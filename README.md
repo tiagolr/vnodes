@@ -1,29 +1,27 @@
 # vnodes
 
-## Project setup
+Vue bare components to create svg interactive graphs, diagrams or node based visual tools.
+
+Kitchen Sink Demo (App.vue)
+
+![Demo (app.js)](./docs/ss1.jpg)
+
+## Get started
 ```
-npm install
+Import components directly to your project or check the demo page by running
+
+npm install && npm start
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Components
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- Screen - svg wrapper with zoom, panning and others
+- Node - svg element added to screen that can contain any html
+- Edge - connect nodes
 
-### Run your tests
-```
-npm run test
-```
+## TODO
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- Simplify Edges api
+- Edge labels
+- Edges routing ( orthogonal, manhattan, metro, eg : https://resources.jointjs.com/demos/routing )
+- Group component
