@@ -7,11 +7,8 @@ Kitchen Sink Demo (App.vue)
 ![Demo (app.js)](./docs/ss1.jpg)
 
 ## Get started
-```
-Import components directly to your project or check the demo page by running
 
-npm install && npm start
-```
+Import components directly to your project or check the demo page by running `npm install && npm start`
 
 ## Components
 
