@@ -44,4 +44,4 @@ onCreate () {
 - Simplify Edges api
 - Edge labels
 - Edges routing ( orthogonal, manhattan, metro, eg : https://resources.jointjs.com/demos/routing )
-- Group component
+- Group component - Container with nodes and slots (east, west, north, south), updates the width and height to nodes (minX, minY, maxX, maxY), updates all nodes positions on move, slots can have aditional html like labels.
