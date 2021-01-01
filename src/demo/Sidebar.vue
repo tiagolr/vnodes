@@ -42,6 +42,12 @@
       </select>
     </div>
 
+    <h5></h5>
+    <div>
+      <span>GroupNodes</span>
+      <input type="checkbox" id="groupNodes" v-model="groupNodes">
+    </div>
+
     <div class="footer">
       <div>
         <input type="text" placeholder="a,b" v-model="zoomNodes">
@@ -66,6 +72,7 @@
         graphNodesFilter: '',
         zoomNodes: '',
         connType: '',
+        groupNodes: false,
       }
     },
     mounted () {
@@ -168,6 +175,9 @@
       },
       graphType () {
         this.graphNodes()
+      },
+      groupNodes (bool) {
+        this.$emit('toggleGroupNodes', bool)
       }
     },
   }

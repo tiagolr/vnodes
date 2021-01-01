@@ -2,6 +2,9 @@
   <div id="app">
     <div style="width: 1000px; height: 800px;">
       <screen ref="screen">
+        <group v-if="groupNodes" :nodes="graph.nodes">
+        </group>
+
         <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
         </edge>
 
@@ -9,7 +12,7 @@
         </node>
       </screen>
     </div>
-    <Sidebar :graph="graph">
+    <Sidebar :graph="graph" @toggleGroupNodes="toggleGroupNodes">
     </Sidebar>
   </div>
 </template>
@@ -20,6 +23,7 @@ import Sidebar from './demo/Sidebar'
 import Screen from './components/Screen'
 import Node from './components/Node'
 import Edge from './components/Edge'
+import Group from './components/Group'
 import graph from './graph'
 
 export default {
@@ -27,11 +31,18 @@ export default {
     Screen,
     Node,
     Edge,
+    Group,
     Sidebar
   },
   data() {
     return {
-      graph: new graph()
+      graph: new graph(),
+      groupNodes: false,
+    }
+  },
+  methods: {
+    toggleGroupNodes(bool) {
+      this.groupNodes = bool
     }
   },
 }
