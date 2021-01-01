@@ -8,7 +8,7 @@ Kitchen Sink Demo (App.vue)
 
 ## Get started
 
-Import components directly to your project or check the demo page by running `npm install && npm start`
+Import components directly to your project or **check the demo** by running `npm install && npm start`
 
 ### Example
 ```html
@@ -38,11 +38,11 @@ onCreate () {
 - Screen - svg wrapper with zoom, panning and others
 - Node - svg element added to screen that can contain arbitrary html, defaults to a label with node id
 - Edge - connect nodes
-- Group - Surround nodes in a container
+- Group - surround nodes with a container, allows dragging multiple nodes (see demo app)
 
 ## TODO
 
 - Simplify Edges api
 - Edge labels
 - Edges routing ( orthogonal, manhattan, metro, eg : https://resources.jointjs.com/demos/routing )
-- Group component - drag Nodes, html placeholders: east,west,north,south
+- Group component - html placeholders: east,west,north,south

@@ -1,5 +1,5 @@
 <template>
-  <g>
+  <g @mousedown="onMousedown">
     <rect
       :x="minX - padding"
       :y="minY - padding"
@@ -12,7 +12,11 @@
 </template>
 
 <script>
+import drag from '../mixins/drag'
 export default {
+  mixins: [
+    drag
+  ],
   props: {
     nodes: {
       type: Array,
@@ -25,7 +29,16 @@ export default {
     borderRadius: {
       type: Number,
       default: 10
-    }
+    },
+    disableDrag: false,
+  },
+  mounted () {
+    this.$on('drag', ({ x, y }) => {
+      this.nodes.forEach(node => {
+        node.x += x
+        node.y += y
+      })
+    })
   },
   computed: {
     minX: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.min(acc, node.x), Infinity),
@@ -37,6 +50,15 @@ export default {
     height: vm => vm.maxY - vm.minY,
     size: vm => ({ w: vm.width, h: vm.height }),
   },
+  methods: {
+    onMousedown (e) {
+      e.stopPropagation()
+      if (!this.disableDrag) {
+        e.preventDefault();
+        this.startDrag();
+      }
+    }
+  }
 }
 </script>
 
@@ -46,7 +68,6 @@ rect
   fill-opacity 0.2
 </style>
 
-// TODO drag group and all nodes
 // TODO
 // Slots for labels, align html contents east west north south
 // example align right
