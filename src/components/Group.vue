@@ -45,10 +45,8 @@ export default {
     maxX: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.max(acc, node.x + node.width), -Infinity),
     minY: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.min(acc, node.y), Infinity),
     maxY: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.max(acc, node.y + node.height), -Infinity),
-
     width: vm => vm.maxX - vm.minX,
     height: vm => vm.maxY - vm.minY,
-    size: vm => ({ w: vm.width, h: vm.height }),
   },
   methods: {
     onMousedown (e) {
