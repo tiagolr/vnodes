@@ -3,17 +3,19 @@ import util from './util'
 import { flextree } from 'd3-flextree'
 
 export default class Graph {
-  nodes = []
-  edges = []
+  constructor () {
+    this.nodes = []
+    this.edges = []
+  }
 
-  positionNode ({ node, parent, dir="right", spacing=40, invertOffset=false }) {
+  positionNode ({ node, parent, dir = 'right', spacing = 40, invertOffset = false }) {
     node = typeof node === 'string' ? this.nodes.find(n => n.id === node) : node
     parent = typeof parent === 'string' ? this.nodes.find(n => n.id === parent) : parent
     const pos = util.findPosition(node, parent, dir, this.nodes, spacing, invertOffset)
     this.updateNode(node, { x: pos.x, y: pos.y })
   }
 
-  graphNodes ({ nodes, edges, type="basic", dir="right", spacing=40 }) {
+  graphNodes ({ nodes, edges, type = 'basic', dir = 'right', spacing = 40 }) {
     nodes = nodes || this.nodes
     edges = edges || this.edges
     if (type === 'basic' || type === 'basic-invert') {
@@ -34,7 +36,6 @@ export default class Graph {
       dag
         .filter(node => !node.parentIds.length)
         .forEach(node => findPos(node, null))
-
     } else
     if (type === 'tree') {
       const dag = util.createDAG(nodes, edges)
@@ -63,31 +64,34 @@ export default class Graph {
           }
           applyChanges(tree)
         })
-    }
-    else {
+    } else {
       throw new Error('unknown layout type ' + type)
     }
   }
 
   reset () {
-    while(this.edges.length) { this.edges.pop() }
-    while(this.nodes.length) { this.nodes.pop() }
+    while (this.edges.length) { this.edges.pop() }
+    while (this.nodes.length) { this.nodes.pop() }
   }
 
-  createNode (fields={}) {
-    if (typeof fields === 'string') fields = { id: fields }
-    const i = this.nodes.push(Object.assign({
+  createNode (fields = {}) {
+    if (typeof fields === 'string') {
+      fields = { id: fields }
+    }
+    const node = Object.assign({
       id: uuid(),
       x: 0,
       y: 0,
       width: 50,
       height: 50,
-      visible: true,
-    }, fields))
-    return this.nodes[i - 1]
+      visible: true
+    }, fields)
+
+    this.nodes.push(node)
+    return node
   }
 
-  updateNode (node, fields={}) {
+  updateNode (node, fields = {}) {
     if (typeof node === 'string') node = this.nodes.find(n => n.id === node)
     if (!node) throw new Error(`node ${node} does not exist`)
     return Object.assign(node, fields)
@@ -101,22 +105,24 @@ export default class Graph {
     return index
   }
 
-  createEdge (from, to, fields={}) {
+  createEdge (from, to, fields = {}) {
     if (typeof from === 'object') from = from.id
     if (typeof to === 'object') to = to.id
     if (!from) throw new Error('orig required')
     if (!to) throw new Error('dest required')
 
-    const i = this.edges.push(Object.assign({
+    const edge = Object.assign({
       id: fields.id || `${from}@${to}`,
       from,
       to,
       fromAnchor: { x: '50%', y: '50%' },
       toAnchor: { x: '50%', y: '50%' },
       visible: true,
-      type: 'linear',
-    },fields))
-    return this.edges[i - 1]
+      type: 'linear'
+    }, fields)
+
+    this.edges.push(edge)
+    return edge
   }
 
   updateEdge (edge, fields) {

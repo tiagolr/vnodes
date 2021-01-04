@@ -8,11 +8,11 @@ import { intersect } from 'mathjs'
 const Victor = require('victor');
 export default {
   props: {
-    data: {
+    data: { // graph edge referece
       type: Object,
       required: true
     },
-    nodes: {
+    nodes: { // graph nodes reference
       type: Array,
       required: true
     }

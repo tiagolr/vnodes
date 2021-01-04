@@ -36,13 +36,12 @@ onCreate () {
 ## Components
 
 - Screen - svg wrapper with zoom, panning and others
-- Node - svg element added to screen that can contain arbitrary html, defaults to a label with node id
+- Node - svg element added to screen that can contain arbitrary html, defaults to a label with nodeid
 - Edge - connect nodes
-- Group - surround nodes with a container, allows dragging multiple nodes (see demo app)
+- Group - surround nodes with a container
 
 ## TODO
 
-- Simplify Edges api
 - Edge labels
 - Edges routing ( orthogonal, manhattan, metro, eg : https://resources.jointjs.com/demos/routing )
 - Group component - html placeholders: east,west,north,south

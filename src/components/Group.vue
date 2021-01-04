@@ -1,13 +1,14 @@
 <template>
-  <g @mousedown="onMousedown">
+  <g>
     <rect
       :x="minX - padding"
       :y="minY - padding"
       :width="width + padding * 2"
       :height="height + padding * 2"
       :rx="borderRadius"
-      :ry="borderRadius"
-    ></rect>
+      @mousedown="onMousedown"
+    >
+    </rect>
   </g>
 </template>
 
@@ -65,15 +66,3 @@ rect
   fill ccc
   fill-opacity 0.2
 </style>
-
-// TODO
-// Slots for labels, align html contents east west north south
-// example align right
-// .b {
-//   widtH: 20px;
-//   height: 20px;
-//   background-color: blue;
-//   position: absolute;
-//   right: 0;
-//   transform: translateX(100%)
-// }
