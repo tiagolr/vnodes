@@ -30,10 +30,7 @@
 
     <h5>Edges</h5>
     <div>
-      <span>radialOffset</span>
-    </div>
-    <div>
-      <span>type</span>
+      <span>type </span>
        <select v-model="connType">
         <option value="linear">linear</option>
         <option value="auto">auto</option>
@@ -41,14 +38,42 @@
         <option value="vsmooth">vsmooth</option>
       </select>
     </div>
-
-    <h5></h5>
     <div>
-      <span>GroupNodes</span>
-      <input type="checkbox" id="groupNodes" v-model="groupNodes">
+      <span>anchor.x </span>
+      <input type="text" style="width: 30px" placeholder="50%" v-model="anchorX" />
+    </div>
+    <div>
+      <span>anchor.y </span>
+      <input type="text" style="width: 30px" placeholder="50%" v-model="anchorY" />
+    </div>
+    <div>
+      <span>anchor.align </span>
+      <select v-model="edgeAlign">
+        <option value=""></option>
+        <option value="center">center</option>
+        <option value="top-left">top-left</option>
+        <option value="top-right">top-right</option>
+        <option value="bottom">bottom</option>
+        <option value="bottom-left">bottom-left</option>
+        <option value="bottom-right">bottom-right</option>
+      </select>
+    </div>
+    <div>
+      <span>anchor.snap </span>
+      <select v-model="edgeSnap">
+        <option value=""></option>
+        <option value="rect">rect</option>
+        <option value="circle">circle</option>
+      </select>
     </div>
 
+    <h5></h5>
+
     <div class="footer">
+      <div>
+        <span>GroupNodes</span>
+        <input type="checkbox" id="groupNodes" v-model="groupNodes">
+    </div>
       <div>
         <input type="text" placeholder="a,b" v-model="zoomNodes">
       </div>
@@ -73,6 +98,10 @@
         zoomNodes: '',
         connType: '',
         groupNodes: false,
+        edgeSnap: '',
+        edgeAlign: '',
+        anchorX: '',
+        anchorY: ''
       }
     },
     mounted () {
@@ -178,6 +207,40 @@
       },
       groupNodes (bool) {
         this.$emit('toggleGroupNodes', bool)
+      },
+      edgeSnap (value) {
+        this.graph.edges.forEach(edge => {
+          this.$set(edge.fromAnchor, 'snap', value)
+          this.$set(edge.toAnchor, 'snap', value)
+        })
+      },
+      edgeAlign (value) {
+        this.graph.edges.forEach(edge => {
+          this.$set(edge.fromAnchor, 'align', value)
+          this.$set(edge.toAnchor, 'align', value)
+        })
+      },
+      anchorX (value) {
+        if (!value) {
+          value = '50%'
+        } else if (!value.endsWith('%')) {
+          value = parseFloat(value)
+        }
+        this.graph.edges.forEach(edge => {
+          edge.fromAnchor.x = value
+          edge.toAnchor.x = value
+        })
+      },
+      anchorY (value) {
+        if (!value) {
+          value = '50%'
+        } else if (!value.endsWith('%')) {
+          value = parseFloat(value)
+        }
+        this.graph.edges.forEach(edge => {
+          edge.fromAnchor.y = value
+          edge.toAnchor.y = value
+        })
       }
     },
   }

@@ -44,4 +44,4 @@ onCreate () {
 
 - Edge labels
 - Edges routing ( orthogonal, manhattan, metro, eg : https://resources.jointjs.com/demos/routing )
-- Group component - html placeholders: east,west,north,south
+- Group - html placeholders: east,west,north,south
