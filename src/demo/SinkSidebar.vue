@@ -251,7 +251,7 @@
   position: absolute;
   left: 1020px;
   right: 0;
-  top: 10px;
+  top: 0;
   height: 800px;
   text-align: left;
 }

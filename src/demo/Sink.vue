@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div style="position: relative">
     <div style="width: 1000px; height: 800px;">
       <screen ref="screen">
         <group v-if="groupNodes" :nodes="graph.nodes">
@@ -12,19 +12,19 @@
         </node>
       </screen>
     </div>
-    <Sidebar :graph="graph" @toggleGroupNodes="toggleGroupNodes">
-    </Sidebar>
+    <sink-sidebar :graph="graph" @toggleGroupNodes="toggleGroupNodes">
+    </sink-sidebar>
   </div>
 </template>
 
 <script>
 import Vue from 'vue'
-import Sidebar from './demo/Sidebar'
-import Screen from './components/Screen'
-import Node from './components/Node'
-import Edge from './components/Edge'
-import Group from './components/Group'
-import graph from './graph'
+import SinkSidebar from './SinkSidebar'
+import Screen from '../components/Screen'
+import Node from '../components/Node'
+import Edge from '../components/Edge'
+import Group from '../components/Group'
+import graph from '../graph'
 
 export default {
   components: {
@@ -32,7 +32,7 @@ export default {
     Node,
     Edge,
     Group,
-    Sidebar
+    SinkSidebar
   },
   data() {
     return {
@@ -49,11 +49,4 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 </style>
