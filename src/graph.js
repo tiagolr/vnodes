@@ -31,7 +31,9 @@ export default class Graph {
           y: node.y
         })
         visited[node.id] = true
-        node.children.forEach(n => findPos(n, node))
+        node.children
+          .filter(n => !visited[n.id])
+          .forEach(n => findPos(n, node))
       }
       dag
         .filter(node => !node.parentIds.length)

@@ -37,13 +37,12 @@ function findPosition (node, parent, align="right", collisions, sep={ x: 40, y: 
   ]
 
   // find node position perpendicular to its parent
-  const offsetX = (align === 'down' || align === 'up')
-    ? sepX * (invertOffset ? -1 : 1) : 0
+  const alignV = align === 'down' || align === 'up'
+  const alignH = align === 'right' || align === 'left'
+  const offsetX = alignV ? sepX * (invertOffset ? -1 : 1) : 0
+  const offsetY = alignH ? sepY * (invertOffset ? -1 : 1) : 0
 
-  const offsetY = (align === 'right' || align === 'left')
-    ? sepY * (invertOffset ? -1 : 1) : 0
-
-  let cols = boxIntersect(boxes, [ nodebox ])
+  let cols = boxIntersect(boxes, [nodebox])
   while (cols.length) {
     const col = collisions[cols[0][0]]
     if (offsetX) {
@@ -63,7 +62,7 @@ function findPosition (node, parent, align="right", collisions, sep={ x: 40, y: 
         nodebox[3] = col.y + offsetY
       }
     }
-    cols = boxIntersect(boxes, [ nodebox ])
+    cols = boxIntersect(boxes, [nodebox])
   }
 
   return { x: nodebox[0], y: nodebox[1]}

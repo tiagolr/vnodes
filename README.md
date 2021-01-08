@@ -8,7 +8,9 @@ Kitchen Sink Demo (App.vue)
 
 ## Get started
 
-Import components directly to your project or **check the demo** by running `npm install && npm start`
+Import components directly to your project ``
+
+Demos https://txlabs.github.io/vnodes/
 
 ### Example
 ```html
