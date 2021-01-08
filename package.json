@@ -5,7 +5,8 @@
   "scripts": {
     "start": "npm run serve",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "pages": "vue-cli-service build && git add . && git commit -m gh-pages && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
     "box-intersect": "^1.0.2",
