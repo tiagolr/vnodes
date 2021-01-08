@@ -21,7 +21,11 @@ export default class Graph {
     if (type === 'basic' || type === 'basic-invert') {
       const dag = util.createDAG(nodes, edges) // removes cycles if any
       const visited = {}
+      window.visited = visited
       const findPos = (node, parent) => {
+        if (visited[node.id]) {
+          return
+        }
         const collisions = nodes.filter(n => !!visited[n.id])
         const pos = util.findPosition(node, parent, dir, collisions, spacing, type === 'basic-invert')
         node.x = pos.x
@@ -31,9 +35,7 @@ export default class Graph {
           y: node.y
         })
         visited[node.id] = true
-        node.children
-          .filter(n => !visited[n.id])
-          .forEach(n => findPos(n, node))
+        node.children.forEach(n => findPos(n, node))
       }
       dag
         .filter(node => !node.parentIds.length)
