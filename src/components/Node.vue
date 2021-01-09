@@ -62,6 +62,7 @@ export default {
   display inline-block
 
 .default-label
+  text-align center
   font-weight bold
   width auto
   height auto

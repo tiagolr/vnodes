@@ -41,9 +41,3 @@ onCreate () {
 - Node - svg element added to screen that can contain arbitrary html, defaults to a label with nodeid
 - Edge - connect nodes
 - Group - surround nodes with a container
-
-## TODO
-
-- Edge labels
-- Edges routing ( orthogonal, manhattan, metro, eg : https://resources.jointjs.com/demos/routing )
-- Group - html placeholders: east,west,north,south

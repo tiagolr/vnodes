@@ -39,29 +39,9 @@
       </select>
     </div>
     <div>
-      <span>anchor.x </span>
-      <input type="text" style="width: 30px" placeholder="50%" v-model="anchorX" />
-    </div>
-    <div>
-      <span>anchor.y </span>
-      <input type="text" style="width: 30px" placeholder="50%" v-model="anchorY" />
-    </div>
-    <div>
-      <span>anchor.align </span>
-      <select v-model="edgeAlign">
-        <option value=""></option>
-        <option value="center">center</option>
-        <option value="top-left">top-left</option>
-        <option value="top-right">top-right</option>
-        <option value="bottom">bottom</option>
-        <option value="bottom-left">bottom-left</option>
-        <option value="bottom-right">bottom-right</option>
-      </select>
-    </div>
-    <div>
-      <span>anchor.snap </span>
+      <span>snap </span>
       <select v-model="edgeSnap">
-        <option value=""></option>
+        <option value="">fixed</option>
         <option value="rect">rect</option>
         <option value="circle">circle</option>
       </select>
@@ -98,10 +78,8 @@
         zoomNodes: '',
         connType: '',
         groupNodes: false,
-        edgeSnap: '',
         edgeAlign: '',
-        anchorX: '',
-        anchorY: ''
+        edgeSnap: '',
       }
     },
     mounted () {

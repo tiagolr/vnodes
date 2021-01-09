@@ -15,13 +15,26 @@ export default class Graph {
     this.updateNode(node, { x: pos.x, y: pos.y })
   }
 
+  // refs
+  // https://gojs.net
+
+  // TODO
+  // dagLoad - set [nodes] and [edges] from dag
+  // dagBuild - builds and saves dag info into nodes
+  // dagBuildEdges - delete all edges and build them from Dag
+  // dagSetParent - change dag parent (string or array[string] => array[string])
+
   graphNodes ({ nodes, edges, type = 'basic', dir = 'right', spacing = 40 }) {
     nodes = nodes || this.nodes
     edges = edges || this.edges
+
+    const dag = util.createDAG(nodes, edges) // removes cycles if any
+    if (!dag.length) {
+      return
+    }
+
     if (type === 'basic' || type === 'basic-invert') {
-      const dag = util.createDAG(nodes, edges) // removes cycles if any
       const visited = {}
-      window.visited = visited
       const findPos = (node, parent) => {
         if (visited[node.id]) {
           return
@@ -30,6 +43,7 @@ export default class Graph {
         const pos = util.findPosition(node, parent, dir, collisions, spacing, type === 'basic-invert')
         node.x = pos.x
         node.y = pos.y
+        console.log(node)
         this.updateNode(node.id, {
           x: node.x,
           y: node.y
@@ -41,33 +55,30 @@ export default class Graph {
         .filter(node => !node.parentIds.length)
         .forEach(node => findPos(node, null))
     } else
-    if (type === 'tree') {
-      const dag = util.createDAG(nodes, edges)
-      if (!dag.length) return
-      const layout = flextree()
-      const flipXY = (dir === 'left' || dir === 'right')
 
-      dag
-        .filter(n => !n.parentIds.length)
-        .forEach(root => {
-          const graph = []
-          const offsetX = root.x
-          const offsetY = root.y
-          util.dagToFlextree(root, graph, flipXY, spacing)
-          const tree = layout.hierarchy(graph[0])
-          layout(tree)
-          // apply layout to nodes
-          const invertX = dir === 'left' ? -1 : 1
-          const invertY = dir === 'up' ? -1 : 1
-          const applyChanges = n => {
-            this.updateNode(n.data.id, {
-              x: (flipXY ? n.y : n.x) * invertX + offsetX,
-              y: (flipXY ? n.x : n.y) * invertY + offsetY
-            })
-            n.children && n.children.forEach(applyChanges)
-          }
-          applyChanges(tree)
-        })
+    if (type === 'tree') {
+      const layout = flextree()
+      const flipH = (dir === 'left' || dir === 'right')
+      const roots = dag.filter(n => !n.parentIds.length)
+      roots.forEach(root => {
+        const graph = []
+        const offsetX = root.x
+        const offsetY = root.y
+        util.dagToFlextree(root, graph, flipH, spacing)
+        const tree = layout.hierarchy(graph[0])
+        layout(tree)
+        // apply layout to nodes
+        const invertX = dir === 'left' ? -1 : 1
+        const invertY = dir === 'up' ? -1 : 1
+        const applyChanges = n => {
+          this.updateNode(n.data.id, {
+            x: (flipH ? n.y : n.x) * invertX + offsetX,
+            y: (flipH ? n.x : n.y) * invertY + offsetY
+          })
+          n.children && n.children.forEach(applyChanges)
+        }
+        applyChanges(tree)
+      })
     } else {
       throw new Error('unknown layout type ' + type)
     }

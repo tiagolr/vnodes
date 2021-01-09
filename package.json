@@ -16,11 +16,11 @@
     "victor": "^1.1.0"
   },
   "devDependencies": {
-    "vue": "^2.6.10",
     "@vue/cli-plugin-babel": "^3.11.0",
     "@vue/cli-service": "^3.11.0",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
+    "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   },
   "postcss": {
