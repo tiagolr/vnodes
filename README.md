@@ -1,3 +1,9 @@
+
+**Project migrated to:**
+https://github.com/tiagolr/vnodes
+
+-------
+
 # vnodes
 
 Vue bare components to create svg interactive graphs, diagrams or node based visual tools.
