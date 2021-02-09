@@ -8,7 +8,7 @@ Vue.js bare components to create svg interactive graphs, diagrams and other visu
 
 Import components directly to your project ``
 
-Demos https://txlabs.github.io/vnodes/
+Demos https://tiagolr.github.io/vnodes/
 
 ### Example
 ```html
