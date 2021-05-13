@@ -1,7 +1,3 @@
-
-**Project migrated to:**
-https://github.com/tiagolr/vnodes
-
 -------
 
 # vnodes
