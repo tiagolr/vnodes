@@ -26,14 +26,24 @@ Demos https://txlabs.github.io/vnodes/
 </screen>
 ```
 ```js
-data: {
-  graph: new graph()
-}
-onCreate () {
-  this.graph.createNode('a')
-  this.graph.createNode('b')
-  this.graph.createEdge('a', 'b')
-  this.graph.graphNodes()
+import { Screen, Node, Edge, graph } from 'vnodes'
+export default {
+  components: {
+     Screen, 
+     Node, 
+     Edge
+  }
+  data () {
+    return {
+      graph: new graph()
+    }
+  }
+  created () {
+    this.graph.createNode('a')
+    this.graph.createNode('b')
+    this.graph.createEdge('a', 'b')
+    this.graph.graphNodes()
+  }
 }
 ```
 
