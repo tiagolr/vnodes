@@ -90,7 +90,7 @@ export default class Graph {
 
   createNode (fields = {}) {
     if (typeof fields === 'string') {
-      fields = { id: fields }
+      fields = { id: fields } // support a single id string or an object as params
     }
     const node = Object.assign({
       id: uuid(),
@@ -98,7 +98,6 @@ export default class Graph {
       y: 0,
       width: 50,
       height: 50,
-      visible: true
     }, fields)
 
     this.nodes.push(node)
@@ -120,8 +119,16 @@ export default class Graph {
   }
 
   createEdge (from, to, fields = {}) {
-    if (typeof from === 'object') from = from.id
-    if (typeof to === 'object') to = to.id
+    if (arguments.length === 1) {
+      // support calling with single argument
+      fields = arguments[0]
+      from = fields.from
+      to = fields.to
+    } else {
+      // support passing node objects instead of ids
+      if (typeof from === 'object') from = from.id
+      if (typeof to === 'object') to = to.id
+    }
     if (!from) throw new Error('orig required')
     if (!to) throw new Error('dest required')
 
@@ -131,7 +138,6 @@ export default class Graph {
       to,
       fromAnchor: { x: '50%', y: '50%' },
       toAnchor: { x: '50%', y: '50%' },
-      visible: true,
       type: 'linear'
     }, fields)
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar">
+  <div>
     <div style="font-weight: bold">Graph</div>
     <textarea v-model="graphText" placeholder="add multiple lines" rows="4"></textarea>
     <div>
@@ -219,15 +219,3 @@
     },
   }
 </script>
-
-<style lang="stylus" scoped>
-.sidebar {
-  // position: absolute;
-  // left: 700px;
-  // right: 0;
-  // top: 0;
-  // height: 800px;
-  // text-align: left;
-  // max-width: 250px;
-}
-</style>

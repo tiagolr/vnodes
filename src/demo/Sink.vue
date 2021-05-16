@@ -1,6 +1,6 @@
 <template>
-  <div class="sink">
-    <div class="demo">
+  <div class="demo">
+    <div class="viewport">
       <screen ref="screen">
         <group v-if="groupNodes" :nodes="$refs.sidebar.filterNodes || graph.nodes">
         </group>
@@ -48,25 +48,3 @@ export default {
 }
 </script>
 
-<style>
-.sink {
-  position: relative;
-  display: flex;
-}
-.demo {
-  height: 500px;
-}
-.sidebar {
-  padding-left: 20px;
-  max-width: 300px
-}
-@media only screen and (max-width: 1000px) {
-  .sink {
-    flex-flow: column wrap;
-  }
-  .sidebar {
-    max-width: 100%;
-    width: 100%;
-  }
-}
-</style>

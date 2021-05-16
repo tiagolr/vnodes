@@ -1,5 +1,5 @@
 <template>
-  <path class="edge" :d="path">
+  <path class="edge" :d="path" @click="e => $emit('click', e)">
   </path>
 </template>
 

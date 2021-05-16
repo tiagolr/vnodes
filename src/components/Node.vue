@@ -1,22 +1,19 @@
 <template>
-  <g>
-    <foreignObject
+  <foreignObject
       class="node"
       :x="data.x"
       :y="data.y"
       :width="width || data.width"
       :height="height || data.height"
-      @mousedown="onMousedown"
-    >
-      <div class="content" ref="content">
-        <div v-if="!$slots.default" class="default-label">
-          {{ data.id }}
-        </div>
-        <slot>
-        </slot>
+      @mousedown="onMousedown">
+    <div class="content" ref="content">
+      <div v-if="!$slots.default" class="default-label">
+        {{ data.id }}
       </div>
-    </foreignObject>
-  </g>
+      <slot>
+      </slot>
+    </div>
+  </foreignObject>
 </template>
 
 <script>
@@ -60,6 +57,10 @@ export default {
   border-radius 7px
   background-color: rgba(100, 200, 100, .9)
   display inline-block
+  width: auto
+  height: auto
+  white-space: nowrap;
+  width: fit-content;
 
 .default-label
   text-align center

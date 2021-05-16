@@ -60,7 +60,7 @@ export default {
       const screen = this.$refs.screen
       const width = rect.right - rect.left
       const height = rect.bottom - rect.top
-      if (!scale || typeof scale !== 'number') {
+      if (!scale) {
         const dx = width / screen.clientWidth
         const dy = height / screen.clientHeight
         scale = 1 / Math.max(dx, dy)
@@ -82,6 +82,32 @@ export default {
         top: node.y - marginY,
         bottom: node.y + node.height + marginY
       })
+    },
+    /**
+     * centers the view and zoom on a group nodes
+     */
+    zoomNodes (nodes, padding=50, scale=null) {
+      if (!nodes || !nodes.length) {
+        return
+      }
+      let left = Infinity
+      let top = Infinity
+      let right = -Infinity
+      let bottom = -Infinity
+
+      nodes.forEach(node => {
+        if (node.x < left) left = node.x
+        if (node.x + node.width > right) right = node.x + node.width
+        if (node.y < top) top = node.y
+        if (node.y + node.height > bottom) bottom = node.y + node.height
+      })
+
+      this.zoomRect({
+        left: left - padding,
+        top: top - padding,
+        right: right + padding,
+        bottom: bottom + padding,
+      }, scale)
     },
     panNode (node, offsetX=0, offsetY=0) { // centers node on screen
       const zoom = this.panzoom.getZoom()

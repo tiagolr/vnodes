@@ -1,45 +1,53 @@
 <template>
-  <div id="demo">
-    <h1></h1>
+  <div style="margin-top: 50px; margin-bottom: 50px">
+    <h2>Vnodes</h2>
     <sink>
     </sink>
+
+    <h2>Edit</h2>
+    <edit>
+    </edit>
+
   </div>
 </template>
 
 <script>
 import Sink from './Sink'
+import Edit from './Edit'
 
 export default {
   components: {
-    Sink
-    // TODO + tabs href
-    // html in nodes (node select, edit html, fit nodes)
-    // connectors (connector select, edit fields)
-    // anchors/ports
-    // genealogy tree https://bl.ocks.org/d3noob/43a860bc0024792f8803bba8ca0d5ecd https://observablehq.com/@erikbrinkman/d3-dag-sugiyama
-    // virtual render
-    // orthogonal, ..., metro
-    // css animations
+    Sink,
+    Edit
   },
 }
 </script>
 
 <style>
-/* #demo {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-} */
 body {
-  /* max-width: 100% !important; */
-  /* margin: unset !important; */
   background-color: #f9f9f9;
   max-width: 56em;
 }
-
-/* .wrap {
-  box-sizing: border-box;
-  max-width: 1200px;
-} */
+.demo {
+  display: flex;
+}
+.viewport {
+  height: 500px;
+  flex-grow: 1;
+}
+.sidebar {
+  padding-left: 20px;
+  width: 200px;
+  max-width: 200px;
+  flex-shrink: 0;
+}
+@media only screen and (max-width: 1000px) {
+  .viewport {
+    flex-flow: column wrap;
+  }
+  .sidebar {
+    max-width: 100%;
+    width: 100%;
+  }
+}
 </style>
