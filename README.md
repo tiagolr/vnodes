@@ -16,14 +16,16 @@ Demos https://txlabs.github.io/vnodes/
 
 ### Example
 ```html
-<screen ref="screen">
-  <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
-  </edge>
+<template>
+  <screen ref="screen">
+    <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+    </edge>
 
-  <node v-for="node in graph.nodes" :data="node" :key="node.id">
-    <!-- Arbitrary html can be placed here, defaults to node.id label -->
-  </node>
-</screen>
+    <node v-for="node in graph.nodes" :data="node" :key="node.id">
+      <!-- Arbitrary html can be placed here, defaults to node.id label -->
+    </node>
+  </screen>
+</template>
 ```
 ```js
 import { Screen, Node, Edge, graph } from 'vnodes'
