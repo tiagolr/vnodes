@@ -1,12 +1,12 @@
 <template>
   <div class="sidebar">
-    <textarea v-model="graphText" placeholder="add multiple lines" rows="8"></textarea>
-    <h5>Graph</h5>
+    <div style="font-weight: bold">Graph</div>
+    <textarea v-model="graphText" placeholder="add multiple lines" rows="4"></textarea>
     <div>
-      <span>type </span>
+      <span>type</span>
       <select v-model="graphType">
         <option value="basic">basic</option>
-        <option value="basic-invert">basic-invert</option>
+        <option value="basic-invert">invert</option>
         <option value="tree">tree</option>
       </select>
     </div>
@@ -19,15 +19,8 @@
         <option value="down">down</option>
       </select>
     </div>
-    <div>
-      <span for="">nodes </span>
-      <input type="text" placeholder="a,b" v-model="graphNodesFilter">
-    </div>
-    <div>
-      <button @click="graphNodes">Graph Nodes</button>
-    </div>
 
-    <h5>Edges</h5>
+    <div style="font-weight: bold">Edges</div>
     <div>
       <span>type </span>
        <select v-model="connType">
@@ -46,17 +39,13 @@
       </select>
     </div>
 
-    <h5></h5>
-
-    <div class="footer">
-      <div>
-        <span>GroupNodes</span>
-        <input type="checkbox" id="groupNodes" v-model="groupNodes">
-    </div>
-      <div>
-        <input type="text" placeholder="a,b" v-model="zoomNodes">
-      </div>
-      <button @click="demoZoomNodes">Zoom Nodes</button>
+    <div style="font-weight: bold">Nodes</div>
+    <div><input type="text" placeholder="a,b,c (nodes filter)" v-model="graphNodesFilter"></div>
+    <button @click="() => zoomNodes(null, filterNodes)">Zoom Nodes</button>
+    <button @click="() => graphNodes(filterNodes)">Graph Nodes</button>
+    <div>
+      <input type="checkbox" id="groupNodes" v-model="groupNodes">
+      <span> Group</span>
     </div>
   </div>
 </template>
@@ -74,7 +63,6 @@
         graphText: 'a/b/c\nb/d',
         graphError: '',
         graphNodesFilter: '',
-        zoomNodes: '',
         connType: '',
         groupNodes: false,
         edgeAlign: '',
@@ -89,26 +77,24 @@
     methods: {
       centerNodes () {
         const panzoom = this.$parent.$refs.screen.panzoom
-        this.demoZoomNodes()
+        this.zoomNodes()
         if (panzoom.getZoom() > 1) {
-          this.demoZoomNodes(1) // fix, only allow zoom out
+          this.zoomNodes(1) // fix, only allow zoom out
         }
       },
-      demoZoomNodes (zoom=null) {
+      zoomNodes (zoom=null) {
         let left = Infinity
         let top = Infinity
         let right = -Infinity
         let bottom = -Infinity
 
-        const filterNodes = this.zoomNodes && this.zoomNodes.split(',')
-        this.graph.nodes
-          .filter(n => !this.zoomNodes || filterNodes.includes(n.id))
-          .forEach(node => {
-            if (node.x < left) left = node.x
-            if (node.x + node.width > right) right = node.x + node.width
-            if (node.y < top) top = node.y
-            if (node.y + node.height > bottom) bottom = node.y + node.height
-          })
+        const nodes = this.filterNodes || this.graph.nodes
+        nodes.forEach(node => {
+          if (node.x < left) left = node.x
+          if (node.x + node.width > right) right = node.x + node.width
+          if (node.y < top) top = node.y
+          if (node.y + node.height > bottom) bottom = node.y + node.height
+        })
 
         left -= 50
         top -= 50
@@ -132,16 +118,12 @@
           node.children.forEach(c => visitNode(c, node))
         }
         graph.forEach(n => visitNode(n))
-        this.graphNodes(true)
+        this.graphNodes()
         this.centerNodes()
       },
-      graphNodes (all) {
-        const filterNodes = this.graphNodesFilter && this.graphNodesFilter.split(',')
-        const nodes = this.graph.nodes
-          .filter(n => all === true || !filterNodes || filterNodes.includes(n.id))
-
+      graphNodes (filterNodes) {
         this.graph.graphNodes({
-          nodes,
+          nodes: filterNodes || this.graph.nodes,
           edges: this.graph.edges,
           type: this.graphType,
           dir: this.graphDir
@@ -149,6 +131,11 @@
       }
     },
     computed: {
+      filterNodes () {
+        const filtered = this.graphNodesFilter.split(',').map(s => s.trim())
+        const nodes = this.graph.nodes.filter(n => filtered.includes(n.id))
+        return nodes.length ? nodes : null
+      },
       parsedGraph () {
         const visited = []
         const graph = []
@@ -243,11 +230,4 @@
   // text-align: left;
   // max-width: 250px;
 }
-.sidebar > * {
-  margin-bottom: 10px
-}
-.footer
-  margin-bottom 0px
-  position absolute
-  bottom 0
 </style>

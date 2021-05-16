@@ -1,8 +1,8 @@
 <template>
-  <div style="position: relative">
+  <div class="sink">
     <div class="demo">
       <screen ref="screen">
-        <group v-if="groupNodes" :nodes="graph.nodes">
+        <group v-if="groupNodes" :nodes="$refs.sidebar.filterNodes || graph.nodes">
         </group>
 
         <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
@@ -12,7 +12,7 @@
         </node>
       </screen>
     </div>
-    <sink-sidebar :graph="graph" @toggleGroupNodes="toggleGroupNodes">
+    <sink-sidebar class="sidebar" :graph="graph" @toggleGroupNodes="toggleGroupNodes" ref="sidebar">
     </sink-sidebar>
   </div>
 </template>
@@ -43,27 +43,30 @@ export default {
   methods: {
     toggleGroupNodes(bool) {
       this.groupNodes = bool
-    }
+    },
   },
 }
 </script>
 
 <style>
+.sink {
+  position: relative;
+  display: flex;
+}
 .demo {
-  display: inline-block;
-  width: calc(100% - 250px);
   height: 500px;
 }
 .sidebar {
-  display: inline-block;
-  width: 250px
+  padding-left: 20px;
+  max-width: 300px
 }
-@media only screen and (max-width: 600px) {
-  .demo {
-    width: 100%
+@media only screen and (max-width: 1000px) {
+  .sink {
+    flex-flow: column wrap;
   }
   .sidebar {
-    width: 100%
+    max-width: 100%;
+    width: 100%;
   }
 }
 </style>
