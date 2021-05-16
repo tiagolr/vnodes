@@ -1,14 +1,18 @@
 <template>
   <g>
-    <rect
-      :x="minX - padding"
-      :y="minY - padding"
-      :width="width + padding * 2"
-      :height="height + padding * 2"
-      :rx="borderRadius"
+    <foreignObject
+      class="group"
+      :x="minX - padding.left"
+      :y="minY - padding.top"
+      :width="width + (padding.left + padding.right)"
+      :height="height + (padding.top + padding.bottom)"
       @mousedown="onMousedown"
     >
-    </rect>
+      <div class="content" ref="content">
+        <slot>
+        </slot>
+      </div>
+    </foreignObject>
   </g>
 </template>
 
@@ -24,12 +28,8 @@ export default {
       default: []
     },
     padding: {
-      type: Number,
-      default: 10
-    },
-    borderRadius: {
-      type: Number,
-      default: 10
+      type: Object,
+      default: () => ({ left: 10, right: 10, top: 10, bottom: 10 })
     },
     disableDrag: false,
   },
@@ -62,7 +62,11 @@ export default {
 </script>
 
 <style lang="stylus">
-rect
-  fill ccc
-  fill-opacity 0.2
+.content
+  width: 100%
+  height: 100%
+  position absolute
+  border-radius 7px
+  background-color: rgba(100, 100, 100, .25)
+  display inline-block
 </style>
