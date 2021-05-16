@@ -16,7 +16,7 @@ https://txlabs.github.io/vnodes/
     </edge>
 
     <node v-for="node in graph.nodes" :data="node" :key="node.id">
-      <!-- Arbitrary html can be placed here, defaults to <div>{{node.id}}</div> -->
+      <!-- html can be placed here, defaults to <div>{{node.id}}</div> -->
     </node>
   </screen>
 </template>
