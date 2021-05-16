@@ -51,13 +51,16 @@ export default {
       this.panzoom.zoom(scale)
       this.panzoom.pan( x,y )
     },
-    zoomRect (rect) {
+    zoomRect (rect, scale=null) {
       const screen = this.$refs.screen
       const width = rect.right - rect.left
       const height = rect.bottom - rect.top
-      const dx = width / screen.clientWidth
-      const dy = height / screen.clientHeight
-      const scale = 1 / Math.max(dx, dy)
+      if (!scale || typeof scale !== 'number') {
+        // calculate scale to fit contents
+        const dx = width / screen.clientWidth
+        const dy = height / screen.clientHeight
+        scale = 1 / Math.max(dx, dy)
+      }
       const x = -rect.left * scale + ((screen.clientWidth / scale - width) / 2) * scale
       const y = -rect.top * scale + ((screen.clientHeight / scale - height) / 2) * scale
 

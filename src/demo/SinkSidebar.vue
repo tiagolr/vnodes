@@ -88,7 +88,14 @@
       })
     },
     methods: {
-      demoZoomNodes () {
+      centerNodes () {
+        const panzoom = this.$parent.$refs.screen.panzoom
+        this.demoZoomNodes()
+        if (panzoom.getZoom() > 1) {
+          this.demoZoomNodes(1) // fix, only allow zoom out
+        }
+      },
+      demoZoomNodes (zoom=null) {
         let left = Infinity
         let top = Infinity
         let right = -Infinity
@@ -109,7 +116,7 @@
         right += 50
         bottom += 50
 
-        this.$parent.$refs.screen.zoomRect({ left, top, right, bottom })
+        this.$parent.$refs.screen.zoomRect({ left, top, right, bottom }, zoom)
       },
       createNodes () {
         this.graph.reset()
@@ -127,6 +134,7 @@
         }
         graph.forEach(n => visitNode(n))
         this.graphNodes(true)
+        this.centerNodes()
       },
       graphNodes (all) {
         const filterNodes = this.graphNodesFilter && this.graphNodesFilter.split(',')
@@ -179,9 +187,11 @@
       },
       graphDir () {
         this.graphNodes()
+        this.centerNodes()
       },
       graphType () {
         this.graphNodes()
+        this.centerNodes()
       },
       groupNodes (bool) {
         this.$emit('toggleGroupNodes', bool)

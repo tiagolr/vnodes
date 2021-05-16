@@ -43,7 +43,6 @@ export default class Graph {
         const pos = util.findPosition(node, parent, dir, collisions, spacing, type === 'basic-invert')
         node.x = pos.x
         node.y = pos.y
-        console.log(node)
         this.updateNode(node.id, {
           x: node.x,
           y: node.y
