@@ -46,6 +46,6 @@ export default {
 ## Components
 
 - Screen - svg wrapper with zoom, panning and others
-- Node - svg element added to screen that can contain arbitrary html, defaults to a label with nodeid
-- Edge - connect nodes
+- Node - svg element that contain html
+- Edge - connect nodes using svg lines
 - Group - surround nodes with a container
