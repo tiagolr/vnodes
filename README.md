@@ -4,7 +4,9 @@
 
 Vue minimal components to create svg interactive graphs, diagrams or node visual tools.
 
-Demos https://txlabs.github.io/vnodes/
+### Demo 
+
+https://txlabs.github.io/vnodes/
 
 ### Get started
 ```html
