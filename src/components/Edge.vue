@@ -87,9 +87,9 @@ export default {
   },
   methods: {
     /**
-     * {
-     *    x,      coordinates of the anchor relative to the node,
-     *    y,      in pixels or percentages
+     * anchor {
+     *    x,      coordinates of the anchor relative to the node in pixels or percentage
+     *    y,
      *    align,  'center', 'top', 'bottom'... shorthand for x,y bounding box positioning
      *    snap,   'circle' or 'rect' snaps to the bounding box or circle
      * }
@@ -121,11 +121,15 @@ export default {
         else throw new Error('unkown anchor align' + align)
       }
 
-      if (pos.x.endsWith && pos.x.endsWith('%')) {
-        pos.x = parseInt(pos.x) / 100 * node.width
+      if (pos.x.endsWith) { // convert pos string to number
+        pos.x = pos.x.endsWith('%')
+          ? parseInt(pos.x) / 100 * node.width
+          : parseInt(pos.x)
       }
-      if (pos.y.endsWith && pos.y.endsWith('%')) {
-        pos.y = parseInt(pos.y) / 100 * node.height
+      if (pos.y.endsWith) { // convert pos string to number
+        pos.y = pos.y.endsWith('%')
+         ? parseInt(pos.y) / 100 * node.height
+         : parseInt(pos.y)
       }
 
       return {
