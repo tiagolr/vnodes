@@ -1,6 +1,6 @@
 <template>
   <div style="position: relative">
-    <div style="width: 1000px; height: 800px;">
+    <div class="demo">
       <screen ref="screen">
         <group v-if="groupNodes" :nodes="graph.nodes">
         </group>
@@ -49,4 +49,21 @@ export default {
 </script>
 
 <style>
+.demo {
+  display: inline-block;
+  width: calc(100% - 250px);
+  height: 500px;
+}
+.sidebar {
+  display: inline-block;
+  width: 250px
+}
+@media only screen and (max-width: 600px) {
+  .demo {
+    width: 100%
+  }
+  .sidebar {
+    width: 100%
+  }
+}
 </style>

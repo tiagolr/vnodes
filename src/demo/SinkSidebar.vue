@@ -1,6 +1,5 @@
 <template>
   <div class="sidebar">
-
     <textarea v-model="graphText" placeholder="add multiple lines" rows="8"></textarea>
     <h5>Graph</h5>
     <div>
@@ -236,12 +235,13 @@
 
 <style lang="stylus" scoped>
 .sidebar {
-  position: absolute;
-  left: 1020px;
-  right: 0;
-  top: 0;
-  height: 800px;
-  text-align: left;
+  // position: absolute;
+  // left: 700px;
+  // right: 0;
+  // top: 0;
+  // height: 800px;
+  // text-align: left;
+  // max-width: 250px;
 }
 .sidebar > * {
   margin-bottom: 10px
