@@ -5,8 +5,10 @@
       :y="data.y - margin"
       :width="data.width + margin * 2"
       :height="data.height + margin * 2"
-      @mousedown="onMousedown">
-    <div class="content" ref="content" :style="margin && `margin: ${margin}px`">
+      @mousedown="onMousedown"
+      :style="margin && `padding: ${margin}`"
+    >
+    <div class="content" ref="content">
       <div v-if="!$slots.default" class="default-label">
         {{ data.id }}
       </div>
@@ -18,7 +20,6 @@
 
 <script>
 import drag from '../mixins/drag'
-
 export default {
   mixins: [
     drag
@@ -56,6 +57,7 @@ export default {
 
 <style lang="stylus">
 .node .content
+  position relative
   border-radius 7px
   background-color: rgba(100, 200, 100, .9)
   display inline-block

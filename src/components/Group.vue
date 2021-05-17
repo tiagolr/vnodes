@@ -15,6 +15,7 @@
 </template>
 
 <script>
+/** */
 import drag from '../mixins/drag'
 export default {
   mixins: [
@@ -27,7 +28,7 @@ export default {
     },
     margin: {
       type: Number,
-      default: 10
+      default: 20
     },
     padding: { // additional area covered by group besides nodes minxy, maxxy
       type: Object,

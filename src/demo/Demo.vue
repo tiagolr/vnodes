@@ -9,8 +9,8 @@
     </edit>
 
     <h2>Groups and Ports</h2>
-    <ports>
-    </ports>
+    <groups>
+    </groups>
 
   </div>
 </template>
@@ -18,13 +18,13 @@
 <script>
 import Sink from './Sink'
 import Edit from './Edit'
-import Ports from './Ports'
+import Groups from './Groups'
 
 export default {
   components: {
     Sink,
     Edit,
-    Ports
+    Groups
   },
 }
 </script>

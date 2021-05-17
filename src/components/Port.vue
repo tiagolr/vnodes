@@ -10,7 +10,7 @@
  */
 export default {
   props: {
-    startOffset: Object, // { x, y } - defaults to port center
+    startOffset: Object, // { x, y }
     edgesFrom: {
       type: Array,
       default: () => []
@@ -39,7 +39,7 @@ export default {
         x: el.offsetWidth / 2,
         y: el.offsetHeight / 2
       }
-      while (el) {
+      while (el && !el.classList.contains('content')) {
         this.offset.x += el.offsetLeft || 0
         this.offset.y += el.offsetTop || 0
         el = el.offsetParent
@@ -53,13 +53,14 @@ export default {
     }
   },
   watch: {
-    edgesFrom: updateOffset,
-    edgesTo: updateOffset,
+    edgesFrom: 'updateOffset',
+    edgesTo: 'updateOffset',
   },
 }
 </script>
 
 <style lang="stylus" scoped>
 .port
+  background-color: #fffa
   cursor pointer
 </style>
