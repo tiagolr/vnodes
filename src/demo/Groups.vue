@@ -9,12 +9,22 @@
           <table>
             <td>
               <tr v-for="input in node.inputs" :key="node.id+'i'+input">
-                <port :edgesTo="getInputEdges(node, input)">O</port>{{input}}
+                <span @mousedown.prevent.stop="test">
+                  <port :edgesTo="getInputEdges(node, input)">
+                    <div style="width: 10px; height: 10px; background-color: red; display: inline-block"></div>
+                  </port>
+                </span>
+                {{input}}
               </tr>
             </td>
             <td>
               <tr v-for="output in node.outputs" :key="node.id+'o'+output">
-                {{output}}<port :edgesFrom="getOutputEdges(node, output)">O</port>
+                {{output}}
+                <span @mousedown.prevent.stop="test">
+                  <port :edgesFrom="getOutputEdges(node, output)" @mousedown.prevent.stop="test">
+                    <div style="width: 10px; height: 10px; background-color: red; display: inline-block"></div>
+                  </port>
+                </span>
               </tr>
             </td>
           </table>
@@ -49,6 +59,9 @@ export default {
     }
   },
   methods: {
+    test () {
+      console.log('test')
+    },
     getInputEdges (node, input) { // get edges that go to this input
       return this.graph.edges
         .filter(e => e.to === node.id && e.toPort === input)
@@ -62,8 +75,8 @@ export default {
     this.graph.createNode({
       id: 'a',
       title: 'nodeA',
-      inputs: ['1', '2', '3'],
-      outputs: ['1', '2']
+      inputs: ['1'],
+      outputs: ['1', '2', '3']
     })
     this.graph.createNode({
       id: 'b',

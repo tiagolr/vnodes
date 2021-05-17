@@ -1,6 +1,6 @@
 <template>
   <span class="port">
-    <slot></slot>
+    <slot ref="inner"></slot>
   </span>
 </template>
 
@@ -26,18 +26,23 @@ export default {
     }
   },
   mounted () {
-    this.updateOffset()
+    this.updatePosition()
   },
   methods: {
     /**
      * Calculate html offset of this element
      * and update edges anchors to this element offset
      */
-    updateOffset () {
+    updatePosition () {
       let el = this.$el
+      if (this.$slots.default.length === 1
+          && this.$slots.default[0].elm
+          && this.$slots.default[0].elm.offsetWidth) {
+        el = this.$slots.default[0].elm // if there is a single valid root in <slot> use it to calc offset
+      }
       this.offset = this.startOffset || {
         x: el.offsetWidth / 2,
-        y: el.offsetHeight / 2
+        y: el.offsetHeight / 2,
       }
       while (el && !el.classList.contains('content')) {
         this.offset.x += el.offsetLeft || 0
@@ -53,14 +58,13 @@ export default {
     }
   },
   watch: {
-    edgesFrom: 'updateOffset',
-    edgesTo: 'updateOffset',
+    edgesFrom: 'updatePosition',
+    edgesTo: 'updatePosition',
   },
 }
 </script>
 
 <style lang="stylus" scoped>
 .port
-  background-color: #fffa
   cursor pointer
 </style>
