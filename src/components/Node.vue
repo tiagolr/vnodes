@@ -1,11 +1,12 @@
 <template>
   <foreignObject
       class="node"
-      :x="data.x"
-      :y="data.y"
-      :width="width || data.width"
-      :height="height || data.height"
-      @mousedown="onMousedown">
+      :x="data.x - padding"
+      :y="data.y - padding"
+      :width="data.width + padding * 2"
+      :height="data.height + padding * 2"
+      @mousedown="onMousedown"
+      :style="padding && `padding: ${padding}`">
     <div class="content" ref="content">
       <div v-if="!$slots.default" class="default-label">
         {{ data.id }}
@@ -25,8 +26,10 @@ export default {
   ],
   props: {
     data: {},
-    width: Number,  // override container width
-    height: Number, // override container height
+    padding: {
+      type: Number,
+      default: 10, // padding allows for boxshadow and other out of bounds contents to display
+    },
     disableDrag: Boolean,  // set false to override drag behavior
   },
   mounted () {
@@ -52,8 +55,14 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.content
+<style lang="stylus">
+.node:hover .content
+  box-shadow: 0px 0px 0px 4px blue;
+
+.node.selected .content
+  box-shadow: 0px 0px 0px 4px pink;
+
+.node .content
   border-radius 7px
   background-color: rgba(100, 200, 100, .9)
   display inline-block

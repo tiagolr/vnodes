@@ -1,5 +1,5 @@
 <template>
-  <path class="edge" :d="path" @click="e => $emit('click', e)">
+  <path class="edge" :d="path">
   </path>
 </template>
 
@@ -68,13 +68,13 @@ export default {
       const distX = pos.x1 - pos.x2
       const distY = pos.y1 - pos.y2
 
-      if (this.data.type === 'hsmooth' || this.data.type === 'auto' && Math.abs(distX) >= Math.abs(distY)) {
+      if (this.data.type === 'hsmooth' || this.data.type === 'smooth' && Math.abs(distX) >= Math.abs(distY)) {
         // add two horizontal control points
         const c1 = { x: pos.x1 - distX / 2, y: pos.y1 }
         const c2 = { x: pos.x2 + distX / 2, y: pos.y2 }
         pathd += ` C ${c1.x},${c1.y} ${c2.x},${c2.y} `
       }
-      else if (this.data.type === 'vsmooth' || this.data.type === 'auto' && Math.abs(distY) > Math.abs(distX)) {
+      else if (this.data.type === 'vsmooth' || this.data.type === 'smooth' && Math.abs(distY) > Math.abs(distX)) {
         // add two vertical control points
         const c1 = { x: pos.x1, y: pos.y1 - distY / 2 }
         const c2 = { x: pos.x2, y: pos.y2 + distY / 2 }

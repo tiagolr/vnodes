@@ -25,7 +25,7 @@
       <span>type </span>
        <select v-model="connType">
         <option value="linear">linear</option>
-        <option value="auto">auto</option>
+        <option value="smooth">smooth</option>
         <option value="hsmooth">hsmooth</option>
         <option value="vsmooth">vsmooth</option>
       </select>

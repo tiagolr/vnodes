@@ -2,13 +2,14 @@
   <div class="demo" id="edit-demo">
     <div class="viewport">
       <screen ref="screen">
-        <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id" @click="() => select(edge)">
-        </edge>
-        <g v-for="node in graph.nodes" :key="node.id"
-          @mouseenter="hover = node"
-          @mouseleave="hover = null"
-          @click="select(node)">
-          <node :data="node" ref="node">
+        <g v-for="edge in graph.edges" @click="select(edge)" :key="edge.id">
+          <edge :class="selection && selection.id === edge.id && 'selected'"
+              :data="edge"
+              :nodes="graph.nodes">
+            </edge>
+        </g>
+        <g v-for="node in graph.nodes" @click="select(node)" :key="node.id">
+          <node :data="node" ref="node" :class="selection.id === node.id && 'selected'">
             <div v-html="node.html"></div>
           </node>
         </g>
@@ -46,6 +47,9 @@ export default {
     }
   },
   methods: {
+    test () {
+      console.log('leave')
+    },
     select (obj) {
       this.selection = obj
       this.editText = JSON.stringify(this.selection, null, 2)
@@ -78,7 +82,8 @@ export default {
     this.graph.createEdge({
       from: 'a',
       to: 'b',
-      toAnchor: { x: '50%', y: '50%', snap: 'rect' }
+      toAnchor: { x: '50%', y: '50%', snap: 'rect' },
+      type: 'smooth'
     })
     this.$nextTick(() => {
       this.$refs.screen.zoomNodes(this.graph.nodes, 0, 1)
@@ -94,7 +99,9 @@ export default {
 #edit-demo .edge {
   cursor: pointer
 }
-#edit-demo .edge:hover {
-  // stroke-width: 4
+.selection .edge {
+  stroke-width: 8
+  marker-end: none
+  stroke: blue
 }
 </style>

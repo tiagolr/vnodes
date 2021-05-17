@@ -1,19 +1,17 @@
 <template>
-  <g>
-    <foreignObject
-      class="group"
-      :x="minX - padding.left"
-      :y="minY - padding.top"
-      :width="width + (padding.left + padding.right)"
-      :height="height + (padding.top + padding.bottom)"
-      @mousedown="onMousedown"
-    >
-      <div class="content" ref="content">
-        <slot>
-        </slot>
-      </div>
-    </foreignObject>
-  </g>
+  <foreignObject
+    class="group"
+    :x="minX - padding.left"
+    :y="minY - padding.top"
+    :width="width + (padding.left + padding.right)"
+    :height="height + (padding.top + padding.bottom)"
+    @mousedown="onMousedown"
+  >
+    <div class="content" ref="content">
+      <slot>
+      </slot>
+    </div>
+  </foreignObject>
 </template>
 
 <script>
@@ -62,7 +60,7 @@ export default {
 </script>
 
 <style lang="stylus">
-.content
+.group .content
   width: 100%
   height: 100%
   position absolute
