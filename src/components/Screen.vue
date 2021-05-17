@@ -19,6 +19,10 @@ export default {
     markers: {
       type: Array, // { id:String, type: 'arrow|circle|square|diamond', scale: Number, style: String }
       default: () => []
+    },
+    panzoomOptions: {
+      type: Object,
+      default: () => ({})
     }
   },
   components: {
@@ -30,10 +34,10 @@ export default {
     }
   },
   mounted () {
-    this.panzoom = SvgPanZoom(this.$refs.screen, {
+    this.panzoom = SvgPanZoom(this.$refs.screen, Object.assign({
       dblClickZoomEnabled: false,
       mouseWheelZoomEnabled: true,
-      preventMouseEventsDefault: false,
+      preventMouseEventsDefault: true,
       fit: false,
       contain: false,
       center: false,
@@ -46,7 +50,7 @@ export default {
       onUserPan: e => this.$emit('onuserpan', e),
       onDoubleClick: () => this.$emit('ondoubleclick'),
       onUpdatedCTM: c => this.$emit('onctm', c)
-    })
+    }, this.panzoomOptions))
 
     this.panzoom.zoomRect = this.zoomRect
     this.panzoom.zoomNode = this.zoomNode

@@ -11,7 +11,7 @@
               <tr v-for="input in node.inputs" :key="node.id+'i'+input">
                 <span @mousedown.prevent.stop="test">
                   <port :edgesTo="getInputEdges(node, input)">
-                    <div style="width: 10px; height: 10px; background-color: red; display: inline-block"></div>
+                    <!-- <div class="port-inner"></div> -->
                   </port>
                 </span>
                 {{input}}
@@ -22,7 +22,7 @@
                 {{output}}
                 <span @mousedown.prevent.stop="test">
                   <port :edgesFrom="getOutputEdges(node, output)" @mousedown.prevent.stop="test">
-                    <div style="width: 10px; height: 10px; background-color: red; display: inline-block"></div>
+                    <!-- <div class="port-inner"></div> -->
                   </port>
                 </span>
               </tr>
@@ -99,5 +99,12 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scoped>
+.port-inner
+  width: 15px
+  height: 15px
+  border-radius 10px
+  background-color: red
+  display: inline-block
+  cursor pointer
 </style>

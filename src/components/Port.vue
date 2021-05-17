@@ -1,6 +1,6 @@
 <template>
   <span class="port">
-    <slot ref="inner"></slot>
+    <slot></slot>
   </span>
 </template>
 
@@ -35,7 +35,8 @@ export default {
      */
     updatePosition () {
       let el = this.$el
-      if (this.$slots.default.length === 1
+      if (this.$slots.default
+          && this.$slots.default.length === 1
           && this.$slots.default[0].elm
           && this.$slots.default[0].elm.offsetWidth) {
         el = this.$slots.default[0].elm // if there is a single valid root in <slot> use it to calc offset
@@ -63,8 +64,3 @@ export default {
   },
 }
 </script>
-
-<style lang="stylus" scoped>
-.port
-  cursor pointer
-</style>
