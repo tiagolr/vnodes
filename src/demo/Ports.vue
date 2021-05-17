@@ -45,6 +45,9 @@ export default {
       fromPort: 'o1',
       toPort: 'i1'
     })
+    this.$nextTick(() => {
+      this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
+    })
   }
 }
 </script>

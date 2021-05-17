@@ -82,7 +82,7 @@
           this.zoomNodes(1) // fix, only allow zoom out
         }
       },
-      zoomNodes (zoom=null) {
+      zoomNodes (scale=null) {
         let left = Infinity
         let top = Infinity
         let right = -Infinity
@@ -101,7 +101,7 @@
         right += 50
         bottom += 50
 
-        this.$parent.$refs.screen.zoomRect({ left, top, right, bottom }, zoom)
+        this.$parent.$refs.screen.zoomRect({ left, top, right, bottom }, { scale })
       },
       createNodes () {
         this.graph.reset()

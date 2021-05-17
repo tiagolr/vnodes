@@ -86,7 +86,7 @@ export default {
       type: 'smooth'
     })
     this.$nextTick(() => {
-      this.$refs.screen.zoomNodes(this.graph.nodes, 0, 1)
+      this.$refs.screen.zoomNodes(this.graph.nodes, {scale: 1})
     })
   }
 }

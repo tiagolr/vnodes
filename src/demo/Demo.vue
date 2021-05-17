@@ -1,9 +1,5 @@
 <template>
   <div style="margin-top: 50px; margin-bottom: 50px">
-    <h2>Groups and Ports</h2>
-    <ports>
-    </ports>
-
     <h2>Vnodes</h2>
     <sink>
     </sink>
@@ -11,6 +7,10 @@
     <h2>Edit</h2>
     <edit>
     </edit>
+
+    <h2>Groups and Ports</h2>
+    <ports>
+    </ports>
 
   </div>
 </template>

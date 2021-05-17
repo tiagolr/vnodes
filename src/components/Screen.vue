@@ -62,7 +62,8 @@ export default {
      * @param rect { left, right, top, bottom }
      * @param scale force zoom to a specific value (eg: 1)
      */
-    zoomRect (rect, scale=null) {
+    zoomRect (rect, opts = {scale: null}) {
+      let scale = opts.scale
       const screen = this.$refs.screen
       const width = rect.right - rect.left
       const height = rect.bottom - rect.top
@@ -92,10 +93,12 @@ export default {
     /**
      * centers the view and zoom on a group nodes
      */
-    zoomNodes (nodes, padding=50, scale=null) {
+    zoomNodes (nodes, opts = {padding, scale}) {
       if (!nodes || !nodes.length) {
         return
       }
+      const padding = opts.padding || 50
+      const scale = opts.scale
       let left = Infinity
       let top = Infinity
       let right = -Infinity
@@ -113,9 +116,11 @@ export default {
         top: top - padding,
         right: right + padding,
         bottom: bottom + padding,
-      }, scale)
+      }, { scale })
     },
-    panNode (node, offsetX=0, offsetY=0) { // centers node on screen
+    panNode (node, opts = { offsetX, offsetY }) { // centers node on screen
+      const offsetX = opts.offsetX || 0
+      const offsetY = opts.offsetY || 0
       const zoom = this.panzoom.getZoom()
       const x = this.$el.clientWidth / 2 - (node.x + node.width / 2) * zoom + offsetX
       const y = this.$el.clientHeight / 2 - (node.y + node.height / 2) * zoom + offsetY
