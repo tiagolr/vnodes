@@ -2,29 +2,27 @@
   <div class="demo" id="ports-demo">
     <div class="viewport">
       <screen ref="screen">
-        <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id" @click="() => select(edge)">
+        <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
         </edge>
         <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
           <div style="text-align: center"><strong>{{ node.title }}</strong></div>
           <table>
             <td>
               <tr v-for="input in node.inputs" :key="node.id+'i'+input">
-                <span @mousedown.prevent.stop="test">
                   <port :edgesTo="getInputEdges(node, input)">
-                    <!-- <div class="port-inner"></div> -->
+                    <div class="port-inner" @mousedown.stop="test" :class="getInputEdges(node, input).length && 'connected'">
+                    </div>
                   </port>
-                </span>
                 {{input}}
               </tr>
             </td>
             <td>
               <tr v-for="output in node.outputs" :key="node.id+'o'+output">
                 {{output}}
-                <span @mousedown.prevent.stop="test">
-                  <port :edgesFrom="getOutputEdges(node, output)" @mousedown.prevent.stop="test">
-                    <!-- <div class="port-inner"></div> -->
-                  </port>
-                </span>
+                <port :edgesFrom="getOutputEdges(node, output)" @mousedown.prevent.stop="test">
+                  <div class="port-inner" @mousedown.stop="test" :class="getOutputEdges(node, output).length && 'connected'">
+                  </div>
+                </port>
               </tr>
             </td>
           </table>
@@ -107,4 +105,11 @@ export default {
   background-color: red
   display: inline-block
   cursor pointer
+
+.port-inner:hover
+  background-color blue
+
+.port-inner.connected
+  background-color yellow
+
 </style>

@@ -34,13 +34,9 @@ export default {
      * and update edges anchors to this element offset
      */
     updatePosition () {
-      let el = this.$el
-      if (this.$slots.default
-          && this.$slots.default.length === 1
-          && this.$slots.default[0].elm
-          && this.$slots.default[0].elm.offsetWidth) {
-        el = this.$slots.default[0].elm // if there is a single valid root in <slot> use it to calc offset
-      }
+      let el = this.$slots.default?.length === 1 && this.$slots.default?.[0]?.elm?.offsetWidth
+        ? this.$slots.default[0].elm // there is a single valid html el in <slot />
+        : this.$el
       this.offset = this.startOffset || {
         x: el.offsetWidth / 2,
         y: el.offsetHeight / 2,

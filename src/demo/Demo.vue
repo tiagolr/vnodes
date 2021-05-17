@@ -12,6 +12,9 @@
     <groups>
     </groups>
 
+    <h2>Benchpress</h2>
+    <benchmark>
+    </benchmark>
   </div>
 </template>
 
@@ -19,12 +22,13 @@
 import Sink from './Sink'
 import Edit from './Edit'
 import Groups from './Groups'
-
+import Benchmark from './Benchmark'
 export default {
   components: {
     Sink,
     Edit,
-    Groups
+    Groups,
+    Benchmark
   },
 }
 </script>

@@ -20,7 +20,7 @@ export default {
       type: Array, // { id:String, type: 'arrow|circle|square|diamond', scale: Number, style: String }
       default: () => []
     },
-    panzoomOptions: {
+    options: {
       type: Object,
       default: () => ({})
     }
@@ -44,13 +44,13 @@ export default {
       zoomScaleSensitivity: 0.4,
       minZoom: 0.1,
       maxZoom: 5,
-      onZoom: scale => this.$emit('panzoom', { scale }),
-      onPan: pan => this.$emit('panzoom', ({ x: pan.x, y: pan.y })),
-      onUserZoom: e => this.$emit('onuserzoom', e),
-      onUserPan: e => this.$emit('onuserpan', e),
-      onDoubleClick: () => this.$emit('ondoubleclick'),
-      onUpdatedCTM: c => this.$emit('onctm', c)
-    }, this.panzoomOptions))
+      onZoom: scale => {},
+      onPan: pan => {},
+      onUserZoom: e => {},
+      onUserPan: e => {},
+      onDoubleClick: () => {},
+      onUpdatedCTM: m => {}
+    }, this.options))
 
     this.panzoom.zoomRect = this.zoomRect
     this.panzoom.zoomNode = this.zoomNode
@@ -97,7 +97,7 @@ export default {
     /**
      * centers the view and zoom on a group nodes
      */
-    zoomNodes (nodes, opts = {padding, scale}) {
+    zoomNodes (nodes, opts = { padding: 50, scale: null }) {
       if (!nodes || !nodes.length) {
         return
       }
