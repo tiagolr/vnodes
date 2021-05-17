@@ -33,7 +33,7 @@
     <div>
       <span>snap </span>
       <select v-model="edgeSnap">
-        <option value="">fixed</option>
+        <option value="anchor">anchor</option>
         <option value="rect">rect</option>
         <option value="circle">circle</option>
       </select>

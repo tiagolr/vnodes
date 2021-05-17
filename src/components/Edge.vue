@@ -164,6 +164,7 @@ export default {
 .edge
   stroke-width: 2
   stroke: green
+  // marker-start: url(#arrow-start)
   marker-end: url(#arrow-end)
   fill: none
 </style>

@@ -28,7 +28,7 @@ export default {
     data: {},
     padding: {
       type: Number,
-      default: 10, // padding allows for boxshadow and other out of bounds contents to display
+      default: 10, // padding allows border and out of bounds contents to display
     },
     disableDrag: Boolean,  // set false to override drag behavior
   },
@@ -56,12 +56,6 @@ export default {
 </script>
 
 <style lang="stylus">
-.node:hover .content
-  box-shadow: 0px 0px 0px 4px blue;
-
-.node.selected .content
-  box-shadow: 0px 0px 0px 4px pink;
-
 .node .content
   border-radius 7px
   background-color: rgba(100, 200, 100, .9)

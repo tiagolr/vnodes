@@ -1,5 +1,9 @@
 <template>
   <div style="margin-top: 50px; margin-bottom: 50px">
+    <h2>Groups and Ports</h2>
+    <ports>
+    </ports>
+
     <h2>Vnodes</h2>
     <sink>
     </sink>
@@ -14,11 +18,13 @@
 <script>
 import Sink from './Sink'
 import Edit from './Edit'
+import Ports from './Ports'
 
 export default {
   components: {
     Sink,
-    Edit
+    Edit,
+    Ports
   },
 }
 </script>

@@ -1,15 +1,15 @@
 <template>
   <div class="demo" id="edit-demo">
-    <div class="viewport">
+    <div class="viewport" @click="select(null)">
       <screen ref="screen">
-        <g v-for="edge in graph.edges" @click="select(edge)" :key="edge.id">
+        <g v-for="edge in graph.edges" @click.stop="select(edge)" :key="edge.id">
           <edge :class="selection && selection.id === edge.id && 'selected'"
               :data="edge"
               :nodes="graph.nodes">
             </edge>
         </g>
-        <g v-for="node in graph.nodes" @click="select(node)" :key="node.id">
-          <node :data="node" ref="node" :class="selection.id === node.id && 'selected'">
+        <g v-for="node in graph.nodes" @click.stop="select(node)" :key="node.id">
+          <node :data="node" ref="node" :class="selection && selection.id === node.id && 'selected'">
             <div v-html="node.html"></div>
           </node>
         </g>
@@ -52,7 +52,7 @@ export default {
     },
     select (obj) {
       this.selection = obj
-      this.editText = JSON.stringify(this.selection, null, 2)
+      this.editText = obj ? JSON.stringify(this.selection, null, 2) : ''
     },
     applyChanges () {
       if (!this.selection) {
@@ -93,15 +93,25 @@ export default {
 </script>
 
 <style lang="stylus">
-#edit-demo .node {
+#edit-demo .node:hover .content
+  background-color rgb(90 200 90)
+
+#edit-demo .node.selected .content
+  background-color: rgba(100, 200, 100, 1)
+  box-shadow: 0px 0px 0px 2px #333;
+
+#edit-demo .node .content
   cursor: pointer
-}
+
 #edit-demo .edge {
   cursor: pointer
 }
-.selection .edge {
-  stroke-width: 8
-  marker-end: none
-  stroke: blue
+#edit-demo .edge:hover {
+  // stroke-width: 4
+  stroke: rgb(90 200 90)
+}
+#edit-demo .edge.selected {
+  // stroke-width: 4
+  stroke: #333
 }
 </style>

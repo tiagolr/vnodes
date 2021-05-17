@@ -1,12 +1,8 @@
 <template>
   <svg class="screen" ref="screen">
     <defs>
-      <marker id="arrow-end" markerWidth="13" markerHeight="13" refX="9" refY="6" orient="auto">
-        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: green;" />
-      </marker>
-      <marker id="arrow-start" markerWidth="13" markerHeight="13" refX="9" refY="6" orient="auto">
-        <path d="M2,2 L2,11 L10,6 L2,2" style="fill: green;"/>
-      </marker>
+      <markers :markers="markers">
+      </markers>
     </defs>
     <g>
       <slot>
@@ -16,11 +12,21 @@
 </template>
 
 <script>
+import Markers from './Markers'
 import SvgPanZoom from '../../lib/svg-pan-zoom/svg-pan-zoom'
 export default {
+  props: {
+    markers: {
+      type: Array, // { id:String, type: 'arrow|circle|square|diamond', scale: Number, style: String }
+      default: () => []
+    }
+  },
+  components: {
+    Markers
+  },
   data() {
     return {
-      panzoom: null
+      panzoom: null,
     }
   },
   mounted () {
@@ -115,11 +121,13 @@ export default {
       const y = this.$el.clientHeight / 2 - (node.y + node.height / 2) * zoom + offsetY
       this.panzoom.pan({ x, y })
     }
-  }
+  },
 }
 </script>
 
 <style lang="stylus" scoped>
+#arrow-end
+  fill red !important
 .screen
   width 100%
   height 100%

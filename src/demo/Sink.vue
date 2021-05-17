@@ -1,7 +1,7 @@
 <template>
   <div class="demo">
     <div class="viewport">
-      <screen ref="screen">
+      <screen ref="screen" :markers="[]">
         <group v-if="groupNodes" :nodes="$refs.sidebar.filterNodes || graph.nodes">
         </group>
 
@@ -47,4 +47,7 @@ export default {
   },
 }
 </script>
+
+<style>
+</style>
 
