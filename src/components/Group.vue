@@ -1,13 +1,13 @@
 <template>
   <foreignObject
     class="group"
-    :x="minX - padding.left"
-    :y="minY - padding.top"
-    :width="width + (padding.left + padding.right)"
-    :height="height + (padding.top + padding.bottom)"
+    :x="minX - padding.left - margin"
+    :y="minY - padding.top - margin"
+    :width="width + (padding.left + padding.right) + margin * 2"
+    :height="height + (padding.top + padding.bottom) + margin * 2"
     @mousedown="onMousedown"
   >
-    <div class="content" ref="content">
+    <div class="content" ref="content" :style="contentMargin">
       <slot>
       </slot>
     </div>
@@ -25,7 +25,11 @@ export default {
       type: Array,
       default: []
     },
-    padding: {
+    margin: {
+      type: Number,
+      default: 10
+    },
+    padding: { // additional area covered by group besides nodes minxy, maxxy
       type: Object,
       default: () => ({ left: 10, right: 10, top: 10, bottom: 10 })
     },
@@ -46,6 +50,12 @@ export default {
     maxY: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.max(acc, node.y + node.height), -Infinity),
     width: vm => vm.maxX - vm.minX,
     height: vm => vm.maxY - vm.minY,
+
+    contentMargin: vm => vm.margin && ({
+      margin: vm.margin + 'px',
+      width: `calc(100% - ${vm.margin * 2}px)`,
+      height: `calc(100% - ${vm.margin * 2}px)`
+    })
   },
   methods: {
     onMousedown (e) {

@@ -1,13 +1,12 @@
 <template>
   <foreignObject
       class="node"
-      :x="data.x - padding"
-      :y="data.y - padding"
-      :width="data.width + padding * 2"
-      :height="data.height + padding * 2"
-      @mousedown="onMousedown"
-      :style="padding && `padding: ${padding}`">
-    <div class="content" ref="content">
+      :x="data.x - margin"
+      :y="data.y - margin"
+      :width="data.width + margin * 2"
+      :height="data.height + margin * 2"
+      @mousedown="onMousedown">
+    <div class="content" ref="content" :style="margin && `margin: ${margin}px`">
       <div v-if="!$slots.default" class="default-label">
         {{ data.id }}
       </div>
@@ -26,9 +25,9 @@ export default {
   ],
   props: {
     data: {},
-    padding: {
+    margin: {
       type: Number,
-      default: 10, // padding allows border and out of bounds contents to display
+      default: 10, // margin allows border and out of bounds contents to display
     },
     disableDrag: Boolean,  // set false to override drag behavior
   },
