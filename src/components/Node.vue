@@ -19,10 +19,10 @@
 </template>
 
 <script>
-import drag from '../mixins/drag'
+import dragMixin from '../mixins/drag'
 export default {
   mixins: [
-    drag
+    dragMixin
   ],
   props: {
     data: {},
@@ -30,23 +30,33 @@ export default {
       type: Number,
       default: 10, // margin allows border and out of bounds contents to display
     },
-    disableDrag: Boolean,  // set false to override drag behavior
+    drag: {
+      type: Boolean,
+      default: true // set to false to override mouse drag behavior
+    },
+    fit: {
+      type: Boolean,
+      default: true // set false to prevent fitting contents
+    }
   },
   mounted () {
     this.fitContent()
     this.$on('drag', ({ x, y }) => {
-      this.data.x += x
-      this.data.y += y
+      if (drag) {
+        this.data.x += x
+        this.data.y += y
+      }
     })
   },
   methods: {
     fitContent () {
+      if (!this.fit) return;
       this.data.width = this.$refs.content.offsetWidth
       this.data.height = this.$refs.content.offsetHeight
     },
     onMousedown (e) {
       e.stopPropagation()
-      if (!this.disableDrag) {
+      if (drag) {
         e.preventDefault();
         this.startDrag();
       }

@@ -87,7 +87,8 @@ Connects nodes using svg lines
 Edges require node references `{ from: String|Object, to: String:Object }`, if nodes are refered by `id(String)` an array  `nodes` must be passed:
 
 ```html
-<edge :data="{from: 'A', to: 'B'}"
+<edge
+  :data="{from: 'A', to: 'B'}"
   :nodes="[{id: 'A' ... ]">
 </edge>
 ```
@@ -138,14 +139,14 @@ Surrounds a group of nodes with a rectangle, allows dragging multiple nodes,
 
 Placed inside a node, automatically offsets edges to a determined position inside the nodes html (see Ports demo).
 
-### graph
+### graph.js
 
 Can be used to store edges and nodes.
 Contains utility methods to build graphs, position nodes, remove and create nodes, edges and so on.
 
 ## Styling
 
-The simplest way is to style nodes / edges using CSS
+The simplest way to style nodes and edges is using CSS
 
 ```css
 <style>
