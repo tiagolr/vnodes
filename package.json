@@ -1,13 +1,29 @@
 {
   "name": "vnodes",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "pages": "vue-cli-service build && git add . && git commit -m gh-pages && git subtree push --prefix dist origin gh-pages",
     "start": "npm run serve"
   },
+  "license": "MIT",
+	"repository": "txlabs/vnodes",
+	"author": {
+		"name": "txlabs",
+		"email": "txlabs@protonmail.com"
+	},
+  "keywords": [
+		"vue",
+		"graph",
+		"nodes",
+		"diagram",
+		"dag",
+		"visualization",
+		"tree",
+		"visual tools",
+		"svg"
+	],
   "dependencies": {
     "box-intersect": "^1.0.2",
     "core-js": "^3.6.5",
