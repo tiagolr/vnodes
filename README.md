@@ -6,6 +6,12 @@ Vue bare components to create svg interactive graphs, diagrams or node visual to
 
 https://txlabs.github.io/vnodes/
 
+### Install
+
+```bash
+npm install vnodes
+```
+
 ### Get started
 ```html
 <template>
