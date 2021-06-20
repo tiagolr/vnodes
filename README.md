@@ -101,7 +101,7 @@ Edges can take **anchor** information to offset their position relative to a nod
 
 * String `'center', 'left', 'right', 'top', 'top-left', 'top-right', 'bottom', 'bottom-left', 'bottom-right', 'cirlce', 'rect'`
 
-* Object `{ x?:Number | String, y?: Number | String, align?: String, snap?: String }`
+* Object `{ x?:Number|String, y?: Number|String, align?: String, snap?: String }`
 
 Examples of valid anchor values:
 
@@ -111,7 +111,7 @@ null
 { x: 10, y: 0 }     // offsets x,y by 10 pixels
 { x: '50%', '50%' } // snaps to center
 { x: '50%', '50%', snap: 'rect' } // offsets around node rectangle
-{ align: 'bottom-right' } // same as { x: '100%', y: '100% }
+{ align: 'bottom-right' } // same as { x: '100%', y: '100%' }
 'center'   // same as { x: '50%', y: '50%' }
 'top-left' // same as { x: 0, y: 0 }
 'circle'   // offsets to circle with radius node.width/2
@@ -131,7 +131,7 @@ Surround nodes with a visible container, allows dragging multiple nodes,
 
 ### Port
 
-Helper component to offset an edge anchor to a specific position inside the html of a node.
+Helper component placed inside a node to automatically offset edges to a position on the node html (see Ports demo).
 
 ### graph
 
@@ -141,10 +141,6 @@ Contains utility methods to build graphs, position nodes remove and create nodes
 ## Styling
 
 The simplest way to style nodes / edges is using CSS
-
-### Markers
-
-TODO
 
 ```css
 <style>
@@ -160,3 +156,8 @@ TODO
 }
 </style>
 ```
+
+
+### Markers
+
+TODO
