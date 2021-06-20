@@ -84,8 +84,13 @@ Connects nodes using svg lines
 ></edge>
 ```
 
-Edges data require node references `{ from: String|Object, to: String:Object }`, if nodes are refered by id(String) edges must also include an array with those `nodes` as property.
+Edges require node references `{ from: String|Object, to: String:Object }`, if nodes are refered by `id(String)` an array  `nodes` must be passed:
 
+```html
+<edge :data="{from: 'A', to: 'B'}"
+  :nodes="[{id: 'A', ...}, ...]">
+</edge>
+```
 
 Edges can take **anchor** information to offset their position relative to a node,
 
@@ -103,7 +108,7 @@ Edges can take **anchor** information to offset their position relative to a nod
 
 * Object `{ x?:Number|String, y?: Number|String, align?: String, snap?: String }`
 
-Examples of valid anchor values:
+Examples of valid anchors:
 
 ```js
 null
@@ -120,7 +125,7 @@ null
 
 ### Group
 
-Surround nodes with a visible container, allows dragging multiple nodes,
+Surrounds a group of nodes with a rectangle, allows dragging multiple nodes,
 
 ```html
 <group :nodes="nodes">
@@ -131,12 +136,12 @@ Surround nodes with a visible container, allows dragging multiple nodes,
 
 ### Port
 
-Helper component placed inside a node to automatically offset edges to a position on the node html (see Ports demo).
+Placed inside a node, automatically offsets edges to a determined position inside the nodes html (see Ports demo).
 
 ### graph
 
-Graph utils that can be used to store edges and nodes.
-Contains utility methods to build graphs, position nodes remove and create nodes, edges etc.
+Can be used to store edges and nodes.
+Contains utility methods to build graphs, position nodes, remove and create nodes, edges and so on.
 
 ## Styling
 
@@ -156,7 +161,6 @@ The simplest way to style nodes / edges is using CSS
 }
 </style>
 ```
-
 
 ### Markers
 
