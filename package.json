@@ -1,6 +1,6 @@
 {
   "name": "vnodes",
-  "version": "0.2.0",
+  "version": "1.0.1",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -8,7 +8,7 @@
     "start": "npm run serve"
   },
   "license": "MIT",
-	"repository": "txlabs/vnodes",
+	"repository": "github:txlabs/vnodes",
 	"author": {
 		"name": "txlabs",
 		"email": "txlabs@protonmail.com"
@@ -22,7 +22,8 @@
 		"visualization",
 		"tree",
 		"visual tools",
-		"svg"
+		"svg",
+    "flowchart"
 	],
   "dependencies": {
     "box-intersect": "^1.0.2",
