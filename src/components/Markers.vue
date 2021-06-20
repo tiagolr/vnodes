@@ -25,13 +25,13 @@
 const defaults = [{
   id: 'arrow-start',
   type: 'arrow-start',
-  scale: 1,
+  scale: 0.5,
   style: 'fill: green'
 },
 {
   id: 'arrow-end',
   type: 'arrow-end',
-  scale: 1,
+  scale: 0.5,
   style: 'fill: green'
 }]
 

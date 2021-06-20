@@ -14,12 +14,15 @@ export default {
     },
     nodes: { // graph nodes reference
       type: Array,
-      required: true
     }
   },
   computed: {
-    fromNode: vm => vm.nodes.find(n => n.id === vm.data.from),
-    toNode: vm => vm.nodes.find(n => n.id === vm.data.to),
+    fromNode: vm => typeof vm.data.from === 'string'
+      ? vm.nodes.find(n => n.id === vm.data.from)
+      : vm.data.from,
+    toNode: vm => typeof vm.data.to === 'string'
+      ? vm.nodes.find(n => n.id === vm.data.to)
+      : vm.data.to,
     fromAnchor: vm => vm.parseAnchor(vm.data.fromAnchor, vm.fromNode),
     toAnchor: vm => vm.parseAnchor(vm.data.toAnchor, vm.toNode),
 
@@ -29,7 +32,7 @@ export default {
       let x2 = this.toNode.x + (this.toAnchor.x || 0)
       let y2 = this.toNode.y + (this.toAnchor.y || 0)
 
-      if (this.fromAnchor.snap) {
+      if (this.fromAnchor?.snap) {
         if (this.fromAnchor.snap === 'circle') {
           const radius = Math.max(this.fromNode.width, this.fromNode.height) / 2
           const vec = new Victor(x2 - x1, y2 - y1).normalize()
@@ -44,7 +47,7 @@ export default {
           }
         }
       }
-      if (this.toAnchor.snap) {
+      if (this.toAnchor?.snap) {
         if (this.toAnchor.snap === 'circle') {
           const radius = Math.max(this.toNode.width, this.toNode.height) / 2
           const vec = new Victor(x2 - x1, y2 - y1).normalize()
@@ -95,6 +98,7 @@ export default {
      * }
      */
     parseAnchor(anchor, node) {
+      if (!anchor) return { x: 0, y: 0 }
       let snap = anchor.snap
       let align = anchor.align
       let pos = { x: anchor.x || 0, y: anchor.y || 0 }
@@ -162,7 +166,7 @@ export default {
 
 <style lang="stylus" scoped>
 .edge
-  stroke-width: 2
+  stroke-width: 4
   stroke: green
   // marker-start: url(#arrow-start)
   marker-end: url(#arrow-end)

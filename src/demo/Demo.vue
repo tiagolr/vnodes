@@ -1,28 +1,36 @@
 <template>
   <div style="margin-top: 50px; margin-bottom: 50px">
-    <h2>Vnodes</h2>
+    <h1>Vnodes</h1>
+
+    <h2>Sink</h2>
     <sink>
     </sink>
 
-    <h2>Edit</h2>
+    <h2>Html</h2>
     <edit>
     </edit>
 
-    <h2>Groups and Ports</h2>
-    <groups>
-    </groups>
+    <h2>Ports</h2>
+    <ports>
+    </ports>
+
+    <h2>Benchpress</h2>
+    <benchpress>
+    </benchpress>
   </div>
 </template>
 
 <script>
 import Sink from './Sink'
 import Edit from './Edit'
-import Groups from './Groups'
+import Ports from './Ports'
+import Benchpress from './Benchmark'
 export default {
   components: {
     Sink,
     Edit,
-    Groups,
+    Ports,
+    Benchpress
   },
 }
 </script>
