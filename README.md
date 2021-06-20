@@ -43,7 +43,7 @@ export default {
 
 ## Components
 
-Vnodes components are independent and can be used anywhere in your project.
+Vnodes components are independent and can be used only when desired. Instead of locking into a complex framework, these components are designed to be minimal and still allow to build complex applications.
 
 ### Screen
 
@@ -88,7 +88,7 @@ Edges require node references `{ from: String|Object, to: String:Object }`, if n
 
 ```html
 <edge :data="{from: 'A', to: 'B'}"
-  :nodes="[{id: 'A', ...}, ...]">
+  :nodes="[{id: 'A' ... ]">
 </edge>
 ```
 
@@ -145,7 +145,7 @@ Contains utility methods to build graphs, position nodes, remove and create node
 
 ## Styling
 
-The simplest way to style nodes / edges is using CSS
+The simplest way is to style nodes / edges using CSS
 
 ```css
 <style>
