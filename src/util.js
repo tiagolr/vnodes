@@ -1,18 +1,19 @@
 /**
  * Simple algorithm to position node on graph
- * Positions node parallel to the parent
+ * Starts looking for position in front of the parent
+ * While collisions are detected find empty position perpendicular to collision
  */
 function findPosition (node, parent, align="right", nodes, sep={ x: 40, y: 40 }, invertOffset=false) {
   const sepX = sep.x || sep
   const sepY = sep.y || sep
   const startX = !parent ? 0
-  : (align === 'down' || align === 'up')
-  ? parent.x
-  : align === 'right'
-  ? parent.x + parent.width + sepX
-  : align === 'left'
-  ? parent.x - node.width - sepX
-  : -1
+    : (align === 'down' || align === 'up')
+    ? parent.x
+    : align === 'right'
+    ? parent.x + parent.width + sepX
+    : align === 'left'
+    ? parent.x - node.width - sepX
+    : -1
 
   const startY = !parent ? 0
     : (align === 'right' || align === 'left')
@@ -23,13 +24,13 @@ function findPosition (node, parent, align="right", nodes, sep={ x: 40, y: 40 },
       ? parent.y - node.height - sepY
     : -1
 
-  const boxes = (nodes).filter(n => n.id !== node.id)
-  const box = { x: startX, y: startY, width: node.width, height: node.height }
-
   const alignV = align === 'down' || align === 'up'
   const alignH = align === 'right' || align === 'left'
   const offsetX = alignV ? sepX * (invertOffset ? -1 : 1) : 0
   const offsetY = alignH ? sepY * (invertOffset ? -1 : 1) : 0
+
+  const boxes = (nodes).filter(n => n.id !== node.id)
+  const box = { x: startX, y: startY, width: node.width, height: node.height }
 
   let cols = boxBoxes(box, boxes)
   while (cols.length) {
@@ -132,8 +133,64 @@ const dagToFlextree = (node, graph, flipXY=false, spacing=40) => {
   })
 }
 
+const eps = 0.0000001;
+function between(a, b, c) {
+  return a - eps <= b && b <= c + eps;
+}
+
+function lineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
+  var x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) /
+    ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+  var y = ((x1 * y2 - y1 * x2) * (y3 - y4) - (y1 - y2) * (x3 * y4 - y3 * x4)) /
+    ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
+  if (isNaN(x) || isNaN(y)) {
+    return false;
+  } else {
+    if (x1 >= x2) {
+      if (!between(x2, x, x1)) {
+        return false;
+      }
+    } else {
+      if (!between(x1, x, x2)) {
+        return false;
+      }
+    }
+    if (y1 >= y2) {
+      if (!between(y2, y, y1)) {
+        return false;
+      }
+    } else {
+      if (!between(y1, y, y2)) {
+        return false;
+      }
+    }
+    if (x3 >= x4) {
+      if (!between(x4, x, x3)) {
+        return false;
+      }
+    } else {
+      if (!between(x3, x, x4)) {
+        return false;
+      }
+    }
+    if (y3 >= y4) {
+      if (!between(y4, y, y3)) {
+        return false;
+      }
+    } else {
+      if (!between(y3, y, y4)) {
+        return false;
+      }
+    }
+  }
+  return { x, y }
+}
+
 export default {
   findPosition,
   createDAG,
-  dagToFlextree
+  dagToFlextree,
+  boxBox,
+  boxBoxes,
+  lineLine
 }

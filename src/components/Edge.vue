@@ -5,7 +5,7 @@
 
 <script>
 import uuid from 'uuid'
-import { intersect } from 'mathjs'
+import util from '../util'
 const Victor = require('victor');
 export default {
   props: {
@@ -53,8 +53,8 @@ export default {
         if (this.fromAnchor.snap === 'rect') {
           const i = this.rectIntersect(x2, x1, y2, y1, this.fromNode)
           if (i) {
-            x1 = i[0]
-            y1 = i[1]
+            x1 = i.x
+            y1 = i.y
           }
         }
       }
@@ -68,8 +68,8 @@ export default {
         if (this.toAnchor.snap === 'rect') {
           const i = this.rectIntersect(x1, x2, y1, y2, this.toNode)
           if (i) {
-            x2 = i[0]
-            y2 = i[1]
+            x2 = i.x
+            y2 = i.y
           }
         }
       }
@@ -157,19 +157,17 @@ export default {
     rectIntersect(x1, x2, y1, y2, rect) {
       const box = [ rect.x, rect.y, rect.x + rect.width, rect.y + rect.height]
       const intersections = [
-        intersect([x1, y1], [x2, y2], [box[0], box[1]], [box[0], box[3]]), // left
-        intersect([x1, y1], [x2, y2], [box[0], box[1]], [box[2], box[1]]), // top
-        intersect([x1, y1], [x2, y2], [box[2], box[1]], [box[2], box[3]]), // right
-        intersect([x1, y1], [x2, y2], [box[0], box[3]], [box[2], box[3]]) // bottom
-      ].filter(i => i &&
-        i[0] + 0.01 >= box[0] && i[0] - 0.01 <= box[2] &&
-        i[1] + 0.01 >= box[1] && i[1] - 0.01 <= box[3]
-      )
-      // order intersections by distance
+        util.lineLine(x1, y1, x2, y2, box[0], box[1], box[0], box[3]), // left
+        util.lineLine(x1, y1, x2, y2, box[0], box[1], box[2], box[1]), // top
+        util.lineLine(x1, y1, x2, y2, box[2], box[1], box[2], box[3]), // right
+        util.lineLine(x1, y1, x2, y2, box[0], box[3], box[2], box[3]) // bottom
+      ].filter(i => i)
+
+
       const start = new Victor(x1, y1)
       return intersections
-        .map(i => [i[0], i[1], start.distance(new Victor(i[0], i[1]))])
-        .sort((a, b) => a[2] < b[2] ? 1 : -1)
+        .map(i => Object.assign(i, { distance: start.distance(new Victor(i.x, i.y)) }))
+        .sort((a, b) => a.distance < b.distance ? 1 : -1) // order intersections by distance
         .pop()
     }
   },
