@@ -77,8 +77,8 @@ export default {
       this.$refs.label.$refs.node.fitContent();
     },
     onDrag (d) {
-      this.offsetX += d.x
-      this.offsetY += d.y
+      this.offsetX += d.x || 0
+      this.offsetY += d.y || 0
       this.offsetX = Math.max(Math.min(this.offsetX, 100), -100)
       this.offsetY = Math.max(Math.min(this.offsetY, 100), -100)
     }

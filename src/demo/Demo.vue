@@ -6,7 +6,7 @@
     <sink>
     </sink>
 
-    <h2>Html</h2>
+    <h2>Edit</h2>
     <edit>
     </edit>
 
@@ -42,6 +42,9 @@ export default {
 </script>
 
 <style>
+h2 {
+  font-size: 1.5em;
+}
 body {
   background-color: #f9f9f9;
   max-width: 56em;
