@@ -139,6 +139,10 @@ Surrounds a group of nodes with a rectangle, allows dragging multiple nodes.
 </group>
 ```
 
+### Port
+
+Placed inside a node, automatically offsets edges to a determined position inside the nodes html (see Ports demo).
+
 ### Label
 
 Create a label positioned relative to an edge
@@ -148,10 +152,6 @@ Create a label positioned relative to an edge
   <h4>Content</h4>
 </v-label>
 ```
-
-### Port
-
-Placed inside a node, automatically offsets edges to a determined position inside the nodes html (see Ports demo).
 
 ### graph.js
 
