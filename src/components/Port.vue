@@ -63,6 +63,6 @@ export default {
 
 <style>
 .port {
-  position: absolute;
+  position: relative;
 }
 </style>
