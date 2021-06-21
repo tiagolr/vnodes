@@ -63,12 +63,17 @@ body {
   flex-shrink: 0;
 }
 @media only screen and (max-width: 1000px) {
-  .viewport {
+  /* .demo {
     flex-flow: column wrap;
+  }
+  .viewport {
+    width: 100%;
   }
   .sidebar {
     max-width: 100%;
     width: 100%;
-  }
+    padding: 0;
+    margin-top: 20px;
+  } */
 }
 </style>
