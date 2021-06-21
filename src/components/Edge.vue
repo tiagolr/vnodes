@@ -4,18 +4,29 @@
 </template>
 
 <script>
+import uuid from 'uuid'
 import { intersect } from 'mathjs'
 const Victor = require('victor');
 export default {
   props: {
     data: { // graph edge referece
       type: Object,
-      required: true
+      required: true // { from: String|Object, to: String|Object }
     },
     nodes: { // graph nodes reference
       type: Array,
     }
   },
+
+  mounted () {
+    if (typeof this.data.id === 'undefined') {
+      this.$set(this.data, 'id', uuid())
+    }
+    if (typeof this.data.pathd === 'undefined') {
+      this.$set(this.data, 'pathd', '')
+    }
+  },
+
   computed: {
     fromNode: vm => typeof vm.data.from === 'string'
       ? vm.nodes.find(n => n.id === vm.data.from)
@@ -85,6 +96,7 @@ export default {
       }
 
       pathd += ` ${pos.x2} ${pos.y2}`
+      this.data.pathd = pathd;
       return pathd
     },
   },

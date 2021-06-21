@@ -138,7 +138,8 @@ export default class Graph {
       to,
       fromAnchor: { x: '50%', y: '50%' },
       toAnchor: { x: '50%', y: '50%' },
-      type: 'linear'
+      type: 'linear',
+      pathd: '', // reactive path
     }, fields)
 
     this.edges.push(edge)

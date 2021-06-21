@@ -112,34 +112,32 @@ Edges can take **anchor** information to offset their position relative to a nod
  anchors format can be:
 
 * String `'center', 'left', 'right', 'top', 'top-left', 'top-right', 'bottom', 'bottom-left', 'bottom-right', 'cirlce', 'rect'`
-
 * Object `{ x?:Number|String, y?: Number|String, align?: String, snap?: String }`
 
 Examples of valid anchors:
 
 ```js
 null
-{ x: 0, y: 0}       // snaps to top left corner
-{ x: 10, y: 0 }     // offsets x,y by 10 pixels
-{ x: '50%', '50%' } // snaps to center
-{ x: '50%', '50%', snap: 'rect' } // offsets around node rectangle
-{ align: 'bottom-right' } // same as { x: '100%', y: '100%' }
-'center'   // same as { x: '50%', y: '50%' }
-'top-left' // same as { x: 0, y: 0 }
-'circle'   // offsets to circle with radius node.width/2
-'rect'     // offsets around node rectangle
+{ x: 0, y: 0}
+{ x: 10, y: 10 }
+{ x: '50%', '50%' }
+{ x: '50%', '50%', snap: 'rect' }
+{ align: 'bottom-right' }
+'center'
+'top-left'
+'circle'   // snaps offset to circle with radius node.width/2
+'rect'     // snaps offset to node rectangle
 ```
 
 ### Group
 
-Surrounds a group of nodes with a rectangle, allows dragging multiple nodes,
+Surrounds a group of nodes with a rectangle, allows dragging multiple nodes.
 
 ```html
 <group :nodes="nodes">
   <h1>Group Label</h1>
 </group>
 ```
-
 
 ### Port
 
