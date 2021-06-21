@@ -1,6 +1,6 @@
 {
   "name": "vnodes",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -26,7 +26,6 @@
     "flowchart"
   ],
   "dependencies": {
-    "box-intersect": "^1.0.2",
     "core-js": "^3.6.5",
     "d3-dag": "^0.2.6",
     "d3-flextree": "^2.1.1",
