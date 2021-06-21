@@ -60,3 +60,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.port {
+  position: absolute;
+}
+</style>
