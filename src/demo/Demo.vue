@@ -3,25 +3,25 @@
     <h1>Vnodes</h1>
 
     <h2>
-      Sink <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Sink.vue" target="_blank">&lt;&gt;</a>
+      Sink <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Sink.vue" target="_blank">&lt;/&gt;</a>
     </h2>
     <sink>
     </sink>
 
-    <h2>Edit <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Edit.vue" target="_blank">&lt;&gt;</a></h2>
+    <h2>Edit <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Edit.vue" target="_blank">&lt;/&gt;</a></h2>
     <edit>
     </edit>
 
 
-    <h2>Ports <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Ports.vue" target="_blank">&lt;&gt;</a></h2>
+    <h2>Ports <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Ports.vue" target="_blank">&lt;/&gt;</a></h2>
     <ports>
     </ports>
 
-    <h2>Labels <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue" target="_blank">&lt;&gt;</a></h2>
+    <h2>Labels <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue" target="_blank">&lt;/&gt;</a></h2>
     <labels>
     </labels>
 
-    <h2>Benchpress <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Benchmark.vue" target="_blank">&lt;&gt;</a></h2>
+    <h2>Benchpress <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Benchmark.vue" target="_blank">&lt;/&gt;</a></h2>
     <benchpress>
     </benchpress>
   </div>
@@ -45,12 +45,9 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-h2
-  width: calc(100% - 225px)
-  a
-    color: #4a4a4a;
-    font-size: 1em;
-    float: right
+h2 a
+  color: #4a4a4a;
+  font-size: 0.75em;
 </style>
 
 <style>
