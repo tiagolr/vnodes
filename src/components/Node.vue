@@ -30,7 +30,7 @@ export default {
       type: Number,
       default: 10, // margin allows border and out of bounds contents to display
     },
-    drag: {
+    useDrag: {
       type: Boolean,
       default: true // set to false to override mouse drag behavior
     },
@@ -42,7 +42,7 @@ export default {
   mounted () {
     this.fitContent()
     this.$on('drag', ({ x, y }) => {
-      if (drag) {
+      if (this.useDrag) {
         this.data.x += x
         this.data.y += y
       }
@@ -56,7 +56,7 @@ export default {
     },
     onMousedown (e) {
       e.stopPropagation()
-      if (drag) {
+      if (this.useDrag) {
         e.preventDefault();
         this.startDrag();
       }

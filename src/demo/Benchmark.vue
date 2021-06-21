@@ -1,7 +1,7 @@
 <template>
   <div class="demo" id="benchmark-demo">
     <div class="viewport">
-      <screen ref="screen" :options="{onUpdatedCTM: test}">
+      <screen ref="screen">
         <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
         </edge>
         <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
@@ -41,9 +41,6 @@ export default {
     }
   },
   methods: {
-    test (e) {
-      console.log('test', e)
-    },
     makeGraph () {
       this.graph.reset();
       this.graph.createNode('0')

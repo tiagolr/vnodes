@@ -1,6 +1,6 @@
 {
   "name": "vnodes",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -8,23 +8,23 @@
     "start": "npm run serve"
   },
   "license": "MIT",
-	"repository": "github:txlabs/vnodes",
-	"author": {
-		"name": "txlabs",
-		"email": "txlabs@protonmail.com"
-	},
+  "repository": "github:txlabs/vnodes",
+  "author": {
+    "name": "txlabs",
+    "email": "txlabs@protonmail.com"
+  },
   "keywords": [
-		"vue",
-		"graph",
-		"nodes",
-		"diagram",
-		"dag",
-		"visualization",
-		"tree",
-		"visual tools",
-		"svg",
+    "vue",
+    "graph",
+    "nodes",
+    "diagram",
+    "dag",
+    "visualization",
+    "tree",
+    "visual tools",
+    "svg",
     "flowchart"
-	],
+  ],
   "dependencies": {
     "box-intersect": "^1.0.2",
     "core-js": "^3.6.5",
