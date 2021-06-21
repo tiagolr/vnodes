@@ -139,6 +139,16 @@ Surrounds a group of nodes with a rectangle, allows dragging multiple nodes.
 </group>
 ```
 
+### Label
+
+Create a label positioned relative to an edge
+
+```html
+<v-label :edge="graph.edges[0]" :perc="50">
+  <h4>Content</h4>
+</v-label>
+```
+
 ### Port
 
 Placed inside a node, automatically offsets edges to a determined position inside the nodes html (see Ports demo).

@@ -9,7 +9,7 @@
 
         <v-label v-if="graph.edges.length"
           :edge="graph.edges[0]"
-          :position="parseInt(position)"
+          :perc="parseInt(perc)"
           :offset="{x: parseInt(offsetX), y: parseInt(offsetY)}"
           :align="align"
           :rotate="rotate"
@@ -23,8 +23,8 @@
     </div>
     <div class="sidebar">
       <textarea rows="3" v-model="contents" @input="resizeLabel"></textarea>
-      <div>Position {{ position }}</div>
-      <input type="range" v-model="position" min="0" max="100">
+      <div>Position {{ perc }}</div>
+      <input type="range" v-model="perc" min="0" max="100">
       <div>Offset { x : {{ offsetX }}, y: {{ offsetY }} }</div>
       <input type="range" v-model="offsetX" min="-100" max="100">
       <input type="range" v-model="offsetY" min="-100" max="100">
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       graph: new graph(),
-      position: 50,
+      perc: 50,
       offsetX: 0,
       offsetY: 0,
       align: 'center',

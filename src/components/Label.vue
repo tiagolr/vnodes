@@ -26,7 +26,7 @@ export default {
       type: Object,
       required: true // { id, pathd } required
     },
-    position: {
+    perc: {
       type: Number,
       default: 50
     },
@@ -67,7 +67,7 @@ export default {
       if (!el) {
         throw `element not found: ${this.edge.id}`
       }
-      const length = el.getTotalLength() * this.position / 100
+      const length = el.getTotalLength() * this.perc / 100
       this.pos = el.getPointAtLength(length)
 
       if (this.rotate) {
@@ -102,7 +102,7 @@ export default {
       deep: true,
       handler: 'getPosition'
     },
-    position: 'getPosition',
+    perc: 'getPosition',
     pos: 'updateNodePos',
     'node.width': 'updateNodePos',
     'node.heigth': 'updateNodePos',
