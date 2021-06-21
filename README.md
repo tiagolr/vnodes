@@ -148,7 +148,7 @@ Placed inside a node, automatically offsets edges to a determined position insid
 Create a label positioned relative to an edge
 
 ```html
-<v-label :edge="graph.edges[0]" :perc="50">
+<v-label :edge="graph.edges[0]" :perc="50" :offset="{x: 0, y: -50}">
   <h4>Content</h4>
 </v-label>
 ```
