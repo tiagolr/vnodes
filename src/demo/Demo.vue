@@ -46,6 +46,7 @@ export default {
 
 <style lang="stylus" scoped>
 h2
+  margin-top: 50px;
   width: calc(100% - 225px)
   a
     color: #4a4a4a;
