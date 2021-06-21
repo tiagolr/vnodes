@@ -1,10 +1,8 @@
-import boxIntersect from 'box-intersect'
-
 /**
  * Simple algorithm to position node on graph
  * Positions node parallel to the parent
  */
-function findPosition (node, parent, align="right", collisions, sep={ x: 40, y: 40 }, invertOffset=false) {
+function findPosition (node, parent, align="right", nodes, sep={ x: 40, y: 40 }, invertOffset=false) {
   const sepX = sep.x || sep
   const sepY = sep.y || sep
   const startX = !parent ? 0
@@ -25,15 +23,15 @@ function findPosition (node, parent, align="right", collisions, sep={ x: 40, y: 
       ? parent.y - node.height - sepY
     : -1
 
-  const boxes = (collisions)
+  const boxes = (nodes)
     .filter(n => n.id !== node.id)
-    .map(n => [n.x, n.y, n.x + n.width, n.y + n.height])
+    .map(n => [n.x, n.y, n.width, n.height])
 
   const nodebox = [ // [ x1, y1, x2, y2 ]
     startX,
     startY,
-    startX + node.width,
-    startY + node.height
+    node.width,
+    node.height
   ]
 
   // find node position perpendicular to its parent
@@ -42,30 +40,26 @@ function findPosition (node, parent, align="right", collisions, sep={ x: 40, y: 
   const offsetX = alignV ? sepX * (invertOffset ? -1 : 1) : 0
   const offsetY = alignH ? sepY * (invertOffset ? -1 : 1) : 0
 
-  let cols = boxIntersect(boxes, [nodebox])
+  let cols = boxBoxes(nodebox, boxes)
   while (cols.length) {
-    const col = collisions[cols[0][0]]
+    const col = { x: cols[0][0], y: cols[0][1], width: cols[0][2], height: cols[0][3]}
     if (offsetX) {
-      if (offsetX > 0) {
-        nodebox[0] = col.x + col.width + offsetX
-        nodebox[2] = col.x + col.width + node.width + offsetX
-      } else {
-        nodebox[0] = col.x - node.width + offsetX
-        nodebox[2] = col.x + offsetX
-      }
+      nodebox[0] = col.x + offsetX + (offsetX > 0 ? col.width : -node.width)
     } else {
-      if (offsetY > 0) {
-        nodebox[1] = col.y + col.height + offsetY
-        nodebox[3] = col.y + col.height + node.height + offsetY
-      } else {
-        nodebox[1] = col.y - node.height + offsetY
-        nodebox[3] = col.y + offsetY
-      }
+      nodebox[1] = col.y + offsetY + (offsetY > 0 ? col.height : -node.height)
     }
-    cols = boxIntersect(boxes, [nodebox])
+    cols = boxBoxes(nodebox, boxes)
   }
 
   return { x: nodebox[0], y: nodebox[1]}
+}
+
+function boxBox(x1, y1, w1, h1, x2, y2, w2, h2) {
+    return x1 < x2 + w2 && x1 + w1 > x2 && y1 < y2 + h2 && y1 + h1 > y2
+}
+
+function boxBoxes(box, boxes) {
+  return boxes.filter(b => boxBox(b[0], b[1], b[2], b[3], box[0], box[1], box[2], box[3]))
 }
 
 function createDAG (nodes, edges) {

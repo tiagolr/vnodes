@@ -105,7 +105,7 @@ export default {
     perc: 'getPosition',
     pos: 'updateNodePos',
     'node.width': 'updateNodePos',
-    'node.heigth': 'updateNodePos',
+    'node.height': 'updateNodePos',
     'offset': 'updateNodePos',
     'offset': 'updateNodePos',
     'align': 'updateNodePos',
