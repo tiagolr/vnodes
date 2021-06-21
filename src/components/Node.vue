@@ -6,14 +6,15 @@
       :width="data.width + margin * 2"
       :height="data.height + margin * 2"
       @mousedown="onMousedown"
-      :style="margin && `padding: ${margin}`"
     >
-    <div class="content" ref="content">
-      <div v-if="!$slots.default" class="default-label">
-        {{ data.id }}
+    <div :style="margin && `padding: ${margin}px`">
+      <div class="content" ref="content">
+        <div v-if="!$slots.default" class="default-label">
+          {{ data.id }}
+        </div>
+        <slot>
+        </slot>
       </div>
-      <slot>
-      </slot>
     </div>
   </foreignObject>
 </template>
