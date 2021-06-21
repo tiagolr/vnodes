@@ -45,9 +45,12 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-h2 a
-  color: #4a4a4a;
-  font-size: 0.75em;
+h2
+  width: calc(100% - 225px)
+  a
+    color: #4a4a4a;
+    font-size: 0.75em;
+    float: right
 </style>
 
 <style>
