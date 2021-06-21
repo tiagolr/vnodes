@@ -1,5 +1,5 @@
 <template>
-  <path class="edge" :d="path">
+  <path class="edge" :d="path" :id="data.id">
   </path>
 </template>
 

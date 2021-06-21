@@ -1,13 +1,21 @@
 <template>
   <g class="label">
-    <node data="node" :useDrag="false">
-      <slot>
-      </slot>
+    <path v-if="connector" class="edge"
+      :d="`M ${pos.x} ${pos.y} L ${node.x + node.width / 2} ${node.y + node.height / 2}`">
+    </path>
+    <node ref="node"
+      :data="node"
+      :useDrag="useDrag"
+      :style="nodeTransform"
+      @drag="e => $emit('drag', e)">
+        <slot>
+        </slot>
     </node>
   </g>
 </template>
 
 <script>
+import uuid from 'uuid'
 import Node from './Node'
 export default {
   components: {
@@ -18,7 +26,7 @@ export default {
       type: Object,
       required: true // { id, pathd } required
     },
-    perc: {
+    position: {
       type: Number,
       default: 50
     },
@@ -30,78 +38,89 @@ export default {
       type: String,
       default: 'center'
     },
-    // rotate: {
-    //   type: Boolean,
-    //   default: false
-    // },
-    // useDrag: {
-    //   type: Boolean,
-    //   default: false
-    // },
-    // connector: {
-    //   type: Boolean,
-    //   default: false,
-    // }
+    rotate: {
+      type: Boolean,
+      default: false
+    },
+    useDrag: {
+      type: Boolean,
+      default: false
+    },
+    connector: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
       pos: { x: 0, y: 0 },
-      node: { x: 0, y: 0, width: 100, heigth: 100},
+      node: { id: uuid() ,x: 250, y: 0, width: 100, height: 100},
       angle: 0,
     }
   },
   mounted () {
-    if (typeof this.edge.pathd !== 'string') {
-      console.warn(this.edge, 'edge does not have `pathd:string` defined')
-    }
-    if (!this.edge.id) {
-      throw 'edge must have property `id:string` defined'
-    }
     this.$nextTick(this.getPosition)
   },
   methods: {
     getPosition () {
-      console.log('getting position')
       const el = document.getElementById(this.edge.id)
       if (!el) {
         throw `element not found: ${this.edge.id}`
       }
-      const length = el.getTotalLength() * perc / 100
+      const length = el.getTotalLength() * this.position / 100
       this.pos = el.getPointAtLength(length)
+
+      if (this.rotate) {
+        const delta = el.getPointAtLength(Math.min(length + 0.01), el.getTotalLength)
+        this.angle = Math.atan2(delta.y - this.pos.y, delta.x - this.pos.x);
+      } else {
+        this.angle = 0
+      }
     },
     updateNodePos () {
-      console.log('Updating node pos')
       const align =  { x: 0, y: 0}
-      if (this.align === 'center') { align.x = node.width / 2; align.y = node.height / 2; }
-      else if (this.align === 'top') align.x = node.width / 2
-      else if (this.align === 'top-right') align.x = node.width
-      else if (this.align === 'left') align.y = node.heigth / 2;
-      else if (this.align === 'right') { align.x = node.width; align.y = node.height / 2; }
-      else if (this.align === 'bottom-left') { align.y = node.height }
-      else if (this.align === 'bottom') { align.x = node.width / 2; align.y = node.height }
-      else if (this.align === 'bottom-right') { align.x = node.width; align.y = node.height }
+      if (this.align === 'center') { align.x = this.node.width / 2; align.y = this.node.height / 2; }
+      else if (this.align === 'top') align.x = this.node.width / 2
+      else if (this.align === 'top-right') align.x = node.width;
+      else if (this.align === 'left') align.y = this.node.height / 2;
+      else if (this.align === 'right') { align.x = this.node.width; align.y = this.node.height / 2; }
+      else if (this.align === 'bottom-left') { align.y = this.node.height }
+      else if (this.align === 'bottom') { align.x = this.node.width / 2; align.y = this.node.height }
+      else if (this.align === 'bottom-right') { align.x = this.node.width; align.y = this.node.height }
 
-      this.node.x = this.pos.x + this.offset.x + align.x
-      this.node.y = this.pos.y + this.offset.y + align.y
-
-      // if (this.rotate) {
-      //   this.angle = 0 // TODO
-      // }
-    }
+      this.node.x = this.pos.x + this.offset.x - align.x
+      this.node.y = this.pos.y + this.offset.y - align.y
+    },
+  },
+  computed: {
+    nodeTransform: vm => `
+        transform-origin: ${vm.node.x + vm.node.width / 2}px ${vm.node.y + vm.node.height}px;
+        transform: rotate(${vm.angle}rad);`,
   },
   watch: {
     edge: {
       deep: true,
       handler: 'getPosition'
     },
-    perc: 'getPosition',
+    position: 'getPosition',
     pos: 'updateNodePos',
     'node.width': 'updateNodePos',
-    'node.heigth': 'updateNodePos'
+    'node.heigth': 'updateNodePos',
+    'offset': 'updateNodePos',
+    'offset': 'updateNodePos',
+    'align': 'updateNodePos',
+    'rotate': 'getPosition'
   },
 }
 </script>
 
 <style lang="stylus">
-
+.label .node .content {
+  background-color: #bbe4bb
+}
+.label .edge {
+  stroke: #286f28
+  stroke-width: 3
+  stroke-dasharray: 4
+}
 </style>

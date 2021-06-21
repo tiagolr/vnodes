@@ -12,11 +12,6 @@
       <div ref="fps" style="margin-bottom:10px"></div>
       <span>Node Count</span>
       <input type="number" v-model=nodeCount>
-      <!-- fps # -->
-      <!-- virtualized yes/no -->
-      <!-- hidden nodes -->
-      <!-- hidden edges -->
-      <!-- group nodes + filter -->
     </div>
   </div>
 </template>

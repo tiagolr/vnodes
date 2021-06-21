@@ -14,6 +14,10 @@
     <ports>
     </ports>
 
+    <h2>Labels</h2>
+    <labels>
+    </labels>
+
     <h2>Benchpress</h2>
     <benchpress>
     </benchpress>
@@ -24,12 +28,14 @@
 import Sink from './Sink'
 import Edit from './Edit'
 import Ports from './Ports'
+import Labels from './Labels'
 import Benchpress from './Benchmark'
 export default {
   components: {
     Sink,
     Edit,
     Ports,
+    Labels,
     Benchpress
   },
 }

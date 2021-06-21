@@ -106,7 +106,7 @@ Edges can take **anchor** information to offset their position relative to a nod
   from: nodes[0],
   to: nodes[1],
   fromAnchor: 'center',
-  toAnchor: 'top-left'
+  toAnchor: 'top-left',
 }">
 ```
  anchors format can be:
@@ -154,12 +154,12 @@ The simplest way to style nodes and edges is using CSS
 
 ```css
 <style>
-.node .content {
+svg .node .content {
   border-radius: 50%;
   background-color: red;
 }
 
-.edge {
+svg .edge {
   stroke-width: 10;
   stroke: blue;
   marker-start: url(#arrow-start);
