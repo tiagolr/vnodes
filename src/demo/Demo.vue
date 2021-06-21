@@ -48,7 +48,7 @@ export default {
 h2
   width: calc(100% - 225px)
   a
-    font-family: monospace;
+    color: #4a4a4a;
     font-size: 1em;
     float: right
 </style>
