@@ -25,7 +25,7 @@
       <textarea rows="3" v-model="contents" @input="resizeLabel"></textarea>
       <div>Position {{ perc }}</div>
       <input type="range" v-model="perc" min="0" max="100">
-      <div>Offset { x : {{ offsetX }}, y: {{ offsetY }} }</div>
+      <div>Offset { x : {{ parseInt(offsetX) }}, y: {{ parseInt(offsetY) }} }</div>
       <input type="range" v-model="offsetX" min="-100" max="100">
       <input type="range" v-model="offsetY" min="-100" max="100">
       <div>Align</div>
