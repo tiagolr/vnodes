@@ -99,7 +99,7 @@ export default {
     })
 
     this.$nextTick(() => {
-      this.$refs.screen.zoomNodes(this.graph.nodes, {scale: 1})
+      this.$refs.screen.zoomNodes(this.graph.nodes)
     })
   }
 }

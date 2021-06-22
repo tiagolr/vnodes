@@ -56,7 +56,7 @@ Vnodes components are independent and can be used only when desired. Instead of 
 Svg wrapper with zoom, panning and other features.
 
 ```html
-<screen width="300" height="500">
+<screen>
   <circle cx="50" cy="50" r="50" fill="red"/>
 </screen>
 ```
@@ -90,7 +90,7 @@ Connects nodes using svg lines
 ></edge>
 ```
 
-Edges require node references `{ from: String|Object, to: String:Object }`, if nodes are refered by `id(String)` an array  `nodes` must be passed:
+Edges require node references `{ from: id|Object, to: String|Object }`, if nodes are refered by `id(String)` an array  `nodes` must be passed:
 
 ```html
 <edge

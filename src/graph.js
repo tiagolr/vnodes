@@ -8,7 +8,7 @@ export default class Graph {
     this.edges = []
   }
 
-  positionNode ({ node, parent, dir = 'right', spacing = 40, invertOffset = false }) {
+  positionNode ({ node, parent, dir = 'right', spacing = 40, invertOffset = false } = {}) {
     node = typeof node === 'string' ? this.nodes.find(n => n.id === node) : node
     parent = typeof parent === 'string' ? this.nodes.find(n => n.id === parent) : parent
     const pos = util.findPosition(node, parent, dir, this.nodes, spacing, invertOffset)
@@ -24,7 +24,7 @@ export default class Graph {
   // dagBuildEdges - delete all edges and build them from Dag
   // dagSetParent - change dag parent (string or array[string] => array[string])
 
-  graphNodes ({ nodes, edges, type = 'basic', dir = 'right', spacing = 40 }) {
+  graphNodes ({ nodes, edges, type = 'basic', dir = 'right', spacing = 40 } = {}) {
     nodes = nodes || this.nodes
     edges = edges || this.edges
 

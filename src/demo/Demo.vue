@@ -17,9 +17,17 @@
     <ports>
     </ports>
 
+    <!-- <h2>Groups <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Groups.vue" target="_blank">&lt;/&gt;</a></h2>
+    <groups>
+    </groups> -->
+
     <h2>Labels <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue" target="_blank">&lt;/&gt;</a></h2>
     <labels>
     </labels>
+
+    <!-- <h2>CSS <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
+    <styles>
+    </styles> -->
 
     <h2>Benchpress <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Benchmark.vue" target="_blank">&lt;/&gt;</a></h2>
     <benchpress>
@@ -33,13 +41,17 @@ import Edit from './Edit'
 import Ports from './Ports'
 import Labels from './Labels'
 import Benchpress from './Benchmark'
+import Styles from './Styles'
+import Groups from './Groups'
 export default {
   components: {
     Sink,
     Edit,
     Ports,
     Labels,
-    Benchpress
+    Benchpress,
+    Styles,
+    Groups,
   },
 }
 </script>
@@ -52,9 +64,12 @@ h2
     color: #4a4a4a;
     font-size: 0.75em;
     float: right
-</style>
+</styles>
 
 <style>
+.screen {
+  background-color: white;
+}
 h2 {
   font-size: 1.5em;
 }

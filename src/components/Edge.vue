@@ -43,7 +43,7 @@ export default {
       let x2 = this.toNode.x + (this.toAnchor.x || 0)
       let y2 = this.toNode.y + (this.toAnchor.y || 0)
 
-      if (this.fromAnchor?.snap) {
+      if (this.fromAnchor && this.fromAnchor.snap) {
         if (this.fromAnchor.snap === 'circle') {
           const radius = Math.max(this.fromNode.width, this.fromNode.height) / 2
           const vec = new Victor(x2 - x1, y2 - y1).normalize()
@@ -58,7 +58,7 @@ export default {
           }
         }
       }
-      if (this.toAnchor?.snap) {
+      if (this.toAnchor && this.toAnchor.snap) {
         if (this.toAnchor.snap === 'circle') {
           const radius = Math.max(this.toNode.width, this.toNode.height) / 2
           const vec = new Victor(x2 - x1, y2 - y1).normalize()
