@@ -94,17 +94,18 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.checkboxes input
-  display inline
-.checkboxes label
-  display inline
+<style scoped>
+.checkboxes input {
+  display: inline
+}
+.checkboxes label {
+  display: inline;
   margin-right: 10px
-
+}
 </style>
 
-<style lang="stylus">
-.group-label
+<style>
+.group-label {
   font-weight: bold;
   color: #fff;
   padding: 10px;
@@ -112,4 +113,5 @@ export default {
   background-color: #183e5280;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+}
 </style>

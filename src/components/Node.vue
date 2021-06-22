@@ -64,24 +64,26 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-.node .content
-  position relative
-  border-radius 7px
-  background-color: rgba(100, 200, 100, .9)
-  display inline-block
-  width: auto
-  height: auto
+<style>
+.node .content {
+  position: relative;
+  border-radius: 7px;
+  background-color: rgba(100, 200, 100, .9);
+  display: inline-block;
+  width: auto;
+  height: auto;
   white-space: nowrap;
   width: fit-content;
+}
 
-.default-label
-  text-align center
-  font-weight bold
-  width auto
-  height auto
-  min-width 30px
-  min-height 30px
-  line-height 30px
-  padding 10px
+.default-label {
+  text-align: center;
+  font-weight: bold;
+  width: auto;
+  height: auto;
+  min-width: 30px;
+  min-height: 30px;
+  line-height: 30px;
+  padding: 10px;
+}
 </style>

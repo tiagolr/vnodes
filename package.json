@@ -35,8 +35,6 @@
     "@vue/cli-service": "^3.11.0",
     "css-parse": "^2.0.0",
     "stats.js": "^0.17.0",
-    "stylus": "^0.54.7",
-    "stylus-loader": "^3.0.2",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"
   },

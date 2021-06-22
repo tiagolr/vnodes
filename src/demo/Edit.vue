@@ -92,26 +92,29 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-#edit-demo .node:hover .content
-  background-color rgb(90 200 90)
+<style>
+#edit-demo .node:hover .content {
+  background-color: rgb(90 200 90);
+}
 
-#edit-demo .node.selected .content
-  background-color: rgba(100, 200, 100, 1)
+#edit-demo .node.selected .content {
+  background-color: rgba(100, 200, 100, 1);
   box-shadow: 0px 0px 0px 2px #333;
+}
 
-#edit-demo .node .content
-  cursor: pointer
+#edit-demo .node .content {
+  cursor: pointer;
+}
 
 #edit-demo .edge {
-  cursor: pointer
+  cursor: pointer;
 }
 #edit-demo .edge:hover {
-  // stroke-width: 4
+  /* stroke-width: 4 */
   stroke: rgb(90 200 90)
 }
 #edit-demo .edge.selected {
-  // stroke-width: 4
+  /* stroke-width: 4 */
   stroke: #333
 }
 </style>

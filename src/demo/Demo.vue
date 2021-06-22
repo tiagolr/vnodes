@@ -56,14 +56,16 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-h2
+<style scoped>
+h2 {
   margin-top: 50px;
-  width: calc(100% - 225px)
-  a
-    color: #4a4a4a;
-    font-size: 0.75em;
-    float: right
+  width: calc(100% - 225px);
+}
+h2 a {
+  color: #4a4a4a;
+  font-size: 0.75em;
+  float: right
+}
 </styles>
 
 <style>

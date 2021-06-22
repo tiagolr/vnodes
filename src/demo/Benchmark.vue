@@ -72,20 +72,21 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-
-#benchmark-demo
-  .node .content
-    // background-color #14c56a
-    background-color: #47696e;
-    color: white;
-  .node:hover .content
-    background-color red
-  .edge
-    stroke #ccc
-    stroke-width 4
-    marker-end: none
-  .edge:hover
-    stroke: red
-
+<style>
+#benchmark-demo .node .content {
+  /* background-color #14c56a */
+  background-color: #47696e;
+  color: white;
+}
+#benchmark-demo .node:hover .content {
+  background-color: red;
+}
+#benchmark-demo .edge {
+  stroke: #ccc;
+  stroke-width: 4;
+  marker-end: none;
+}
+#benchmark-demo .edge:hover {
+  stroke: red;
+}
 </style>

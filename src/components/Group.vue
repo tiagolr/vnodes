@@ -70,12 +70,13 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-.group .content
-  width: 100%
-  height: 100%
-  position absolute
-  border-radius 7px
-  background-color: rgba(100, 100, 100, .25)
-  display inline-block
+<style>
+.group .content {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  border-radius: 7px;
+  background-color: rgba(100, 100, 100, .25);
+  display: inline-block;
+}
 </style>

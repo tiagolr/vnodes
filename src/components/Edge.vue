@@ -174,11 +174,12 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.edge
-  stroke-width: 4
-  stroke: green
-  // marker-start: url(#arrow-start)
-  marker-end: url(#arrow-end)
-  fill: none
+<style scoped>
+.edge {
+  stroke-width: 4;
+  stroke: green;
+  /* marker-start: url(#arrow-start) */
+  marker-end: url(#arrow-end);
+  fill: none;
+}
 </style>

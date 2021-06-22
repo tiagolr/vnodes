@@ -134,12 +134,14 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-#arrow-end
-  fill red !important
-.screen
-  width 100%
-  height 100%
-  outline none
-  border 1px solid #ccc
+<style scoped>
+#arrow-end {
+  fill: red !important
+}
+.screen {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: 1px solid #ccc;
+}
 </style>

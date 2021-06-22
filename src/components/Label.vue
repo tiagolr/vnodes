@@ -114,13 +114,13 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style>
 .label .node .content {
-  background-color: #bbe4bb
+  background-color: #bbe4bb;
 }
 .label .edge {
-  stroke: #286f28
-  stroke-width: 3
-  stroke-dasharray: 4
+  stroke: #286f28;
+  stroke-width: 3;
+  stroke-dasharray: 4;
 }
 </style>

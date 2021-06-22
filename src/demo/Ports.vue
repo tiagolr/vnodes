@@ -97,19 +97,22 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.port-inner
-  width: 15px
-  height: 15px
-  border-radius 10px
-  background-color: red
-  display: inline-block
-  cursor pointer
+<style scoped>
+.port-inner {
+  width: 15px;
+  height: 15px;
+  border-radius: 10px;
+  background-color: red;
+  display: inline-block;
+  cursor: pointer;
+}
 
-.port-inner:hover
-  background-color blue
+.port-inner:hover {
+  background-color: blue;
+}
 
-.port-inner.connected
-  background-color yellow
+.port-inner.connected {
+  background-color: yellow;
+}
 
 </style>

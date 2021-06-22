@@ -105,8 +105,8 @@ export default {
 }
 </script>
 
-<style lang="stylus">
-// #benchmark-demo
+<style>
+/* // #benchmark-demo
 //   .node .content
 //     background-color: #47696e;
 //     color: white;
@@ -117,5 +117,5 @@ export default {
 //     stroke-width 4
 //     marker-end: none
 //   .edge:hover
-//     stroke: red
+//     stroke: red */
 </style>
