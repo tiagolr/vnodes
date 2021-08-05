@@ -10,19 +10,14 @@
         </g>
         <g v-for="node in graph.nodes" @click.stop="select(node)" :key="node.id">
           <node :data="node" ref="node" :class="isSelected(node) && 'selected'">
-            <div v-if="!isSelected(node)" v-html="node.html">
+            <div v-html="node.html">
             </div>
-            <textarea v-if="isSelected(node)"
-              class="edit-html"
-              ref="textarea"
-              v-model="textareaText"
-            ></textarea>
           </node>
         </g>
       </screen>
     </div>
     <div class="sidebar">
-      <textarea name="" id="" cols="30" rows="10" style="height: 100%"
+      <textarea style="height: 100%; margin: 0"
         :disabled="!selection"
         v-model="editText"
         placeholder="Click on a node or edge to start editing"
@@ -47,28 +42,21 @@ export default {
     return {
       graph: new graph(),
       selection: null,
-      textareaText: '',
       editText: '',
       hover: null
     }
   },
   methods: {
     select (obj) {
-      if (this.selection?.html) {
-        this.selection.html = this.textareaText
-      }
       this.selection = obj
       const editText = { ...obj }
-      delete editText.html
-      this.editText = obj ? JSON.stringify(editText, null, 2) : ''
-      this.textareaText = obj?.html && pretty(obj.html) || ''
+      delete editText.pathd
+      editText.html = editText.html && "\n" + pretty(editText.html) + "\n"
+      this.editText = obj ? JSON.stringify(editText, null, 2).replace(/\\n/g, '\n') : ''
       this.$nextTick(() => {
         this.$refs.node.forEach(node => {
           node.fitContent()
         })
-        if (this.$refs.textarea?.length) {
-          this.$refs.textarea[0].focus()
-        }
       })
     },
     applyChanges () {
@@ -76,14 +64,16 @@ export default {
         return
       }
       try {
-        const edit = JSON.parse(this.editText)
+        const edit = JSON.parse(this.editText.replace(/\n/g, ''))
         Object.assign(this.selection, edit)
         this.$nextTick(() => {
           this.$refs.node.forEach(node => {
             node.fitContent()
           })
         })
-      } catch (_) {}
+      } catch (_) {
+        console.log('fack', _)
+      }
     },
     isSelected (node) {
       return this.selection
@@ -142,15 +132,5 @@ export default {
 #edit-demo .edge.selected {
   /* stroke-width: 4 */
   stroke: #333
-}
-.edit-html {
-  width: 150px;
-  height: 150px;
-  background-color: #fff8;
-  resize: none;
-  overflow: hidden;
-  margin: 0px;
-  display: block;
-  border: none;
 }
 </style>
