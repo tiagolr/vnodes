@@ -4,13 +4,19 @@
       <screen ref="screen">
         <g v-for="edge in graph.edges" @click.stop="select(edge)" :key="edge.id">
           <edge :class="selection && selection.id === edge.id && 'selected'"
-              :data="edge"
-              :nodes="graph.nodes">
-            </edge>
+            :data="edge"
+            :nodes="graph.nodes">
+          </edge>
         </g>
         <g v-for="node in graph.nodes" @click.stop="select(node)" :key="node.id">
-          <node :data="node" ref="node" :class="selection && selection.id === node.id && 'selected'">
-            <div v-html="node.html"></div>
+          <node :data="node" ref="node" :class="isSelected(node) && 'selected'">
+            <div v-if="!isSelected(node)" v-html="node.html">
+            </div>
+            <textarea v-if="isSelected(node)"
+              class="edit-html"
+              ref="textarea"
+              v-model="textareaText"
+            ></textarea>
           </node>
         </g>
       </screen>
@@ -19,10 +25,8 @@
       <textarea name="" id="" cols="30" rows="10" style="height: 100%"
         :disabled="!selection"
         v-model="editText"
-        @change="applyChanges"
         placeholder="Click on a node or edge to start editing"
-      >
-      </textarea>
+      ></textarea>
     </div>
   </div>
 </template>
@@ -32,6 +36,7 @@ import Screen from '../components/Screen'
 import Node from '../components/Node'
 import Edge from '../components/Edge'
 import graph from '../graph'
+import pretty from 'pretty'
 export default {
   components: {
     Screen,
@@ -42,29 +47,47 @@ export default {
     return {
       graph: new graph(),
       selection: null,
+      textareaText: '',
       editText: '',
       hover: null
     }
   },
   methods: {
-    test () {
-      console.log('leave')
-    },
     select (obj) {
+      if (this.selection?.html) {
+        this.selection.html = this.textareaText
+      }
       this.selection = obj
-      this.editText = obj ? JSON.stringify(this.selection, null, 2) : ''
+      const editText = { ...obj }
+      delete editText.html
+      this.editText = obj ? JSON.stringify(editText, null, 2) : ''
+      this.textareaText = obj?.html && pretty(obj.html) || ''
+      this.$nextTick(() => {
+        this.$refs.node.forEach(node => {
+          node.fitContent()
+        })
+        if (this.$refs.textarea?.length) {
+          this.$refs.textarea[0].focus()
+        }
+      })
     },
     applyChanges () {
       if (!this.selection) {
         return
       }
-      const edit = JSON.parse(this.editText)
-      Object.assign(this.selection, edit)
-      this.$nextTick(() => {
-        this.$refs.node.forEach(node => {
-          node.fitContent()
+      try {
+        const edit = JSON.parse(this.editText)
+        Object.assign(this.selection, edit)
+        this.$nextTick(() => {
+          this.$refs.node.forEach(node => {
+            node.fitContent()
+          })
         })
-      })
+      } catch (_) {}
+    },
+    isSelected (node) {
+      return this.selection
+        && this.selection.id === node.id
     }
   },
   mounted () {
@@ -88,7 +111,10 @@ export default {
     this.$nextTick(() => {
       this.$refs.screen.zoomNodes(this.graph.nodes, {scale: 1})
     })
-  }
+  },
+  watch: {
+    editText: 'applyChanges'
+  },
 }
 </script>
 
@@ -116,5 +142,15 @@ export default {
 #edit-demo .edge.selected {
   /* stroke-width: 4 */
   stroke: #333
+}
+.edit-html {
+  width: 150px;
+  height: 150px;
+  background-color: #fff8;
+  resize: none;
+  overflow: hidden;
+  margin: 0px;
+  display: block;
+  border: none;
 }
 </style>

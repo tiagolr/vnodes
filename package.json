@@ -34,6 +34,7 @@
     "@vue/cli-plugin-babel": "^4.5.13",
     "@vue/cli-service": "^3.11.0",
     "css-parse": "^2.0.0",
+    "pretty": "^2.0.0",
     "stats.js": "^0.17.0",
     "vue": "^2.6.10",
     "vue-template-compiler": "^2.6.10"

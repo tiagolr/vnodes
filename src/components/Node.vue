@@ -57,7 +57,7 @@ export default {
     },
     onMousedown (e) {
       e.stopPropagation()
-      e.preventDefault();
+      // e.preventDefault();
       this.startDrag();
     }
   }
