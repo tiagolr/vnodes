@@ -21,6 +21,7 @@
         :disabled="!selection"
         v-model="editText"
         placeholder="Click on a node or edge to start editing"
+        spellcheck="false"
       ></textarea>
     </div>
   </div>
@@ -32,6 +33,7 @@ import Node from '../components/Node'
 import Edge from '../components/Edge'
 import graph from '../graph'
 import pretty from 'pretty'
+import stringify from 'javascript-stringify'
 export default {
   components: {
     Screen,
@@ -52,19 +54,16 @@ export default {
       const editText = { ...obj }
       delete editText.pathd
       editText.html = editText.html && "\n" + pretty(editText.html) + "\n"
-      this.editText = obj ? JSON.stringify(editText, null, 2).replace(/\\n/g, '\n') : ''
-      this.$nextTick(() => {
-        this.$refs.node.forEach(node => {
-          node.fitContent()
-        })
-      })
+      this.editText = stringify(editText, null, 2)
+        .replace(/\\n/g, "\n")
+        .replace(/html: '([^]*)'/g, 'html: `$1`')
     },
     applyChanges () {
       if (!this.selection) {
         return
       }
       try {
-        const edit = JSON.parse(this.editText.replace(/\n/g, ''))
+        const edit = eval('('+this.editText+')')
         Object.assign(this.selection, edit)
         this.$nextTick(() => {
           this.$refs.node.forEach(node => {
