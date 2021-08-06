@@ -17,12 +17,22 @@
       </screen>
     </div>
     <div class="sidebar">
-      <textarea style="height: 100%; margin: 0"
+      <!-- <textarea style="height: 100%; margin: 0"
         :disabled="!selection"
         v-model="editText"
         placeholder="Click on a node or edge to start editing"
         spellcheck="false"
-      ></textarea>
+      ></textarea> -->
+      <codemirror v-model="editText" :options="{
+          mode: 'text/javascript',
+          theme: 'default',
+          lineWrapping: true,
+          scrollbarStyle: null,
+          styleActiveLine: true,
+          line: true,
+        }"
+        style="font-size: 13.3333px; font-family: monospace; -webkit-text-size-adjust: 100%; height: 100%"
+      ></codemirror>
     </div>
   </div>
 </template>
@@ -34,11 +44,18 @@ import Edge from '../components/Edge'
 import graph from '../graph'
 import pretty from 'pretty'
 import stringify from 'javascript-stringify'
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/mode/javascript/javascript.js'
+import 'codemirror/lib/codemirror.css'
+// import 'codemirror/theme/base16-light.css'
+// import 'codemirror/theme/base16-light.css'
+
 export default {
   components: {
     Screen,
     Node,
-    Edge
+    Edge,
+    codemirror
   },
   data() {
     return {
@@ -51,12 +68,18 @@ export default {
   methods: {
     select (obj) {
       this.selection = obj
+      if (!this.selection) {
+        this.editText = ''
+        return
+      }
       const editText = { ...obj }
       delete editText.pathd
-      editText.html = editText.html && "\n" + pretty(editText.html) + "\n"
+      if (editText.html) {
+        editText.html = "\n" + pretty(editText.html) + "\n"
+      }
       this.editText = stringify(editText, null, 2)
         .replace(/\\n/g, "\n")
-        .replace(/html: '([^]*)'/g, 'html: `$1`')
+        .replace(/html: '([^]*)\s'/g, 'html: `$1\n`')
     },
     applyChanges () {
       if (!this.selection) {
@@ -108,6 +131,16 @@ export default {
 </script>
 
 <style>
+#edit-demo .CodeMirror {
+  width: 100%;
+  height: 500px;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  background-color: #f1f1f1;
+  border: 1px solid #f1f1f1;
+}
+
 #edit-demo .node:hover .content {
   background-color: rgb(90 200 90);
 }
