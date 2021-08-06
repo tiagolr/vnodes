@@ -112,7 +112,7 @@ export default class Graph {
 
   removeNode (node) {
     const index = this.nodes.indexOf(node)
-    if (index > 1) {
+    if (index > -1) {
       this.nodes.splice(index, 1)
     }
     return index
