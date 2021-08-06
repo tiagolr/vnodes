@@ -62,6 +62,7 @@ export default {
 
     this.graph.graphNodes({ type: 'tree' })
     this.applyTheme();
+    window.t = this
   },
   methods: {
     forceRender () {
@@ -76,6 +77,10 @@ export default {
         })
     },
     async applyTheme () {
+
+      // TRY
+      // ref.$forceUpdate()
+      // ref.$mount()
       let rules
       try {
         rules = parse(this.theme)
