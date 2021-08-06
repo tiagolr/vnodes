@@ -14,11 +14,8 @@ export default {
       drag: {
         zoom: 1,
         active: false,
-        threshold: {
-          x: 0,
-          y: 0,
-          crossed: false
-        }
+        prev: { x: 0, y: 0 },
+        threshold: { x: 0, y: 0, crossed: false }
       }
     }
   },
@@ -35,7 +32,7 @@ export default {
         document.removeEventListener('click', this.preventClicks, true)
       }
     },
-    startDrag () {
+    startDrag (e) {
       let parent = this.$parent
       while (parent) {
         if (parent.panzoom) {
@@ -45,6 +42,7 @@ export default {
         parent = parent.$parent
       }
       this.drag.active = true
+      this.drag.prev = { x: e.clientX, y: e.clientY }
       this.drag.threshold = {x: 0, y: 0, crossed: false}
       document.addEventListener('mouseup', this.stopDrag)
       document.addEventListener('mousemove', this.applyDrag)
@@ -56,8 +54,10 @@ export default {
       document.removeEventListener('mousemove', this.applyDrag)
     },
     applyDrag (e) {
-      let x = e.movementX / this.drag.zoom
-      let y = e.movementY / this.drag.zoom
+      let x = (e.clientX - this.drag.prev.x) / this.drag.zoom
+      let y = (e.clientY - this.drag.prev.y) / this.drag.zoom
+      this.drag.prev = {x: e.clientX, y: e.clientY}
+
 
       if (!this.drag.threshold.crossed) {
         if (Math.abs(this.drag.threshold.x) < this.dragThreshold && Math.abs(this.drag.threshold.y) < this.dragThreshold) {

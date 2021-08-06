@@ -63,7 +63,7 @@ export default {
       e.stopPropagation()
       if (!this.disableDrag) {
         e.preventDefault();
-        this.startDrag();
+        this.startDrag(e);
       }
     }
   }
