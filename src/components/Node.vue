@@ -37,7 +37,7 @@ export default {
     },
     fit: {
       type: Boolean,
-      default: true // set false to prevent fitting contents
+      default: true // set false to manually set width and height
     }
   },
   mounted () {
@@ -57,7 +57,7 @@ export default {
     },
     onMousedown (e) {
       e.stopPropagation()
-      // e.preventDefault();
+      e.preventDefault();
       this.startDrag(e);
     }
   }

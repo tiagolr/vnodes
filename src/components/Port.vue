@@ -10,7 +10,8 @@
  */
 export default {
   props: {
-    startOffset: Object, // { x, y }
+    id: String, // optional id
+    startOffset: Object, // {x, y}, contents center if null
     edgesFrom: {
       type: Array,
       default: () => []

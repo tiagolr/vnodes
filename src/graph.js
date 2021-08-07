@@ -133,7 +133,7 @@ export default class Graph {
     if (!to) throw new Error('dest required')
 
     const edge = Object.assign({
-      id: fields.id || `${from}@${to}`,
+      id: uuid.v4(),
       from,
       to,
       fromAnchor: { x: '50%', y: '50%' },
