@@ -90,7 +90,7 @@ Connects nodes using svg lines
 ></edge>
 ```
 
-Edges require node references `{ from: id|Object, to: String|Object }`, if nodes are refered by `id(String)` an array  `nodes` must be passed:
+Edges require node references `{ from: id|Object, to: String|Object }`, if nodes are refered by `id(String)` an array `nodes` must be passed:
 
 ```html
 <edge
@@ -141,11 +141,11 @@ Surrounds a group of nodes with a rectangle, allows dragging multiple nodes.
 
 ### Port
 
-Placed inside a node, automatically offsets edges to a determined position inside the nodes html (see Ports demo).
+Placed inside a node, automatically offsets edges to a their position inside the nodes html [Ports demo].
 
 ### Label
 
-Create a label positioned relative to an edge
+Create a label node that is positioned along an edge
 
 ```html
 <v-label :edge="graph.edges[0]" :perc="50" :offset="{x: 0, y: -50}">
@@ -156,7 +156,7 @@ Create a label positioned relative to an edge
 ### graph.js
 
 Can be used to store edges and nodes.
-Contains utility methods to build graphs, position nodes, remove and create nodes, edges and so on.
+Contains utility methods to build graphs, layouts, remove and create nodes, edges and so on.
 
 ## Styling
 

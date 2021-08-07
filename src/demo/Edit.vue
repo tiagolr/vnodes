@@ -1,6 +1,6 @@
 <template>
   <div class="demo" id="edit-demo">
-    <div class="viewport" @click="select(null)">
+    <div class="viewport" @click="select(null)" @mousedown.capture="blockEvents" @wheel.capture="blockEvents">
       <screen ref="screen">
         <g v-for="edge in graph.edges" @click.stop="select(edge)" :key="edge.id">
           <edge :class="selection && selection.id === edge.id && 'selected'"
@@ -8,21 +8,15 @@
             :nodes="graph.nodes">
           </edge>
         </g>
-        <g v-for="node in graph.nodes" @click.stop="select(node)" :key="node.id">
-          <node :data="node" ref="node" :class="isSelected(node) && 'selected'">
-            <div v-html="node.html">
+        <g v-for="node in graph.nodes" :key="node.id">
+          <node :data="node" ref="node" :class="isSelected(node) && 'selected'" :textSelect="node.textSelect" :useDrag="node.useDrag">
+            <div v-html="node.html" @click.stop="select(node)">
             </div>
           </node>
         </g>
       </screen>
     </div>
     <div class="sidebar">
-      <!-- <textarea style="height: 100%; margin: 0"
-        :disabled="!selection"
-        v-model="editText"
-        placeholder="Click on a node or edge to start editing"
-        spellcheck="false"
-      ></textarea> -->
       <codemirror v-model="editText" :options="{
           mode: 'text/javascript',
           theme: 'default',
@@ -47,8 +41,6 @@ import stringify from 'javascript-stringify'
 import { codemirror } from 'vue-codemirror'
 import 'codemirror/mode/javascript/javascript.js'
 import 'codemirror/lib/codemirror.css'
-// import 'codemirror/theme/base16-light.css'
-// import 'codemirror/theme/base16-light.css'
 
 export default {
   components: {
@@ -61,15 +53,14 @@ export default {
     return {
       graph: new graph(),
       selection: null,
-      editText: '',
-      hover: null
+      editText: '/* click on a node or edge to start editing */',
     }
   },
   methods: {
     select (obj) {
       this.selection = obj
       if (!this.selection) {
-        this.editText = ''
+        this.editText = '/* click on a node or edge to start editing */'
         return
       }
       const editText = { ...obj }
@@ -94,38 +85,76 @@ export default {
           })
         })
       } catch (_) {
-        console.log('fack', _)
+        console.log('TODO invalid code')
       }
     },
     isSelected (node) {
       return this.selection
         && this.selection.id === node.id
-    }
+    },
+    /**
+     * HACKS
+     * support shortcut .no-drag and .no-wheel classes
+     * to disable dragging and mouse-wheel behavior from editable html
+     */
+    blockEvents (e) {
+      const path = e.path || e.composedPath?.();
+      if (path?.find(el => el.classList?.contains('no-drag'))) { // @mousedown
+        const pz = this.$refs.screen.panzoom
+        pz.options.preventMouseEventsDefault = false // enable default events (text select, input click)
+        document.addEventListener('mouseup', () => {
+          pz.options.preventMouseEventsDefault = true
+        }, { once: true })
+        e.stopPropagation() // disable node drag
+      }
+      if (path?.find(el => el.classList?.contains('no-wheel'))) { // @wheel
+        e.stopPropagation() // disable wheel zoom
+      }
+    },
   },
   mounted () {
     this.graph.createNode({
       id: 'a',
-      html: '<h5 style="margin: 25px">A</h5>'
+      html: '<h5>A</h5>'
     })
     this.graph.createNode({
       id: 'b',
       x: 200,
       y: 200,
+      textSelect: false,
+      useDrag: true,
       html:
-      `<div style="margin: 10px; text-align: center"><h4>B</h4><p>Some subtitle</p></div>`
+      `<div><h4>B</h4><p>Subtitle</p><button>Yo</button></div>`
+    })
+    this.graph.createNode({
+      id: 'c',
+      x: -100,
+      y: 150,
+      textSelect: false,
+      useDrag: true,
+      html: `<div> <h4>okay</h4> <textarea type="text" class="no-drag">Some text here</textarea><br/><select class="no-drag" name="cars" id="cars"><option value="volvo">Volvo</option><option value="saab">Saab</option><option value="mercedes">Mercedes</option><option value="audi">Audi</option></select></div>`
+    })
+    this.graph.createNode({
+      id: 'd',
+      x: 340,
+      textSelect: false,
+      useDrag: true,
+      html: `<div>Okay</div>`
     })
     this.graph.createEdge({
+      id: 'a:b',
       from: 'a',
       to: 'b',
       toAnchor: { x: '50%', y: '50%', snap: 'rect' },
       type: 'smooth'
     })
+    this.graph.createEdge({ id: 'c:d', from: 'c', to: 'd', type: 'smooth' })
     this.$nextTick(() => {
       this.$refs.screen.zoomNodes(this.graph.nodes, {scale: 1})
     })
   },
   watch: {
-    editText: 'applyChanges'
+    editText: 'applyChanges',
   },
 }
 </script>
@@ -140,8 +169,19 @@ export default {
   background-color: #f1f1f1;
   border: 1px solid #f1f1f1;
 }
+#edit-demo .node .background {
+  /* background-color: #ccc; */
+}
 
-#edit-demo .node:hover .content {
+#edit-demo .node .content > div {
+  padding: 25px;
+}
+
+#edit-demo .node .content h4,h5,p {
+  margin: 0
+}
+
+#edit-demo .node:hover .background {
   background-color: rgb(90 200 90);
 }
 

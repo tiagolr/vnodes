@@ -11,7 +11,7 @@
     <div class="sidebar">
       <div ref="fps" style="margin-bottom:10px"></div>
       <span>Node Count</span>
-      <input type="number" v-model=nodeCount>
+      <input type="number" v-model=nodeCount step="25">
     </div>
   </div>
 </template>

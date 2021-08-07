@@ -5,12 +5,11 @@
     :y="minY - padding.top - margin"
     :width="width + (padding.left + padding.right) + margin * 2"
     :height="height + (padding.top + padding.bottom) + margin * 2"
-    @mousedown="onMousedown"
-  >
-    <div class="content" ref="content" :style="contentMargin">
-      <slot>
-      </slot>
-    </div>
+    @mousedown="onMousedown">
+      <div class="content" ref="content" :style="contentMargin">
+        <slot>
+        </slot>
+      </div>
   </foreignObject>
 </template>
 

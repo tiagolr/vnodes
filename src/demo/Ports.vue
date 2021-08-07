@@ -8,18 +8,18 @@
           :key="edge.id"
         ></edge>
         <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
-          <div style="text-align: center"><strong>{{ node.title }}</strong></div>
+          <div style="text-align: center"><strong>{{ node.id }}</strong></div>
           <table>
             <td>
               <tr v-for="input in node.inputs" :key="node.id+':'+input">
                   <port ref="port"
                     :id="node.id+':'+input"
                     :edgesTo="getInputEdges(node, input)">
-                    <div class="port-inner"
-                      @mousedown.prevent.stop="evt => startConnect(node, { input }, evt)"
-                      @mouseup.prevent.stop="createConnect(node, { input })"
-                      :class="getInputEdges(node, input).length && 'connected'">
-                    </div>
+                      <div class="port-inner"
+                        @mousedown.prevent.stop="evt => startConnect(node, { input }, evt)"
+                        @mouseup.prevent.stop="createConnect(node, { input })"
+                        :class="getInputEdges(node, input).length && 'connected'">
+                      </div>
                   </port>
                 {{ input.slice(1) }}
               </tr>
@@ -30,11 +30,11 @@
                 <port ref="port"
                   :id="node.id+':'+output"
                   :edgesFrom="getOutputEdges(node, output)">
-                  <div class="port-inner"
-                    @mousedown.prevent.stop="evt => startConnect(node, { output }, evt)"
-                    @mouseup.prevent.stop="createConnect(node, { output })"
-                    :class="getOutputEdges(node, output).length && 'connected'">
-                  </div>
+                    <div class="port-inner"
+                      @mousedown.prevent.stop="evt => startConnect(node, { output }, evt)"
+                      @mouseup.prevent.stop="createConnect(node, { output })"
+                      :class="getOutputEdges(node, output).length && 'connected'">
+                    </div>
                 </port>
               </tr>
             </td>
@@ -73,16 +73,12 @@ export default {
       if (this.connecting) return
       const port = this.$refs.port
         .find(p => p.id === `${node.id}:${input || output}`)
-      const edges = input ? this.getInputEdges(node, input)
-        : output ? this.getOutputEdges(node, output)
-        : []
 
-      if (edges.length) { // activate exiting edge
-        const edge = edges.slice(-1)[0]
+      const edge = input && this.getInputEdges(node, input).reverse()[0]
+      if (edge) { // edit exiting edge
         edge.active = true
         this.connecting = {
-          node: this.graph.nodes
-            .find(n => input ? edge.from === n.id : edge.to === n.id),
+          node: this.graph.nodes.find(n => input ? edge.from === n.id : edge.to === n.id),
           input: output,
           output: input
         }
@@ -172,15 +168,21 @@ export default {
     window.ports = this// DELETEME
     this.graph.createNode({
       id: 'a',
-      title: 'nodeA',
       inputs: ['i1'],
-      outputs: ['o1', 'o2', 'o3']
+      outputs: ['o1', 'o2', 'o3', 'o4']
     })
     this.graph.createNode({
       id: 'b',
-      x: 200,
-      y: 100,
-      title: 'B',
+      inputs: ['i1', 'i2'],
+      outputs: ['o1', 'o2']
+    })
+    this.graph.createNode({
+      id: 'c',
+      inputs: ['i1', 'i2'],
+      outputs: ['o1', 'o2']
+    })
+    this.graph.createNode({
+      id: 'd',
       inputs: ['i1', 'i2'],
       outputs: ['o1', 'o2']
     })
@@ -192,7 +194,24 @@ export default {
       active: false,
       type: 'hsmooth'
     })
+    this.graph.createEdge({
+      from: 'a',
+      to: 'c',
+      fromPort: 'o1',
+      toPort: 'i1',
+      active: false,
+      type: 'hsmooth'
+    })
+    this.graph.createEdge({
+      from: 'c',
+      to: 'd',
+      fromPort: 'o1',
+      toPort: 'i1',
+      active: false,
+      type: 'hsmooth'
+    })
     this.$nextTick(() => {
+      this.graph.graphNodes({ spacing: 75 })
       this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
     })
     document.addEventListener('mouseup', this.cancelConnect)

@@ -19,10 +19,6 @@ export default {
       }
     }
   },
-  beforeDestroy () {
-    document.removeEventListener('mousemove', this.applyDrag)
-    document.removeEventListener('mouseup', this.stopDrag)
-  },
   methods: {
     preventClicks (e) {
       if (this.drag.threshold.crossed) {
@@ -73,5 +69,9 @@ export default {
 
       this.$emit('drag', { x, y })
     },
-  }
+  },
+  beforeDestroy () {
+    document.removeEventListener('mousemove', this.applyDrag)
+    document.removeEventListener('mouseup', this.stopDrag)
+  },
 }

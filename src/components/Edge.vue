@@ -162,8 +162,6 @@ export default {
         util.lineLine(x1, y1, x2, y2, box[2], box[1], box[2], box[3]), // right
         util.lineLine(x1, y1, x2, y2, box[0], box[3], box[2], box[3]) // bottom
       ].filter(i => i)
-
-
       const start = new Victor(x1, y1)
       return intersections
         .map(i => Object.assign(i, { distance: start.distance(new Victor(i.x, i.y)) }))

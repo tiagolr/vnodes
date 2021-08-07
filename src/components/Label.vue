@@ -24,7 +24,7 @@ export default {
   props: {
     edge: {
       type: Object,
-      required: true // { id, pathd } required
+      required: true // { id, pathd }
     },
     perc: {
       type: Number,

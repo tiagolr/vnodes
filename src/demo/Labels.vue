@@ -14,7 +14,7 @@
           :align="align"
           :rotate="rotate"
           :connector="connector"
-          :useDrag="false"
+          :useDrag="true"
           ref="label"
           @drag="onDrag">
             <div v-html="contents"></div>

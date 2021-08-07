@@ -6,7 +6,7 @@
 
 <script>
 /**
- * Use this component inside a node to offset a connector anchor into its position
+ * Offsets edges to its position when placed inside a node
  */
 export default {
   props: {

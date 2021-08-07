@@ -129,7 +129,7 @@ export default {
       const x = this.$el.clientWidth / 2 - (node.x + node.width / 2) * zoom + offsetX
       const y = this.$el.clientHeight / 2 - (node.y + node.height / 2) * zoom + offsetY
       this.panzoom.pan({ x, y })
-    }
+    },
   },
 }
 </script>
