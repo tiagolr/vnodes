@@ -3,16 +3,16 @@ import util from './util'
 import { flextree } from 'd3-flextree'
 
 export default class Graph {
-  constructor () {
+  constructor() {
     this.nodes = []
     this.edges = []
   }
 
-  positionNode ({ node, parent, dir = 'right', spacing = 40, invertOffset = false } = {}) {
+  positionNode({node, parent, dir = 'right', spacing = 40, invertOffset = false} = {}) {
     node = typeof node === 'string' ? this.nodes.find(n => n.id === node) : node
     parent = typeof parent === 'string' ? this.nodes.find(n => n.id === parent) : parent
     const pos = util.findPosition(node, parent, dir, this.nodes, spacing, invertOffset)
-    this.updateNode(node, { x: pos.x, y: pos.y })
+    this.updateNode(node, {x: pos.x, y: pos.y})
   }
 
   // refs
@@ -24,7 +24,7 @@ export default class Graph {
   // dagBuildEdges - delete all edges and build them from Dag
   // dagSetParent - change dag parent (string or array[string] => array[string])
 
-  graphNodes ({ nodes, edges, type = 'basic', dir = 'right', spacing = 40 } = {}) {
+  graphNodes({nodes, edges, type = 'basic', dir = 'right', spacing = 40} = {}) {
     nodes = nodes || this.nodes
     edges = edges || this.edges
 
@@ -51,11 +51,9 @@ export default class Graph {
         node.children.forEach(n => findPos(n, node))
       }
       dag
-        .filter(node => !node.parentIds.length)
-        .forEach(node => findPos(node, null))
-    } else
-
-    if (type === 'tree') {
+          .filter(node => !node.parentIds.length)
+          .forEach(node => findPos(node, null))
+    } else if (type === 'tree') {
       const layout = flextree()
       const flipH = (dir === 'left' || dir === 'right')
       const roots = dag.filter(n => !n.parentIds.length)
@@ -83,14 +81,18 @@ export default class Graph {
     }
   }
 
-  reset () {
-    while (this.edges.length) { this.edges.pop() }
-    while (this.nodes.length) { this.nodes.pop() }
+  reset() {
+    while (this.edges.length) {
+      this.edges.pop()
+    }
+    while (this.nodes.length) {
+      this.nodes.pop()
+    }
   }
 
-  createNode (fields = {}) {
+  createNode(fields = {}) {
     if (typeof fields === 'string') {
-      fields = { id: fields } // support a single id string or an object as params
+      fields = {id: fields} // support a single id string or an object as params
     }
     const node = Object.assign({
       id: uuid(),
@@ -104,13 +106,13 @@ export default class Graph {
     return node
   }
 
-  updateNode (node, fields = {}) {
+  updateNode(node, fields = {}) {
     if (typeof node === 'string') node = this.nodes.find(n => n.id === node)
     if (!node) throw new Error(`node ${node} does not exist`)
     return Object.assign(node, fields)
   }
 
-  removeNode (node) {
+  removeNode(node) {
     const index = this.nodes.indexOf(node)
     if (index > -1) {
       this.nodes.splice(index, 1)
@@ -118,7 +120,7 @@ export default class Graph {
     return index
   }
 
-  createEdge (from, to, fields = {}) {
+  createEdge(from, to, fields = {}) {
     if (arguments.length === 1) {
       // support calling with single argument
       fields = arguments[0]
@@ -136,8 +138,8 @@ export default class Graph {
       id: fields.id || `${from}@${to}`,
       from,
       to,
-      fromAnchor: { x: '50%', y: '50%' },
-      toAnchor: { x: '50%', y: '50%' },
+      fromAnchor: {x: '50%', y: '50%'},
+      toAnchor: {x: '50%', y: '50%'},
       type: 'linear',
       pathd: '', // reactive path
     }, fields)
@@ -146,15 +148,85 @@ export default class Graph {
     return edge
   }
 
-  updateEdge (edge, fields) {
+  updateEdge(edge, fields) {
     return Object.assign(edge, fields)
   }
 
-  removeEdge (edge) {
+  removeEdge(edge) {
     const index = this.edges.indexOf(edge)
     if (index > -1) {
       this.edges.splice(index, 1)
     }
     return index
+  }
+
+  reorderGraph() {
+    for(let i = 0; i < 100; i++){
+      let n = 0
+      for(let node of this.nodes){
+        for (let otherNode of this.nodes) {
+          if(otherNode.id === node.id){
+            continue
+          }
+          else{
+            let dx = otherNode.x - node.x;
+            let dy = otherNode.y - node.y;
+            let offset = Math.sqrt(dx * dx + dy * dy);
+            if(this.edges.find(edge => {
+              return (edge.to === node.id && edge.from === otherNode.id) ||
+                     (edge.from === node.id && edge.to === otherNode.id)
+            })){
+              if(offset < 500){
+                if (offset < 400) {
+                  if (offset < 200) {
+                    node.x -= dx;
+                    node.y -= dy;
+                  } else {
+                    node.x -= dx / 3;
+                    node.y -= dy / 3;
+                  }
+                } else {
+                  n++
+                  node.x += dx / 6;
+                  node.y += dy / 6;
+                }
+              }
+              else{
+                node.x -= 2*dx;
+                node.y -= 2*dy;
+              }
+            }
+            else{
+              if(offset < 1000){
+                if(offset < 100){
+                  node.x -= dx * 3;
+                  node.y -= dy * 3;
+                }
+                else{
+                  if(offset < 500){
+                    node.x -= dx / 3;
+                    node.y -= dy / 3;
+                  }
+                  else{
+                    node.x -= dx / 9;
+                    node.y -= dy / 9;
+                  }
+                }
+              }
+              else{
+                n++
+              }
+            }
+          }
+        }
+        let dx = 0 - node.x
+        let dy = 0 - node.y
+        node.x += dx / 15
+        node.y += dy / 15
+      }
+      if(n / this.nodes.length * this.nodes.length > 0.7){
+        break
+      }
+    }
   }
 }
