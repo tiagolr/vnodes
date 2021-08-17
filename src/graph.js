@@ -3,16 +3,16 @@ import util from './util'
 import { flextree } from 'd3-flextree'
 
 export default class Graph {
-  constructor() {
+  constructor () {
     this.nodes = []
     this.edges = []
   }
 
-  positionNode({node, parent, dir = 'right', spacing = 40, invertOffset = false} = {}) {
+  positionNode ({ node, parent, dir = 'right', spacing = 40, invertOffset = false } = {}) {
     node = typeof node === 'string' ? this.nodes.find(n => n.id === node) : node
     parent = typeof parent === 'string' ? this.nodes.find(n => n.id === parent) : parent
     const pos = util.findPosition(node, parent, dir, this.nodes, spacing, invertOffset)
-    this.updateNode(node, {x: pos.x, y: pos.y})
+    this.updateNode(node, { x: pos.x, y: pos.y })
   }
 
   // refs
@@ -24,7 +24,7 @@ export default class Graph {
   // dagBuildEdges - delete all edges and build them from Dag
   // dagSetParent - change dag parent (string or array[string] => array[string])
 
-  graphNodes({nodes, edges, type = 'basic', dir = 'right', spacing = 40} = {}) {
+  graphNodes ({ nodes, edges, type = 'basic', dir = 'right', spacing = 40 } = {}) {
     nodes = nodes || this.nodes
     edges = edges || this.edges
 
@@ -51,9 +51,11 @@ export default class Graph {
         node.children.forEach(n => findPos(n, node))
       }
       dag
-          .filter(node => !node.parentIds.length)
-          .forEach(node => findPos(node, null))
-    } else if (type === 'tree') {
+        .filter(node => !node.parentIds.length)
+        .forEach(node => findPos(node, null))
+    } else
+
+    if (type === 'tree') {
       const layout = flextree()
       const flipH = (dir === 'left' || dir === 'right')
       const roots = dag.filter(n => !n.parentIds.length)
@@ -81,18 +83,14 @@ export default class Graph {
     }
   }
 
-  reset() {
-    while (this.edges.length) {
-      this.edges.pop()
-    }
-    while (this.nodes.length) {
-      this.nodes.pop()
-    }
+  reset () {
+    while (this.edges.length) { this.edges.pop() }
+    while (this.nodes.length) { this.nodes.pop() }
   }
 
-  createNode(fields = {}) {
+  createNode (fields = {}) {
     if (typeof fields === 'string') {
-      fields = {id: fields} // support a single id string or an object as params
+      fields = { id: fields } // support a single id string or an object as params
     }
     const node = Object.assign({
       id: uuid(),
@@ -106,13 +104,13 @@ export default class Graph {
     return node
   }
 
-  updateNode(node, fields = {}) {
+  updateNode (node, fields = {}) {
     if (typeof node === 'string') node = this.nodes.find(n => n.id === node)
     if (!node) throw new Error(`node ${node} does not exist`)
     return Object.assign(node, fields)
   }
 
-  removeNode(node) {
+  removeNode (node) {
     const index = this.nodes.indexOf(node)
     if (index > -1) {
       this.nodes.splice(index, 1)
@@ -120,7 +118,7 @@ export default class Graph {
     return index
   }
 
-  createEdge(from, to, fields = {}) {
+  createEdge (from, to, fields = {}) {
     if (arguments.length === 1) {
       // support calling with single argument
       fields = arguments[0]
@@ -138,8 +136,8 @@ export default class Graph {
       id: fields.id || `${from}@${to}`,
       from,
       to,
-      fromAnchor: {x: '50%', y: '50%'},
-      toAnchor: {x: '50%', y: '50%'},
+      fromAnchor: { x: '50%', y: '50%' },
+      toAnchor: { x: '50%', y: '50%' },
       type: 'linear',
       pathd: '', // reactive path
     }, fields)
@@ -148,11 +146,11 @@ export default class Graph {
     return edge
   }
 
-  updateEdge(edge, fields) {
+  updateEdge (edge, fields) {
     return Object.assign(edge, fields)
   }
 
-  removeEdge(edge) {
+  removeEdge (edge) {
     const index = this.edges.indexOf(edge)
     if (index > -1) {
       this.edges.splice(index, 1)
