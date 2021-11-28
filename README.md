@@ -190,3 +190,4 @@ graph layouts https://www.yworks.com/products/yfiles/features#layout
 layered layouts https://github.com/erikbrinkman/d3-dag
 layered layouts https://www.yworks.com/pages/layered-graph-layout
 css animations demo/theme https://www.yworks.com/products/yfiles/features
+https://www.edrawmax.com/online/en/
