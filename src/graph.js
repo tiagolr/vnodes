@@ -1,4 +1,4 @@
-import uuid from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import util from './util'
 import { flextree } from 'd3-flextree'
 
@@ -93,7 +93,7 @@ export default class Graph {
       fields = { id: fields } // support a single id string or an object as params
     }
     const node = Object.assign({
-      id: uuid(),
+      id: uuidv4(),
       x: 0,
       y: 0,
       width: 50,
@@ -133,7 +133,7 @@ export default class Graph {
     if (!to) throw new Error('dest required')
 
     const edge = Object.assign({
-      id: uuid.v4(),
+      id: uuidv4(),
       from,
       to,
       fromAnchor: { x: '50%', y: '50%' },
