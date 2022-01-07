@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import uuid from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import Node from './Node'
 export default {
   components: {
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       pos: { x: 0, y: 0 },
-      node: { id: uuid() ,x: 250, y: 0, width: 100, height: 100},
+      node: { id: uuidv4() ,x: 250, y: 0, width: 100, height: 100},
       angle: 0,
     }
   },

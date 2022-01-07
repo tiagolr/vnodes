@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import uuid from 'uuid'
+import { v4 as uuidv4 } from 'uuid'
 import util from '../util'
 const Victor = require('victor');
 export default {
@@ -20,7 +20,7 @@ export default {
 
   mounted () {
     if (typeof this.data.id === 'undefined') {
-      this.$set(this.data, 'id', uuid())
+      this.$set(this.data, 'id', uuidv4())
     }
     if (typeof this.data.pathd === 'undefined') {
       this.$set(this.data, 'pathd', '')
