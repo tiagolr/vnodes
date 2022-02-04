@@ -1,5 +1,5 @@
 <template>
-  <path class="edge" :d="path" :id="data.id">
+  <path :class="['edge', orientation]" :d="path" :id="data.id">
   </path>
 </template>
 
@@ -11,7 +11,7 @@ export default {
   props: {
     data: { // graph edge referece
       type: Object,
-      required: true // { from: String|Object, to: String|Object }
+      required: true // { from: String|Object, to: String|Object, orientation: String }
     },
     nodes: { // graph nodes reference
       type: Array,
@@ -36,6 +36,19 @@ export default {
       : vm.data.to,
     fromAnchor: vm => vm.parseAnchor(vm.data.fromAnchor, vm.fromNode),
     toAnchor: vm => vm.parseAnchor(vm.data.toAnchor, vm.toNode),
+
+    orientation () {
+      switch (this.data.orientation) {
+        case 'start':
+          return 'marker-start';
+        case 'end':
+          return 'marker-end';
+        case 'both':
+          return 'marker-both';
+        default:
+          return 'marker-none';
+      }
+    },
 
     pos () {
       let x1 = this.fromNode.x + (this.fromAnchor.x || 0)
@@ -176,8 +189,22 @@ export default {
 .edge {
   stroke-width: 4;
   stroke: green;
-  /* marker-start: url(#arrow-start) */
-  marker-end: url(#arrow-end);
   fill: none;
+}
+.edge .marker-start {
+  marker-start: url(#arrow-start);
+  marker-end: unset;
+}
+.edge .marker-end {
+  marker-start: unset;
+  marker-end: url(#arrow-end);
+}
+.edge .marker-both {
+  marker-start: url(#arrow-start);
+  marker-end: url(#arrow-end);
+}
+.edge .marker-none {
+  marker-start: unset;
+  marker-end: unset;
 }
 </style>
