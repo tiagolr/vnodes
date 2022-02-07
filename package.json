@@ -28,6 +28,7 @@
   "dependencies": {
     "d3-dag": "^0.2.6",
     "d3-flextree": "^2.1.1",
+    "svg-pan-zoom": "^3.6.1",
     "victor": "^1.1.0"
   },
   "devDependencies": {
