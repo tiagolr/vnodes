@@ -4,7 +4,7 @@ Vue bare components to create svg interactive graphs, diagrams or node visual to
 
 ### Demo
 
-https://txlabs.github.io/vnodes/
+https://ripbizz.github.io/vnodes/
 
 ### Install
 
