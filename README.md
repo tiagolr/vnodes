@@ -4,7 +4,7 @@ Vue bare components to create svg interactive graphs, diagrams or node visual to
 
 ### Demo
 
-https://ripbizz.github.io/vnodes/
+https://gr1m1um.github.io/vnodes/
 
 ### Install
 
@@ -49,7 +49,7 @@ export default {
 
 ## Components
 
-Vnodes components are independent and can be used only when desired. Instead of locking into a complex framework, these components are designed to be minimal and still allow to build complex applications.
+Components are independent and can be imported separately.
 
 ### Screen
 
