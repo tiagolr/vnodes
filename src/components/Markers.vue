@@ -22,6 +22,12 @@
 </template>
 
 <script>
+/**
+ * markers util used to generate and manage markers such as arrow-start, arrow-end etc
+ * each default template can be overriden (color, scale, etc)
+ * place Markers component inside svg or screen to define the markers
+ * pass the property markers to add new markers based on default ones
+ */
 const defaults = [{
   id: 'arrow-start',
   type: 'arrow-start',
@@ -37,8 +43,7 @@ const defaults = [{
 
 export default {
   props: {
-    // array of marker objects { id:String, type:String, scale:Number, style:String }
-    markers: Array
+    markers: Array //[{ id:String, type:String, scale:Number, style:String }, ...]
   },
   computed: {
     all () {
@@ -49,7 +54,7 @@ export default {
           if (!base) {
             console.error('unknown marker', marker)
           } else {
-            return Object.assign({}, base, marker)
+            return Object.assign({}, base, marker) // replace marker default attrs
           }
         })
         .filter(marker => marker)

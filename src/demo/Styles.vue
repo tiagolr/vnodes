@@ -2,6 +2,8 @@
   <div class="demo" id="styles-demo">
     <div class="viewport">
       <screen ref="screen" v-if="visible">
+        <markers :markers="markers">
+        </markers>
         <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
         </edge>
         <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
@@ -9,7 +11,12 @@
       </screen>
     </div>
     <div class="sidebar">
-      <textarea v-model="theme" style="height: 100%"></textarea>
+      <div>Theme:</div>
+      <select v-model="themeSelect" style="width: 100%">
+        <option value="redish">redish</option>
+        <option value="blueprint">blueprint</option>
+      </select>
+      <textarea v-model="theme" style="height: calc(100% - 70px)"></textarea>
     </div>
   </div>
 </template>
@@ -20,22 +27,61 @@ import Screen from '../components/Screen'
 import Node from '../components/Node'
 import Edge from '../components/Edge'
 import graph from '../graph'
+import Markers from '../components/Markers.vue'
+
+const themes = {
+  redish: `
+.screen {
+  background-color: white
+}
+
+.node .content {
+  background-color: pink;
+  color: red;
+  box-shadow: inset 0px 0px 0px 4px red;
+}
+
+.edge {
+  stroke: red;
+  stroke-linejoin: round;
+  marker-end: url(#arrow-end-red);
+}
+`,
+  blueprint: `
+.screen {
+  background-color: #1A53A9
+}
+
+.node .content {
+  background-color: #559EF5;
+  color: #fff;
+  box-shadow: inset 0px 0px 0px 4px #fff;
+}
+
+.edge {
+  stroke: #fff;
+  stroke-linejoin: round;
+  marker-end: none  ;
+}
+  `
+}
 
 export default {
   components: {
     Screen,
     Node,
     Edge,
+    Markers
   },
   data() {
     return {
+      themeSelect: 'redish',
       graph: new graph(),
       visible: true,
-      theme: `
-.node .content {
-  background-color: pink;
-}
-`.trim(),
+      markers: [{
+        id:'arrow-end-red', type:'arrow-end', scale:0.5, style:'fill: red',
+      }],
+      theme: themes['redish'].trim()
     }
   },
   mounted () {
@@ -45,26 +91,23 @@ export default {
     this.graph.createNode('d')
     this.graph.createNode('e')
     this.graph.createNode('f')
-    this.graph.createNode('g')
-    this.graph.createNode('h')
-    this.graph.createNode('i')
 
     const fromAnchor = 'rect'
     const toAnchor = 'rect'
     this.graph.createEdge('a', 'b', {fromAnchor, toAnchor})
     this.graph.createEdge('a', 'c', {fromAnchor, toAnchor})
     this.graph.createEdge('a', 'd', {fromAnchor, toAnchor})
-    this.graph.createEdge('d', 'e', {fromAnchor, toAnchor})
+    this.graph.createEdge('c', 'e', {fromAnchor, toAnchor})
     this.graph.createEdge('e', 'f', {fromAnchor, toAnchor})
-    this.graph.createEdge('f', 'g', {fromAnchor, toAnchor})
-    this.graph.createEdge('f', 'h', {fromAnchor, toAnchor})
-    this.graph.createEdge('f', 'i', {fromAnchor, toAnchor})
 
-    this.graph.graphNodes({ type: 'tree' })
+    this.graph.graphNodes({ type: 'tree', spacing: 50 })
     this.applyTheme();
     window.t = this
   },
   methods: {
+    selectTheme(theme) {
+      this.theme = themes[theme]
+    },
     forceRender () {
       this.visible = false
       return this
@@ -77,10 +120,7 @@ export default {
         })
     },
     async applyTheme () {
-
-      // TRY
-      // ref.$forceUpdate()
-      // ref.$mount()
+      // parse theme rules
       let rules
       try {
         rules = parse(this.theme)
@@ -89,7 +129,7 @@ export default {
       } catch (e) {
         return;
       }
-
+      // apply each rule to its selector elements
       await this.forceRender();
       rules.forEach(rule => {
         const sel = rule.selectors.length ? '#styles-demo ' + rule.selectors.join(', ') : ''
@@ -106,7 +146,8 @@ export default {
     }
   },
   watch: {
-    theme: 'applyTheme'
+    theme: 'applyTheme',
+    themeSelect: 'selectTheme'
   }
 }
 </script>

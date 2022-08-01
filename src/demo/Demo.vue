@@ -7,10 +7,10 @@
     </h2>
     <sink>
     </sink>
-<!--
-    <h2>CSS <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
+
+    <h2>Styles <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
     <styles>
-    </styles> -->
+    </styles>
 
     <h2>Edit <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Edit.vue" target="_blank">&lt;/&gt;</a></h2>
     <edit>
