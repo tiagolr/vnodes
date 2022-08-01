@@ -16,7 +16,17 @@
         <option value="redish">redish</option>
         <option value="blueprint">blueprint</option>
       </select>
-      <textarea v-model="theme" style="height: calc(100% - 70px)"></textarea>
+      <!-- <textarea v-model="theme" style="height: calc(100% - 70px)"></textarea> -->
+      <codemirror v-model="theme" :options="{
+          mode: 'text/css',
+          theme: 'default',
+          lineWrapping: true,
+          scrollbarStyle: null,
+          styleActiveLine: true,
+          line: true,
+        }"
+        style="font-size: 13.3333px; font-family: monospace; -webkit-text-size-adjust: 100%; height: 120%"
+      ></codemirror>
     </div>
   </div>
 </template>
@@ -28,6 +38,9 @@ import Node from '../components/Node'
 import Edge from '../components/Edge'
 import graph from '../graph'
 import Markers from '../components/Markers.vue'
+import { codemirror } from 'vue-codemirror'
+import 'codemirror/mode/css/css.js'
+import 'codemirror/lib/codemirror.css'
 
 const themes = {
   redish: `
@@ -71,7 +84,8 @@ export default {
     Screen,
     Node,
     Edge,
-    Markers
+    Markers,
+    codemirror
   },
   data() {
     return {
@@ -106,7 +120,7 @@ export default {
   },
   methods: {
     selectTheme(theme) {
-      this.theme = themes[theme]
+      this.theme = themes[theme].trim()
     },
     forceRender () {
       this.visible = false
@@ -153,4 +167,13 @@ export default {
 </script>
 
 <style>
+#styles-demo .CodeMirror {
+  width: 100%;
+  height: 425px;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  background-color: #f1f1f1;
+  border: 1px solid #f1f1f1;
+}
 </style>
