@@ -8,17 +8,11 @@
     <sink>
     </sink>
 
-    <h2>Markers <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Markers.vue" target="_blank">&lt;/&gt;</a></h2>
-    <markers>
-    </markers>
 
-    <h2>Styles <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
-    <styles>
-    </styles>
 
-    <h2>Edit <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Edit.vue" target="_blank">&lt;/&gt;</a></h2>
+    <!-- <h2>Edit <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Edit.vue" target="_blank">&lt;/&gt;</a></h2>
     <edit>
-    </edit>
+    </edit> -->
 
     <h2>Ports <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Ports.vue" target="_blank">&lt;/&gt;</a></h2>
     <ports>
@@ -31,6 +25,14 @@
     <h2>Labels <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue" target="_blank">&lt;/&gt;</a></h2>
     <labels>
     </labels>
+
+     <h2>Styles <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
+    <styles>
+    </styles>
+
+    <h2>Markers <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Markers.vue" target="_blank">&lt;/&gt;</a></h2>
+    <markers>
+    </markers>
 
     <h2>Benchpress <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Benchmark.vue" target="_blank">&lt;/&gt;</a></h2>
     <benchpress>

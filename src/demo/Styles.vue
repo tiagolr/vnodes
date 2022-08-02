@@ -13,8 +13,8 @@
     <div class="sidebar">
       <div>Theme:</div>
       <select v-model="themeSelect" style="width: 100%">
-        <option value="redish">redish</option>
         <option value="blueprint">blueprint</option>
+        <option value="reds">reds</option>
       </select>
       <!-- <textarea v-model="theme" style="height: calc(100% - 70px)"></textarea> -->
       <codemirror v-model="theme" :options="{
@@ -43,7 +43,7 @@ import 'codemirror/mode/css/css.js'
 import 'codemirror/lib/codemirror.css'
 
 const themes = {
-  redish: `
+  reds: `
 .screen {
   background-color: white
 }
@@ -74,7 +74,8 @@ const themes = {
 .edge {
   stroke: #fff;
   stroke-linejoin: round;
-  marker-end: none  ;
+  marker-start: url(#circle-white);
+  marker-end: url(#circle-white);
 }
   `
 }
@@ -89,13 +90,14 @@ export default {
   },
   data() {
     return {
-      themeSelect: 'redish',
+      themeSelect: 'blueprint',
       graph: new graph(),
       visible: true,
-      markers: [{
-        id:'arrow-end-red', type:'arrow-end', scale:0.5, style:'fill: red',
-      }],
-      theme: themes['redish'].trim()
+      markers: [
+        {id:'arrow-end-red', type:'arrow-end', scale:0.5, style:'fill: red'} ,
+        {id:'circle-white', type:'circle', scale:1, style:'fill: white'},
+      ],
+      theme: themes['blueprint'].trim()
     }
   },
   mounted () {
