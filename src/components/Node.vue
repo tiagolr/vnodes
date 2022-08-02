@@ -8,7 +8,7 @@
     :height="data.height + margin * 2"
     @mousedown="onMousedown">
       <div class="outer" :style="`padding: ${margin}px;`">
-        <div class="content" :class="background && 'background'" ref="content">
+        <div class="content" :class="background && 'background'" ref="content" v-bind="$attrs">
           <div v-if="!$slots.default" class="default-label">
             {{ data.id }}
           </div>

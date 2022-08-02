@@ -8,6 +8,10 @@
     <sink>
     </sink>
 
+    <h2>Markers <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Markers.vue" target="_blank">&lt;/&gt;</a></h2>
+    <markers>
+    </markers>
+
     <h2>Styles <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
     <styles>
     </styles>
@@ -42,6 +46,7 @@ import Labels from './Labels'
 import Benchpress from './Benchmark'
 import Styles from './Styles'
 import Groups from './Groups'
+import Markers from './Markers.vue'
 export default {
   components: {
     Sink,
@@ -51,6 +56,7 @@ export default {
     Benchpress,
     Styles,
     Groups,
+    Markers,
   },
 }
 </script>
