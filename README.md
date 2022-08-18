@@ -1,6 +1,6 @@
 # vnodes
 
-Vue bare components to create svg interactive graphs, diagrams or node visual tools.
+Vue 2.x components to create svg interactive graphs, diagrams or node visual tools.
 
 ### Demo
 
