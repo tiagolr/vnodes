@@ -18,7 +18,7 @@
       </div>
   </foreignObject>
 </template>
-<
+
 <script>
 import dragMixin from '../mixins/drag'
 export default {
