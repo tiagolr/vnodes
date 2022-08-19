@@ -54,10 +54,12 @@ export default {
     if (this.fit) {
       this.fitContent()
     }
-    this.$on('drag', ({ x, y }) => {
-      this.data.x += x
-      this.data.y += y
-    })
+    if (this.$on) { // vue3 patch
+      this.$on('drag', ({ x, y }) => {
+        this.data.x += x
+        this.data.y += y
+      })
+    }
   },
   methods: {
     fitContent () {

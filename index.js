@@ -6,6 +6,13 @@ import Group from './src/components/Group.vue'
 import Port from './src/components/Port.vue'
 import Label from './src/components/Label.vue'
 
+export { graph }
+export { Screen }
+export { Node }
+export { Edge }
+export { Group }
+export { Port }
+export { Label }
 export default {
   graph,
   Screen,

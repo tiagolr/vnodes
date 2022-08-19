@@ -18,13 +18,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import SinkSidebar from './SinkSidebar'
-import Screen from '../components/Screen'
-import Node from '../components/Node'
-import Edge from '../components/Edge'
-import Group from '../components/Group'
-import graph from '../graph'
+import { Screen, Node, Edge, Group, graph } from '../../index'
 
 export default {
   components: {
