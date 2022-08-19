@@ -67,7 +67,7 @@ export default {
         }
       }
 
-      this.$emit('drag', { x, y })
+      this.onDrag({ x, y })
     },
   },
   beforeDestroy () {

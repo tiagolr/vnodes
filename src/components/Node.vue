@@ -54,14 +54,12 @@ export default {
     if (this.fit) {
       this.fitContent()
     }
-    if (this.$on) { // vue3 patch
-      this.$on('drag', ({ x, y }) => {
-        this.data.x += x
-        this.data.y += y
-      })
-    }
   },
   methods: {
+    onDrag ({ x,y }) {
+      this.data.x += x
+      this.data.y += y
+    },
     fitContent () {
       this.data.width = this.$refs.content.offsetWidth
       this.data.height = this.$refs.content.offsetHeight
