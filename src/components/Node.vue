@@ -59,6 +59,7 @@ export default {
     onDrag ({ x,y }) {
       this.data.x += x
       this.data.y += y
+      this.$emit('drag', { x, y })
     },
     fitContent () {
       this.data.width = this.$refs.content.offsetWidth
