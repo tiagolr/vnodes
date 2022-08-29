@@ -235,17 +235,17 @@ export default {
 }
 
 .port-inner:hover {
-  background-color: rgb(0, 204, 255);
+  background-color: rgb(2, 219, 67);
 }
 
 .port-inner.connected {
-  background-color: rgb(0, 217, 255);
+  background-color: rgb(2, 219, 67);
 }
 
 .node-header {
   text-align: left;
   padding-left: 10px;
-  background-color: rgb(96, 170, 255);
+  background-color: rgb(40, 150, 95);
   border-radius: 5px 5px 0 0;
   color: rgb(255, 255, 255);
 }
