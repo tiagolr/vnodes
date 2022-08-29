@@ -8,9 +8,9 @@
           :key="edge.id"
         ></edge>
         <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
-          <div style="text-align: center"><strong>{{ node.id }}</strong></div>
+          <div class="node-header"><strong>{{ node.id }}</strong></div>
           <table>
-            <td>
+            <td style="border-bottom: none">
               <tr v-for="input in node.inputs" :key="node.id+':'+input">
                   <port ref="port"
                     :id="node.id+':'+input"
@@ -24,7 +24,7 @@
                 {{ input.slice(1) }}
               </tr>
             </td>
-            <td>
+            <td style="border-bottom: none">
               <tr v-for="output in node.outputs" :key="node.id+':'+output">
                 {{ output.slice(1) }}
                 <port ref="port"
@@ -229,17 +229,39 @@ export default {
   width: 15px;
   height: 15px;
   border-radius: 10px;
-  background-color: red;
+  background-color: #abc;
   display: inline-block;
   cursor: pointer;
 }
 
 .port-inner:hover {
-  background-color: blue;
+  background-color: rgb(0, 204, 255);
 }
 
 .port-inner.connected {
-  background-color: yellow;
+  background-color: rgb(0, 217, 255);
 }
 
+.node-header {
+  text-align: left;
+  padding-left: 10px;
+  background-color: rgb(96, 170, 255);
+  border-radius: 5px 5px 0 0;
+  color: rgb(255, 255, 255);
+}
+</style>
+
+<style>
+#ports-demo .node .content {
+  background-color: #eee;
+  box-shadow: 2px 2px 2px 2px rgb(100, 100, 100, .5);
+  /* outline: 2px solid #555; */
+}
+
+#ports-demo .edge {
+  stroke: rgb(117, 117, 117);
+  stroke-linejoin: round;
+  marker-start: none;
+  marker-end: none;
+}
 </style>
