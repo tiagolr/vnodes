@@ -94,6 +94,18 @@ export default {
         const c2 = { x: pos.x2, y: pos.y2 + distY / 2 }
         pathd += ` C ${c1.x},${c1.y} ${c2.x},${c2.y} `
       }
+      else if (this.data.type === 'ortho' && Math.abs(distX) >= Math.abs(distY)) {
+        // add two horizontal points
+        const c1 = { x: pos.x1 - distX / 2, y: pos.y1 }
+        const c2 = { x: pos.x2 + distX / 2, y: pos.y2 }
+        pathd += ` ${c1.x},${c1.y} ${c2.x},${c2.y} `
+      }
+      else if (this.data.type === 'ortho' && Math.abs(distY) > Math.abs(distX)) {
+        // add two vertical points
+        const c1 = { x: pos.x1, y: pos.y1 - distY / 2 }
+        const c2 = { x: pos.x2, y: pos.y2 + distY / 2 }
+        pathd += ` ${c1.x},${c1.y} ${c2.x},${c2.y} `
+      }
 
       pathd += ` ${pos.x2} ${pos.y2}`
       this.data.pathd = pathd;

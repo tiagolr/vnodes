@@ -26,6 +26,7 @@
        <select v-model="connType">
         <option value="linear">linear</option>
         <option value="smooth">smooth</option>
+        <option value="ortho">ortho</option>
         <option value="hsmooth">hsmooth</option>
         <option value="vsmooth">vsmooth</option>
       </select>
@@ -60,7 +61,7 @@
       return {
         graphType: 'basic',
         graphDir: 'right',
-        graphText: 'a/b/c\nb/d',
+        graphText: 'a/b/c\nb/d/e/f/g\ne/i',
         graphError: '',
         graphNodesFilter: '',
         connType: '',
