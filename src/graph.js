@@ -15,15 +15,6 @@ export default class Graph {
     this.updateNode(node, { x: pos.x, y: pos.y })
   }
 
-  // refs
-  // https://gojs.net
-
-  // TODO
-  // dagLoad - set [nodes] and [edges] from dag
-  // dagBuild - builds and saves dag info into nodes
-  // dagBuildEdges - delete all edges and build them from Dag
-  // dagSetParent - change dag parent (string or array[string] => array[string])
-
   graphNodes ({ nodes, edges, type = 'basic', dir = 'right', spacing = 40 } = {}) {
     nodes = nodes || this.nodes
     edges = edges || this.edges
@@ -158,6 +149,9 @@ export default class Graph {
     return index
   }
 
+  /**
+   * Force-directed layout by @emeric254
+   */
   reorderGraph() {
     for(let i = 0; i < 200; i++){
       let n = 0
