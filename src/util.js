@@ -133,11 +133,25 @@ const dagToFlextree = (node, graph, flipXY=false, spacing=40) => {
   })
 }
 
+function lineRect(x1, x2, y1, y2, rect) {
+  const box = [ rect.x, rect.y, rect.x + rect.width, rect.y + rect.height]
+  const intersections = [
+    lineLine(x1, y1, x2, y2, box[0], box[1], box[0], box[3]), // left
+    lineLine(x1, y1, x2, y2, box[0], box[1], box[2], box[1]), // top
+    lineLine(x1, y1, x2, y2, box[2], box[1], box[2], box[3]), // right
+    lineLine(x1, y1, x2, y2, box[0], box[3], box[2], box[3]) // bottom
+  ].filter(i => i)
+
+  return intersections
+    .map(i => Object.assign(i, { distance: Math.sqrt((x1 - i.x) ** 2 + (y1 - i.y) ** 2) }))
+    .sort((a, b) => a.distance < b.distance ? 1 : -1) // order intersections by distance
+    .pop()
+}
+
 const eps = 0.0000001;
 function between(a, b, c) {
   return a - eps <= b && b <= c + eps;
 }
-
 function lineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
   var x = ((x1 * y2 - y1 * x2) * (x3 - x4) - (x1 - x2) * (x3 * y4 - y3 * x4)) /
     ((x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4));
@@ -192,5 +206,6 @@ export default {
   dagToFlextree,
   boxBox,
   boxBoxes,
-  lineLine
+  lineLine,
+  lineRect
 }

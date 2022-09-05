@@ -51,7 +51,7 @@ export default {
           y1 += vec.y * radius
         }
         if (this.fromAnchor.snap === 'rect') {
-          const i = this.rectIntersect(x2, x1, y2, y1, this.fromNode)
+          const i = util.lineRect(x2, x1, y2, y1, this.fromNode)
           if (i) {
             x1 = i.x
             y1 = i.y
@@ -66,7 +66,7 @@ export default {
           y2 -= vec.y * radius
         }
         if (this.toAnchor.snap === 'rect') {
-          const i = this.rectIntersect(x1, x2, y1, y2, this.toNode)
+          const i = util.lineRect(x1, x2, y1, y2, this.toNode)
           if (i) {
             x2 = i.x
             y2 = i.y
@@ -166,20 +166,7 @@ export default {
         snap
       }
     },
-    rectIntersect(x1, x2, y1, y2, rect) {
-      const box = [ rect.x, rect.y, rect.x + rect.width, rect.y + rect.height]
-      const intersections = [
-        util.lineLine(x1, y1, x2, y2, box[0], box[1], box[0], box[3]), // left
-        util.lineLine(x1, y1, x2, y2, box[0], box[1], box[2], box[1]), // top
-        util.lineLine(x1, y1, x2, y2, box[2], box[1], box[2], box[3]), // right
-        util.lineLine(x1, y1, x2, y2, box[0], box[3], box[2], box[3]) // bottom
-      ].filter(i => i)
-      const start = new Victor(x1, y1)
-      return intersections
-        .map(i => Object.assign(i, { distance: start.distance(new Victor(i.x, i.y)) }))
-        .sort((a, b) => a.distance < b.distance ? 1 : -1) // order intersections by distance
-        .pop()
-    }
+
   },
 }
 </script>
