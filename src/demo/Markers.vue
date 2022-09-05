@@ -67,33 +67,14 @@ export default {
       markers: [
         { id:'arrow-start-blue', type:'arrow-start', scale:0.5, style:'fill: blue'},
         { id:'arrow-end-blue', type:'arrow-end', scale:0.5, style:'fill: blue' },
-        { id:'squared', type:'square', scale: 1, style:'fill: blue'},
+        { id:'squared', type:'square', scale: 1, style:'fill: blue;'},
         { id:'circular', type:'circle', scale: 1, style:'fill: blue'},
         { id:'crossed', type:'cross', scale: 1, style:'stroke: blue'},
         { id:'arrow-slim-start-blue', type:'arrow-slim-start', scale: .5, style:'stroke: blue'},
         { id:'arrow-slim-end-blue', type:'arrow-slim-end', scale: .5, style:'stroke: blue'},
       ],
     }
-  },
-  mounted () {
-    // this.graph.createNode('a')
-    // this.graph.createNode('b')
-    // this.graph.createNode('c')
-    // this.graph.createNode('d')
-    // this.graph.createNode('e')
-    // this.graph.createNode('f')
-
-    // const fromAnchor = 'rect'
-    // const toAnchor = 'rect'
-    // this.graph.createEdge('a', 'b', {fromAnchor, toAnchor})
-    // this.graph.createEdge('a', 'c', {fromAnchor, toAnchor})
-    // this.graph.createEdge('a', 'd', {fromAnchor, toAnchor})
-    // this.graph.createEdge('c', 'e', {fromAnchor, toAnchor})
-    // this.graph.createEdge('e', 'f', {fromAnchor, toAnchor})
-
-    // this.graph.graphNodes({ type: 'tree', spacing: 50 })
-    // this.applyTheme();
-  },
+  }
 }
 </script>
 

@@ -8,7 +8,7 @@
       :refX="1 * marker.scale"
       :refY="5 * marker.scale">
         <path d="M0,5 L10,10 L10,0 L0,5"
-          :style="`${marker.style};transform: scale(${marker.scale})`"/>
+          :style="`transform: scale(${marker.scale});${marker.style}`"/>
     </marker>
     <marker v-if="marker.type === 'arrow-end'"
       :id="marker.id" orient="auto"
@@ -26,7 +26,7 @@
       :refX="2.5 * marker.scale"
       :refY="2.5 * marker.scale">
         <rect x="0" y="0" width="5" height="5"
-          :style="`${marker.style};transform: scale(${marker.scale})`">
+          :style="`transform: scale(${marker.scale});${marker.style}`">
         </rect>
     </marker>
     <marker v-if="marker.type === 'circle'"
@@ -36,7 +36,7 @@
       :refX="2.5 * marker.scale"
       :refY="2.5 * marker.scale">
         <circle cx="2.5" cy="2.5" r="2.5"
-          :style="`${marker.style};transform: scale(${marker.scale})`">
+          :style="`transform: scale(${marker.scale});${marker.style}`">
         </circle>
     </marker>
     <marker v-if="marker.type === 'cross'" :id="marker.id"
@@ -44,8 +44,8 @@
       :markerHeight="13 * marker.scale"
       fill="none" refX="5" refY="5" position="50%">
        <path d="M 3,3 L 7,7 M 3,7 L 7,3"
-             fill="none" stroke="green" stroke-width="2"
-             :style="`${marker.style};transform: scale(${marker.scale})`"/>
+          fill="none" stroke="green" stroke-width="2"
+          :style="`transform: scale(${marker.scale});${marker.style}`"/>
      </marker>
      <marker v-if="marker.type === 'arrow-slim-start'"
       :id="marker.id" orient="auto"
@@ -55,7 +55,7 @@
       :refY="5 * marker.scale"
       fill="none" stroke="green" stroke-width="2" stroke-linecap="round">
         <path d="M1,5 L9,9 M9,1 L1,5"
-          :style="`${marker.style};transform: scale(${marker.scale})`"/>
+          :style="`transform: scale(${marker.scale});${marker.style}`"/>
     </marker>
     <marker v-if="marker.type === 'arrow-slim-end'"
       :id="marker.id" orient="auto"
@@ -65,7 +65,7 @@
       :refY="5 * marker.scale" stroke-linecap="round"
       fill="none" stroke="green" stroke-width="2">
         <path d="M10,5 L1,1 M10,5 L1,9"
-        :style="`${marker.style};transform: scale(${marker.scale})`"/>
+        :style="`transform: scale(${marker.scale});${marker.style}`"/>
     </marker>
   </g>
 </g>
@@ -75,7 +75,7 @@
 /**
  * markers util used to generate and manage markers
  * each default template can be overriden (color, scale, etc)
- * markers component is available from Screen component
+ * markers component instance is available from Screen component
  */
 const defaults = [{
   id: 'arrow-start',
