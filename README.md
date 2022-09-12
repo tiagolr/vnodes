@@ -4,7 +4,7 @@ Vue components to create svg interactive graphs, diagrams or node visual tools.
 
 ### Demo
 
-https://gr1m1um.github.io/vnodes/
+https://tiagolr.github.io/vnodes/
 
 ### Install
 
