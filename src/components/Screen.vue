@@ -38,6 +38,7 @@ export default {
       dblClickZoomEnabled: false,
       mouseWheelZoomEnabled: true,
       preventMouseEventsDefault: true,
+      controlIconsEnabled: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent),
       fit: false,
       contain: false,
       center: false,
