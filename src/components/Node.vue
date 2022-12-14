@@ -6,7 +6,9 @@
     :y="data.y - margin"
     :width="data.width + margin * 2"
     :height="data.height + margin * 2"
-    @mousedown="onMousedown">
+    @mousedown="onMousedown"
+    @touchstart="onMousedown"
+    >
       <div class="outer" :style="`padding: ${margin}px;`">
         <div class="content" :class="background && 'background'" ref="content" v-bind="$attrs">
           <div v-if="!$slots.default" class="default-label">

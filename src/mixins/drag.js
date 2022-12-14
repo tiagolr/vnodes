@@ -37,19 +37,32 @@ export default {
         }
         parent = parent.$parent
       }
+      // touch normalize
+      if (e.touches && e.touches.length) {
+        e.clientX = e.touches[0].clientX
+        e.clientY = e.touches[0].clientY
+      }
       this.drag.active = true
       this.drag.prev = { x: e.clientX, y: e.clientY }
       this.drag.threshold = {x: 0, y: 0, crossed: false}
       document.addEventListener('mouseup', this.stopDrag)
+      document.addEventListener('touchend', this.stopDrag)
       document.addEventListener('mousemove', this.applyDrag)
+      document.addEventListener('touchmove', this.applyDrag)
       document.addEventListener('click', this.preventClicks, true)
     },
     stopDrag () {
       this.drag.active = false
       document.removeEventListener('mouseup', this.stopDrag)
+      document.removeEventListener('touchend', this.stopDrag)
       document.removeEventListener('mousemove', this.applyDrag)
+      document.removeEventListener('touchmove', this.applyDrag)
     },
     applyDrag (e) {
+      if (e.touches && e.touches.length) {
+        e.clientX = e.touches[0].clientX
+        e.clientY = e.touches[0].clientY
+      }
       let x = (e.clientX - this.drag.prev.x) / this.drag.zoom
       let y = (e.clientY - this.drag.prev.y) / this.drag.zoom
       this.drag.prev = {x: e.clientX, y: e.clientY}
@@ -66,7 +79,6 @@ export default {
           y += this.drag.threshold.y
         }
       }
-
       this.onDrag({ x, y })
     },
   },
