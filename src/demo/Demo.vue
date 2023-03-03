@@ -99,18 +99,24 @@ body {
   max-width: 200px;
   flex-shrink: 0;
 }
+
 @media only screen and (max-width: 1000px) {
-  /* .demo {
-    flex-flow: column wrap;
+  .demo {
+    flex-wrap: wrap;
   }
   .viewport {
     width: 100%;
   }
   .sidebar {
-    max-width: 100%;
-    width: 100%;
-    padding: 0;
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    min-width: calc(100%);
+    gap: 10px;
     margin-top: 20px;
-  } */
+  }
+  h2 {
+    width: 100% !important;
+  }
 }
 </style>
