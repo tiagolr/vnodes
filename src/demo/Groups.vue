@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import Screen from '../components/Screen'
-import Node from '../components/Node'
-import Edge from '../components/Edge'
-import Group from '../components/Group'
+import Screen from '../components/Screen.vue'
+import Node from '../components/Node.vue'
+import Edge from '../components/Edge.vue'
+import Group from '../components/Group.vue'
 import graph from '../graph'
 
 export default {

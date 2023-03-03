@@ -8,8 +8,6 @@
     <sink>
     </sink>
 
-
-
     <!-- <h2>Edit <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Edit.vue" target="_blank">&lt;/&gt;</a></h2>
     <edit>
     </edit> -->
@@ -41,13 +39,13 @@
 </template>
 
 <script>
-import Sink from './Sink'
-import Edit from './Edit'
-import Ports from './Ports'
-import Labels from './Labels'
-import Benchpress from './Benchmark'
-import Styles from './Styles'
-import Groups from './Groups'
+import Sink from './Sink.vue'
+import Edit from './Edit.vue'
+import Ports from './Ports.vue'
+import Labels from './Labels.vue'
+import Benchpress from './Benchmark.vue'
+import Styles from './Styles.vue'
+import Groups from './Groups.vue'
 import Markers from './Markers.vue'
 export default {
   components: {
@@ -73,7 +71,7 @@ h2 a {
   font-size: 0.75em;
   float: right
 }
-</styles>
+</style>
 
 <style>
 .screen {

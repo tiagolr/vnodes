@@ -17,15 +17,12 @@
         <option value="reds">reds</option>
       </select>
       <!-- <textarea v-model="theme" style="height: calc(100% - 70px)"></textarea> -->
-      <codemirror v-model="theme" :options="{
-          mode: 'text/css',
-          theme: 'default',
-          lineWrapping: true,
-          scrollbarStyle: null,
-          styleActiveLine: true,
-          line: true,
-        }"
-        style="font-size: 13.3333px; font-family: monospace; -webkit-text-size-adjust: 100%; height: 120%"
+      <codemirror 
+        v-model="theme"
+        :indent-with-tab="true"
+        :tab-size="2"
+        :extensions="[css()]"
+        style="font-size: 13.3333px; font-family: monospace; height: 425px; width: 100%"
       ></codemirror>
     </div>
   </div>
@@ -33,14 +30,15 @@
 
 <script>
 import parse from 'css-parse'
-import Screen from '../components/Screen'
-import Node from '../components/Node'
-import Edge from '../components/Edge'
+import Screen from '../components/Screen.vue'
+import Node from '../components/Node.vue'
+import Edge from '../components/Edge.vue'
 import graph from '../graph'
 import Markers from '../components/Markers.vue'
-import { codemirror } from 'vue-codemirror'
-import 'codemirror/mode/css/css.js'
-import 'codemirror/lib/codemirror.css'
+import { Codemirror } from 'vue-codemirror'
+import { css } from '@codemirror/lang-css'
+// import 'codemirror/mode/css/css.js'
+// import 'codemirror/lib/codemirror.css'
 
 const themes = {
   reds: `
@@ -86,10 +84,11 @@ export default {
     Node,
     Edge,
     Markers,
-    codemirror
+    Codemirror
   },
   data() {
     return {
+      css,
       themeSelect: 'blueprint',
       graph: new graph(),
       visible: true,
@@ -169,7 +168,7 @@ export default {
 </script>
 
 <style>
-#styles-demo .CodeMirror {
+/* #styles-demo .CodeMirror {
   width: 100%;
   height: 425px;
   margin: 0;
@@ -177,5 +176,5 @@ export default {
   position: relative;
   background-color: #f1f1f1;
   border: 1px solid #f1f1f1;
-}
+} */
 </style>

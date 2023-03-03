@@ -6,7 +6,7 @@
 <script>
 import { v4 as uuidv4 } from 'uuid'
 import util from '../util'
-const Victor = require('victor');
+import Victor from 'victor'
 export default {
   props: {
     data: { // graph edge referece
@@ -20,10 +20,18 @@ export default {
 
   mounted () {
     if (typeof this.data.id === 'undefined') {
-      this.$set(this.data, 'id', uuidv4())
+      if (this.$set) { // vue 2
+        this.$set(this.data, 'id', uuidv4())
+      } else { // vue 3
+        this.data['id'] = uuidv4()
+      }
     }
     if (typeof this.data.pathd === 'undefined') {
-      this.$set(this.data, 'pathd', '')
+      if (this.$set) { // vue 2
+        this.$set(this.data, 'pathd', '')
+      } else { // vue 3
+        this.data['pathd'] = ''
+      }
     }
   },
 

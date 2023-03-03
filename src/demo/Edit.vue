@@ -32,22 +32,22 @@
 </template>
 
 <script>
-import Screen from '../components/Screen'
-import Node from '../components/Node'
-import Edge from '../components/Edge'
+import Screen from '../components/Screen.vue'
+import Node from '../components/Node.vue'
+import Edge from '../components/Edge.vue'
 import graph from '../graph'
 import pretty from 'pretty'
 import stringify from 'javascript-stringify'
-import { codemirror } from 'vue-codemirror'
-import 'codemirror/mode/javascript/javascript.js'
-import 'codemirror/lib/codemirror.css'
+import { Codemirror } from 'vue-codemirror'
+// import 'codemirror/mode/javascript/javascript.js'
+// import 'codemirror/lib/codemirror.css'
 
 export default {
   components: {
     Screen,
     Node,
     Edge,
-    codemirror
+    Codemirror
   },
   data() {
     return {

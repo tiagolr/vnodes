@@ -48,10 +48,10 @@
 </template>
 
 <script>
-import Screen from '../components/Screen'
-import Node from '../components/Node'
-import Edge from '../components/Edge'
-import Port from '../components/Port'
+import Screen from '../components/Screen.vue'
+import Node from '../components/Node.vue'
+import Edge from '../components/Edge.vue'
+import Port from '../components/Port.vue'
 import graph from '../graph'
 export default {
   components: {

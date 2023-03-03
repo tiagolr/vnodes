@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import SinkSidebar from './SinkSidebar'
+import SinkSidebar from './SinkSidebar.vue'
 import { Screen, Node, Edge, Group, graph } from '../../index'
 
 export default {

@@ -52,7 +52,6 @@
 </template>
 
 <script>
-  import Vue from 'vue'
   export default {
     props: {
       graph: { required: true }
@@ -165,7 +164,7 @@
     },
     watch: {
       parsedGraph () {
-        Vue.nextTick(this.createNodes)
+        this.$nextTick(this.createNodes)
       },
       connType (type) {
         this.graph.edges.forEach(edge => {

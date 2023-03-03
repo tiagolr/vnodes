@@ -1,11 +1,11 @@
 {
   "name": "vnodes",
-  "version": "1.1.17",
+  "version": "1.2.0",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "pages": "vue-cli-service build && git add . && git commit -m gh-pages && git subtree push --prefix dist origin gh-pages",
-    "start": "npm run serve"
+    "dev": "vite",
+    "build": "vite build",
+    "pages": "vite build && git add . && git commit -m gh-pages && git subtree push --prefix dist origin gh-pages",
+    "start": "npm run dev"
   },
   "license": "MIT",
   "repository": "github:txlabs/vnodes",
@@ -29,23 +29,20 @@
     "d3-dag": "^0.2.6",
     "d3-flextree": "^2.1.2",
     "tiny-emitter": "^2.1.0",
+    "uuid": "^9.0.0",
     "victor": "^1.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.13",
-    "@vue/cli-service": "^3.11.0",
+    "@codemirror/lang-css": "^6.0.2",
+    "@vitejs/plugin-vue": "^4.0.0",
     "css-parse": "^2.0.0",
     "javascript-stringify": "^1.6.0",
     "pretty": "^2.0.0",
     "stats.js": "^0.17.0",
-    "vue": "^2.6.10",
-    "vue-codemirror": "^4.0.6",
+    "vite": "^4.1.4",
+    "vue": "^3.2.47",
+    "vue-codemirror": "^6.1.1",
     "vue-template-compiler": "^2.6.10"
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
   },
   "browserslist": [
     "> 1%",
