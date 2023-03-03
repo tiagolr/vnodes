@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "pages": "echo vite build && git add . && git commit -m gh-pages && TODO replace /dist/index.html sources to ./source && git subtree push --prefix dist origin gh-pages",
+    "pages": "vite build && git add . && git commit -m gh-pages && git subtree push --prefix dist origin gh-pages",
     "start": "npm run dev"
   },
   "license": "MIT",
