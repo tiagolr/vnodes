@@ -11,7 +11,7 @@ module.exports = function (name="") {
    */
 
   // many ways to swap stylesheets
-  https://www.rainbodesign.com/pub/css/css-javascript.html
+  // https://www.rainbodesign.com/pub/css/css-javascript.html
   function applyTheme (id='light', rootComponent=null, rootSel='body') {
     let rules
     try {
