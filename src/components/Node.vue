@@ -10,7 +10,7 @@
     @touchstart="onMousedown"
     >
       <div class="outer" :style="`padding: ${margin}px;`">
-        <div class="content" :class="background && 'background'" ref="content" v-bind="$attrs">
+        <div class="content" :class="background && 'background'" ref="content">
           <div v-if="!$slots.default" class="default-label">
             {{ data.id }}
           </div>

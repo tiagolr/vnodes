@@ -1,5 +1,5 @@
 <template>
-  <path class="edge" :d="path" :id="data.id" v-bind="$attrs">
+  <path class="edge" :d="path" :id="data.id">
   </path>
 </template>
 

@@ -76,7 +76,8 @@ export default {
       this.pos = el.getPointAtLength(length)
 
       if (this.rotate) {
-        const delta = el.getPointAtLength(Math.min(length + 0.01), el.getTotalLength)
+        // const delta = el.getPointAtLength(Math.min(length + 0.01), el.getTotalLength)
+        const delta = el.getPointAtLength(length + 0.01)
         this.angle = Math.atan2(delta.y - this.pos.y, delta.x - this.pos.x);
       } else {
         this.angle = 0
