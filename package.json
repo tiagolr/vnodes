@@ -29,7 +29,6 @@
     "d3-dag": "^0.2.6",
     "d3-flextree": "^2.1.2",
     "tiny-emitter": "^2.1.0",
-    "uuid": "^9.0.0",
     "victor": "^1.1.0"
   },
   "devDependencies": {

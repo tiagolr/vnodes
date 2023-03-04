@@ -4,7 +4,6 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
 import util from '../util'
 import Victor from 'victor'
 export default {
@@ -20,10 +19,11 @@ export default {
 
   mounted () {
     if (typeof this.data.id === 'undefined') {
+      const id = Math.random().toString(36).slice(2)
       if (this.$set) { // vue 2
-        this.$set(this.data, 'id', uuidv4())
+        this.$set(this.data, 'id', id)
       } else { // vue 3
-        this.data['id'] = uuidv4()
+        this.data['id'] = id
       }
     }
     if (typeof this.data.pathd === 'undefined') {

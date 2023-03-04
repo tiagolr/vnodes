@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
 import Node from './Node.vue'
 export default {
   components: {
@@ -54,7 +53,13 @@ export default {
   data() {
     return {
       pos: { x: 0, y: 0 },
-      node: { id: uuidv4() ,x: 250, y: 0, width: 100, height: 100},
+      node: {
+        id: Math.random().toString(36).slice(2),
+        x: 250,
+        y: 0,
+        width: 100,
+        height: 100
+      },
       angle: 0,
     }
   },
