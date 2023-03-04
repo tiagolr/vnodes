@@ -35,14 +35,6 @@ export default {
     },
     disableDrag: false,
   },
-  mounted () {
-    this.$on('drag', ({ x, y }) => {
-      this.nodes.forEach(node => {
-        node.x += x
-        node.y += y
-      })
-    })
-  },
   computed: {
     minX: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.min(acc, node.x), Infinity),
     maxX: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.max(acc, node.x + node.width), -Infinity),
@@ -58,6 +50,12 @@ export default {
     })
   },
   methods: {
+    onDrag ({ x,y }) {
+      this.nodes.forEach(node => {
+        node.x += x
+        node.y += y
+      })
+    },
     onMousedown (e) {
       e.stopPropagation()
       if (!this.disableDrag) {
