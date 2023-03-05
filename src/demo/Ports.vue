@@ -231,7 +231,7 @@ export default {
   border-radius: 10px;
   background-color: #abc;
   display: inline-block;
-  cursor: pointer;
+  cursor: crosshair;
 }
 
 .port-inner:hover {
