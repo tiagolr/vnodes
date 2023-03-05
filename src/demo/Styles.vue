@@ -37,8 +37,6 @@ import graph from '../graph'
 import Markers from '../components/Markers.vue'
 import { Codemirror } from 'vue-codemirror'
 import { css } from '@codemirror/lang-css'
-// import 'codemirror/mode/css/css.js'
-// import 'codemirror/lib/codemirror.css'
 
 const themes = {
   reds: `
@@ -167,7 +165,10 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.demo :deep(.v-codemirror .cm-gutters) {
+  display: none
+}
 /* #styles-demo .CodeMirror {
   width: 100%;
   height: 425px;
