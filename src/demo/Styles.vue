@@ -15,9 +15,9 @@
       <select v-model="themeSelect" style="width: 100%">
         <option value="blueprint">blueprint</option>
         <option value="reds">reds</option>
+        <option value="greys">greys</option>
       </select>
-      <!-- <textarea v-model="theme" style="height: calc(100% - 70px)"></textarea> -->
-      <codemirror 
+      <codemirror
         v-model="theme"
         :indent-with-tab="true"
         :tab-size="2"
@@ -72,8 +72,31 @@ const themes = {
   stroke-linejoin: round;
   marker-start: url(#circle-white);
   marker-end: url(#circle-white);
+}`,
+  greys:
+`
+.screen {
+  background-color: white
 }
-  `
+
+.node .content {
+  border-radius: 50%;
+  background-color: #eee;
+  color: #333;
+  box-shadow: inset 0px 0px 0px 2px;
+}
+
+.edge {
+  stroke: #333;
+  stroke-width: 2px;
+  stroke-linejoin: round;
+  marker-end: none;
+  stroke-linecap: round;
+  stroke-dasharray: 8px;
+  stroke-dashoffset: 1000;
+  animation: dash 20s linear infinite;
+}
+`
 }
 
 export default {
@@ -169,13 +192,12 @@ export default {
 .demo :deep(.v-codemirror .cm-gutters) {
   display: none
 }
-/* #styles-demo .CodeMirror {
-  width: 100%;
-  height: 425px;
-  margin: 0;
-  overflow: hidden;
-  position: relative;
-  background-color: #f1f1f1;
-  border: 1px solid #f1f1f1;
-} */
+</style>
+
+<style>
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
 </style>
