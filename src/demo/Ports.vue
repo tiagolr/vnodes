@@ -263,5 +263,17 @@ export default {
   stroke-linejoin: round;
   marker-start: none;
   marker-end: none;
+  stroke-dasharray: 5px 10px;
+  stroke-dashoffset: 1000;
+  stroke-linecap: round;
+  animation: dash 20s linear infinite;
+}
+</style>
+
+<style>
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 </style>
