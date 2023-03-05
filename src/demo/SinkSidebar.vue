@@ -184,14 +184,14 @@
       },
       edgeSnap (value) {
         this.graph.edges.forEach(edge => {
-          this.$set(edge.fromAnchor, 'snap', value)
-          this.$set(edge.toAnchor, 'snap', value)
+          edge.fromAnchor.snap = value
+          edge.toAnchor.snap = value
         })
       },
       edgeAlign (value) {
         this.graph.edges.forEach(edge => {
-          this.$set(edge.fromAnchor, 'align', value)
-          this.$set(edge.toAnchor, 'align', value)
+          edge.fromAnchor.align = value
+          edge.toAnchor.align = value
         })
       },
       anchorX (value) {
