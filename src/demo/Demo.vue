@@ -3,50 +3,95 @@
     <h1>Vnodes</h1>
 
     <h2>
-      Sink <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Sink.vue" target="_blank">&lt;/&gt;</a>
+      Sink
+      <a
+        href="https://github.com/txlabs/vnodes/blob/master/src/demo/Sink.vue"
+        target="_blank"
+        >&lt;/&gt;</a
+      >
     </h2>
-    <sink>
-    </sink>
+    <sink> </sink>
 
     <!-- <h2>Edit <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Edit.vue" target="_blank">&lt;/&gt;</a></h2>
     <edit>
     </edit> -->
 
-    <h2>Ports <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Ports.vue" target="_blank">&lt;/&gt;</a></h2>
-    <ports>
-    </ports>
+    <h2>
+      Ports
+      <a
+        href="https://github.com/txlabs/vnodes/blob/master/src/demo/Ports.vue"
+        target="_blank"
+        >&lt;/&gt;</a
+      >
+    </h2>
+    <ports> </ports>
+
+    <h2>
+      SelectedNode
+      <a
+        href="https://github.com/txlabs/vnodes/blob/master/src/demo/SelectedNode.vue"
+        target="_blank"
+        >&lt;/&gt;</a
+      >
+    </h2>
+    <selected-node> </selected-node>
 
     <!-- <h2>Groups <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Groups.vue" target="_blank">&lt;/&gt;</a></h2>
     <groups>
     </groups> -->
 
-    <h2>Labels <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue" target="_blank">&lt;/&gt;</a></h2>
-    <labels>
-    </labels>
+    <h2>
+      Labels
+      <a
+        href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue"
+        target="_blank"
+        >&lt;/&gt;</a
+      >
+    </h2>
+    <labels> </labels>
 
-    <h2>Styles <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
-    <styles>
-    </styles>
+    <h2>
+      Styles
+      <a
+        href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue"
+        target="_blank"
+        >&lt;/&gt;</a
+      >
+    </h2>
+    <styles> </styles>
 
-    <h2>Markers <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Markers.vue" target="_blank">&lt;/&gt;</a></h2>
-    <markers>
-    </markers>
+    <h2>
+      Markers
+      <a
+        href="https://github.com/txlabs/vnodes/blob/master/src/demo/Markers.vue"
+        target="_blank"
+        >&lt;/&gt;</a
+      >
+    </h2>
+    <markers> </markers>
 
-    <h2>Benchpress <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Benchmark.vue" target="_blank">&lt;/&gt;</a></h2>
-    <benchpress>
-    </benchpress>
+    <h2>
+      Benchpress
+      <a
+        href="https://github.com/txlabs/vnodes/blob/master/src/demo/Benchmark.vue"
+        target="_blank"
+        >&lt;/&gt;</a
+      >
+    </h2>
+    <benchpress> </benchpress>
   </div>
 </template>
 
 <script>
-import Sink from './Sink.vue'
-import Edit from './Edit.vue'
-import Ports from './Ports.vue'
-import Labels from './Labels.vue'
-import Benchpress from './Benchmark.vue'
-import Styles from './Styles.vue'
-import Groups from './Groups.vue'
-import Markers from './Markers.vue'
+import Sink from "./Sink.vue";
+import Edit from "./Edit.vue";
+import Ports from "./Ports.vue";
+import Labels from "./Labels.vue";
+import Benchpress from "./Benchmark.vue";
+import Styles from "./Styles.vue";
+import Groups from "./Groups.vue";
+import Markers from "./Markers.vue";
+import SelectedNode from "./SelectedNode.vue";
 export default {
   components: {
     Sink,
@@ -57,8 +102,9 @@ export default {
     Styles,
     Groups,
     Markers,
+    SelectedNode,
   },
-}
+};
 </script>
 
 <style scoped>
@@ -69,7 +115,7 @@ h2 {
 h2 a {
   color: #4a4a4a;
   font-size: 0.75em;
-  float: right
+  float: right;
 }
 </style>
 
