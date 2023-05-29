@@ -28,8 +28,7 @@
   "dependencies": {
     "d3-dag": "^0.2.6",
     "d3-flextree": "^2.1.2",
-    "tiny-emitter": "^2.1.0",
-    "victor": "^1.1.0"
+    "tiny-emitter": "^2.1.0"
   },
   "devDependencies": {
     "@codemirror/lang-css": "^6.0.2",

@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import dragMixin from '../mixins/drag'
+import dragMixin from '../mixins/drag.js'
 export default {
   mixins: [
     dragMixin

@@ -15,7 +15,7 @@
 
 <script>
 /** */
-import drag from '../mixins/drag'
+import drag from '../mixins/drag.js'
 export default {
   mixins: [
     drag

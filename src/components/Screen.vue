@@ -13,7 +13,7 @@
 
 <script>
 import Markers from './Markers.vue'
-import SvgPanZoom from '../../lib/svg-pan-zoom/svg-pan-zoom'
+import SvgPanZoom from '../../lib/svg-pan-zoom/svg-pan-zoom.js'
 export default {
   props: {
     markers: {

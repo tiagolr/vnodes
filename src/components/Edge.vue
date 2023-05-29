@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import util from '../util'
-import Victor from 'victor'
+import util from '../util.js'
+import Victor from '../../lib/victor.js'
 export default {
   props: {
     data: { // graph edge referece
