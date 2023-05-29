@@ -19,8 +19,8 @@ npm install vnodes
     <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
     </edge>
 
+    <!-- html can be placed inside node, defaults to <div>{{node.id}}</div> -->
     <node v-for="node in graph.nodes" :data="node" :key="node.id">
-      <!-- html can be placed here, defaults to <div>{{node.id}}</div> -->
     </node>
   </screen>
 </template>
