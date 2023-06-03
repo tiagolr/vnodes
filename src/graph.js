@@ -74,8 +74,8 @@ export default class Graph {
   }
 
   reset () {
-    while (this.edges.length) { this.edges.pop() }
-    while (this.nodes.length) { this.nodes.pop() }
+    this.edges = []
+    this.nodes = []
   }
 
   createNode (fields = {}) {
