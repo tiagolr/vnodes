@@ -61,6 +61,41 @@ Svg wrapper with zoom, panning and other features.
 </screen>
 ```
 
+#### Screen Options
+Screen component uses [svg-pan-zoom](https://www.npmjs.com/package/svg-pan-zoom) under the hood
+and screen takes options prop like this
+```html
+<screen :options="options">
+  <circle cx="50" cy="50" r="50" fill="red"/>
+</screen>
+```
+you can refer to available options [here](https://www.npmjs.com/package/svg-pan-zoom#how-to-use)
+```json
+{
+  viewportSelector: string,
+  panEnabled: boolean,
+  controlIconsEnabled: boolean,
+  zoomEnabled: boolean,
+  dblClickZoomEnabled: boolean,
+  mouseWheelZoomEnabled: boolean,
+  preventMouseEventsDefault: boolean,
+  zoomScaleSensitivity: number,
+  minZoom: number,
+  maxZoom: number,
+  fit: boolean,
+  contain: boolean,
+  center: boolean,
+  refreshRate: 'auto',
+  beforeZoom: function(){},
+  onZoom: function(){},
+  beforePan: function(){},
+  onPan: function(){},
+  onUpdatedCTM: function(){},
+  customEventsHandler: {},
+  eventsListenerElement: null
+}
+```
+
 ### Node
 
 Html wrapper for svg with additional features like, dragging and fitting contents.
