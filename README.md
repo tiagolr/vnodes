@@ -70,7 +70,7 @@ and screen takes options prop like this
 </screen>
 ```
 you can refer to available options [here](https://www.npmjs.com/package/svg-pan-zoom#how-to-use)
-```json
+```
 {
   viewportSelector: string,
   panEnabled: boolean,
