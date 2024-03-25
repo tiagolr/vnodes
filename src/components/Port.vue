@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import util from "../util";
+
 /**
  * Offsets edges to its position when placed inside a node
  */
@@ -23,7 +25,8 @@ export default {
   },
   data() {
     return {
-      offset: { x: 0, y: 0 }
+      offset: { x: 0, y: 0 },
+      position: util.isSafari() ? 'static': 'relative'
     }
   },
   mounted () {
@@ -65,6 +68,6 @@ export default {
 
 <style>
 .port {
-  position: relative;
+  position: v-bind("position");
 }
 </style>

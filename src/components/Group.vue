@@ -16,6 +16,7 @@
 <script>
 /** */
 import drag from '../mixins/drag.js'
+import util from "../util";
 export default {
   mixins: [
     drag
@@ -47,7 +48,8 @@ export default {
       margin: vm.margin + 'px',
       width: `calc(100% - ${vm.margin * 2}px)`,
       height: `calc(100% - ${vm.margin * 2}px)`
-    })
+    }),
+    position: () => util.isSafari() ? 'static': 'absolute'
   },
   methods: {
     onDrag ({ x,y }) {
@@ -71,7 +73,7 @@ export default {
 .group .content {
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: v-bind('position');
   border-radius: 7px;
   background-color: rgba(100, 100, 100, .25);
   display: inline-block;
