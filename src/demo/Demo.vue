@@ -1,6 +1,6 @@
 <template>
   <div style="margin-top: 50px; margin-bottom: 50px">
-    <h1>Vnodes (test)</h1>
+    <h1>Vnodes</h1>
 
     <h2>
       Sink <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Sink.vue" target="_blank">&lt;/&gt;</a>

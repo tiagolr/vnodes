@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "pages": "vite build && git add . && git commit -m pages && git push",
+    "pages": "vite build && rm -rf docs && mv dist docs && git add . && git commit -m pages && git push",
     "start": "npm run dev"
   },
   "license": "MIT",
