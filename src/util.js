@@ -199,6 +199,18 @@ function lineLine(x1, y1, x2, y2, x3, y3, x4, y4) {
   }
   return { x, y }
 }
+function isSafari() {
+  return window
+    ? /constructor/i.test(window.HTMLElement) ||
+    (function (p) {
+      return p?.toString() === "[object SafariRemoteNotification]";
+    })(
+      !window["safari"] ||
+      (typeof safari !== "undefined" && window["safari"].pushNotification),
+    ) || /iPad|iPhone|iPod/.test(navigator.userAgent) && !window["MSStream"]
+
+    : false;
+}
 
 export default {
   findPosition,
@@ -207,5 +219,6 @@ export default {
   boxBox,
   boxBoxes,
   lineLine,
-  lineRect
+  lineRect,
+  isSafari
 }

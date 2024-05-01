@@ -23,6 +23,7 @@
 
 <script>
 import dragMixin from '../mixins/drag.js'
+import util from '../util.js'
 export default {
   mixins: [
     dragMixin
@@ -51,6 +52,11 @@ export default {
       type: Boolean,
       default: false
     },
+  },
+  computed: {
+    position () {
+      return util.isSafari() ? 'static': 'relative'
+    }
   },
   mounted () {
     if (this.fit) {
@@ -82,7 +88,7 @@ export default {
 
 <style>
 .node .content {
-  position: relative;
+  position: v-bind("position");
   white-space: nowrap;
   width: fit-content;
 }
