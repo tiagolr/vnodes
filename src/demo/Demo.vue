@@ -3,6 +3,12 @@
     <h1>Vnodes</h1>
 
     <h2>
+      Canvas <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Sink.vue" target="_blank">&lt;/&gt;</a>
+    </h2>
+    <canvas-demo>
+    </canvas-demo>
+
+    <h2>
       Sink <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Sink.vue" target="_blank">&lt;/&gt;</a>
     </h2>
     <sink>
@@ -47,6 +53,7 @@ import Benchpress from './Benchmark.vue'
 import Styles from './Styles.vue'
 import Groups from './Groups.vue'
 import Markers from './Markers.vue'
+import CanvasDemo from './CanvasDemo.vue'
 export default {
   components: {
     Sink,
@@ -57,6 +64,7 @@ export default {
     Styles,
     Groups,
     Markers,
+    CanvasDemo
   },
 }
 </script>

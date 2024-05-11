@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       graph: new graph(),
-      nodeCount: 100,
+      nodeCount: 5000,
     }
   },
   methods: {
@@ -35,14 +35,17 @@ export default {
         const parent = this.graph.nodes[Math.round(Math.random() * (this.graph.nodes.length - 1))]
         const node = this.graph.createNode({
           id: String(i),
-          x: Math.random() * this.nodeCount * 12,
-          y: Math.random() * this.nodeCount * 12,
+          x: Math.random() * this.nodeCount * 4,
+          y: Math.random() * this.nodeCount * 4,
           width: 50,
           height: 50
         })
         this.graph.createEdge(parent, node, { type: 'smooth' })
       }
       // this.$refs.screen.zoomNodes(this.graph.nodes)
+      this.$nextTick(() => {
+        this.$refs.screen.draw()
+      })
     },
   },
   mounted () {

@@ -195,20 +195,13 @@ export default {
       ctx.translate( transform.x, transform.y )
       ctx.scale( transform.zoom, transform.zoom )
 
-      ctx.fillStyle = "#991111"
-      ctx.fillRect(-50+100,-50+100,100,100)
-
-      ctx.fillStyle = "#eecc77"
-      ctx.fillRect(-35+100,-35+100,20,20)
-      ctx.fillRect(15+100,-35+100,20,20)
-      ctx.fillRect(-35+100,15+100,70,20)
-
       ctx.fillStyle = '#276c73'
       ctx.beginPath();
-      this.nodes.forEach(node => {
-        ctx.roundRect(node.x, node.y, node.width, node.height, 1)
-      })
-      ctx.stroke()
+      this.nodes
+        .forEach(node => {
+          ctx.roundRect(node.x, node.y, node.width, node.height, 10)
+        })
+      ctx.fill()
     }
   }
 }
