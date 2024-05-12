@@ -3,20 +3,20 @@ import { flextree } from 'd3-flextree'
 
 export default class Graph {
   constructor () {
-    this.nodes = []
-    this.edges = []
+    this.nodes = {}
+    this.edges = {}
   }
 
   positionNode ({ node, parent, dir = 'right', spacing = 40, invertOffset = false } = {}) {
-    node = typeof node === 'string' ? this.nodes.find(n => n.id === node) : node
-    parent = typeof parent === 'string' ? this.nodes.find(n => n.id === parent) : parent
-    const pos = util.findPosition(node, parent, dir, this.nodes, spacing, invertOffset)
+    node = typeof node === 'string' ? this.nodes[node] : node
+    parent = typeof parent === 'string' ? this.nodes[parent] : parent
+    const pos = util.findPosition(node, parent, dir, Object.values(this.nodes), spacing, invertOffset)
     this.updateNode(node, { x: pos.x, y: pos.y })
   }
 
   graphNodes ({ nodes, edges, type = 'basic', dir = 'right', spacing = 40 } = {}) {
-    nodes = nodes || this.nodes
-    edges = edges || this.edges
+    nodes = Object.values(nodes || this.nodes)
+    edges = Object.values(edges || this.edges)
 
     const dag = util.createDAG(nodes, edges) // removes cycles if any
     if (!dag.length) {
@@ -74,8 +74,8 @@ export default class Graph {
   }
 
   reset () {
-    this.edges = []
-    this.nodes = []
+    this.edges = {}
+    this.nodes = {}
   }
 
   createNode (fields = {}) {
@@ -90,22 +90,18 @@ export default class Graph {
       height: 50,
     }, fields)
 
-    this.nodes.push(node)
+    this.nodes[node.id] = node
     return node
   }
 
   updateNode (node, fields = {}) {
-    if (typeof node === 'string') node = this.nodes.find(n => n.id === node)
+    if (typeof node === 'string') node = this.nodes[node]
     if (!node) throw new Error(`node ${node} does not exist`)
     return Object.assign(node, fields)
   }
 
   removeNode (node) {
-    const index = this.nodes.indexOf(node)
-    if (index > -1) {
-      this.nodes.splice(index, 1)
-    }
-    return index
+    return delete this.nodes[node.id]
   }
 
   createEdge (from, to, fields = {}) {
@@ -132,7 +128,7 @@ export default class Graph {
       pathd: '', // reactive path
     }, fields)
 
-    this.edges.push(edge)
+    this.edges[edge.id] = edge
     return edge
   }
 
@@ -141,11 +137,7 @@ export default class Graph {
   }
 
   removeEdge (edge) {
-    const index = this.edges.indexOf(edge)
-    if (index > -1) {
-      this.edges.splice(index, 1)
-    }
-    return index
+    return delete this.edges[edge.id]
   }
 
   /**

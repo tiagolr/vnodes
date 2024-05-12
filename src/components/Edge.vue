@@ -13,7 +13,7 @@ export default {
       required: true // { from: String|Object, to: String|Object }
     },
     nodes: { // graph nodes reference
-      type: Array,
+      type: Object,
     }
   },
 
@@ -37,10 +37,10 @@ export default {
 
   computed: {
     fromNode: vm => typeof vm.data.from === 'string'
-      ? vm.nodes.find(n => n.id === vm.data.from)
+      ? vm.nodes[vm.data.from]
       : vm.data.from,
     toNode: vm => typeof vm.data.to === 'string'
-      ? vm.nodes.find(n => n.id === vm.data.to)
+      ? vm.nodes[vm.data.to]
       : vm.data.to,
     fromAnchor: vm => vm.parseAnchor(vm.data.fromAnchor, vm.fromNode),
     toAnchor: vm => vm.parseAnchor(vm.data.toAnchor, vm.toNode),

@@ -8,17 +8,9 @@
     <sink>
     </sink>
 
-    <!-- <h2>Edit <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Edit.vue" target="_blank">&lt;/&gt;</a></h2>
-    <edit>
-    </edit> -->
-
     <h2>Ports <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Ports.vue" target="_blank">&lt;/&gt;</a></h2>
     <ports>
     </ports>
-
-    <!-- <h2>Groups <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Groups.vue" target="_blank">&lt;/&gt;</a></h2>
-    <groups>
-    </groups> -->
 
     <h2>Labels <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue" target="_blank">&lt;/&gt;</a></h2>
     <labels>
@@ -40,22 +32,18 @@
 
 <script>
 import Sink from './Sink.vue'
-import Edit from './Edit.vue'
 import Ports from './Ports.vue'
 import Labels from './Labels.vue'
 import Benchpress from './Benchmark.vue'
 import Styles from './Styles.vue'
-import Groups from './Groups.vue'
 import Markers from './Markers.vue'
 export default {
   components: {
     Sink,
-    Edit,
     Ports,
     Labels,
     Benchpress,
     Styles,
-    Groups,
     Markers,
   },
 }

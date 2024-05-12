@@ -78,7 +78,7 @@ export default {
       if (edge) { // edit exiting edge
         edge.active = true
         this.connecting = {
-          node: this.graph.nodes.find(n => input ? edge.from === n.id : edge.to === n.id),
+          node: this.nodes.find(n => input ? edge.from === n.id : edge.to === n.id),
           input: output,
           output: input
         }
@@ -136,12 +136,12 @@ export default {
     },
     // edges that go to this input
     getInputEdges (node, input) {
-      return this.graph.edges
+      return this.edges
         .filter(e => e.to === node.id && e.toPort === input)
     },
     // edges that start from this output
     getOutputEdges (node, output) {
-      return this.graph.edges
+      return this.edges
         .filter(e => e.from === node.id && e.fromPort === output)
     },
     onmousemove (e) {
@@ -161,7 +161,9 @@ export default {
     }
   },
   computed: {
-    activeEdge: vm => vm.graph.edges
+    edges: vm => Object.values(vm.graph.edges),
+    nodes: vm => Object.values(vm.graph.nodes),
+    activeEdge: vm => vm.edges
       .find(e => e.active)
   },
   mounted () {
@@ -212,7 +214,7 @@ export default {
     })
     this.$nextTick(() => {
       this.graph.graphNodes({ spacing: 75 })
-      this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
+      this.$refs.screen.zoomNodes(this.nodes, { scale: 1 })
     })
     document.addEventListener('mouseup', this.cancelConnect)
     document.addEventListener('mousemove', this.onmousemove)

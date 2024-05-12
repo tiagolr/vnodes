@@ -99,6 +99,9 @@ export default {
      * centers the view and zoom on a group nodes
      */
     zoomNodes (nodes, opts = { padding: 50, scale: null }) {
+      if (!Array.isArray(nodes)) {
+        nodes = Object.values(nodes)
+      }
       if (!nodes || !nodes.length) {
         return
       }

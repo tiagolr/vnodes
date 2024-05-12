@@ -7,8 +7,8 @@
         <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
         </node>
 
-        <v-label v-if="graph.edges.length"
-          :edge="graph.edges[0]"
+        <v-label v-if="edges.length"
+          :edge="edges[0]"
           :perc="parseInt(perc)"
           :offset="{x: parseInt(offsetX), y: parseInt(offsetY)}"
           :align="align"
@@ -72,6 +72,10 @@ export default {
       contents: '<small style="padding: 10px">Label</small>'
     }
   },
+  computed: {
+    nodes: vm => Object.values(vm.graph.nodes),
+    edges: vm => Object.values(vm.graph.edges),
+  },
   methods: {
     resizeLabel() {
       this.$refs.label.$refs.node.fitContent();
@@ -99,7 +103,7 @@ export default {
     })
 
     this.$nextTick(() => {
-      this.$refs.screen.zoomNodes(this.graph.nodes)
+      this.$refs.screen.zoomNodes(this.nodes)
     })
   }
 }

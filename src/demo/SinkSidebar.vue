@@ -88,7 +88,7 @@
         let right = -Infinity
         let bottom = -Infinity
 
-        const nodes = this.filterNodes || this.graph.nodes
+        const nodes = this.filterNodes || this.nodes
         nodes.forEach(node => {
           if (node.x < left) left = node.x
           if (node.x + node.width > right) right = node.x + node.width
@@ -107,11 +107,11 @@
         this.graph.reset()
         const graph = this.parsedGraph
         const visitNode = (node, parent) => {
-          if (!this.graph.nodes.find(n => n.id === node.id)) {
+          if (!this.nodes.find(n => n.id === node.id)) {
             this.graph.createNode(node.id)
           }
           if (parent) {
-            if (!this.graph.edges.find(c => c.fromNode === parent.id && c.toNode === parent.id)) {
+            if (!this.edges.find(c => c.fromNode === parent.id && c.toNode === parent.id)) {
               this.graph.createEdge(parent.id, node.id)
             }
           }
@@ -123,17 +123,19 @@
       },
       graphNodes (filterNodes) {
         this.graph.graphNodes({
-          nodes: filterNodes || this.graph.nodes,
-          edges: this.graph.edges,
+          nodes: filterNodes || this.nodes,
+          edges: this.edges,
           type: this.graphType,
           dir: this.graphDir
         })
       }
     },
     computed: {
+      nodes: vm => Object.values(vm.graph.nodes),
+      edges: vm => Object.values(vm.graph.edges),
       filterNodes () {
         const filtered = this.graphNodesFilter.split(',').map(s => s.trim())
-        const nodes = this.graph.nodes.filter(n => filtered.includes(n.id))
+        const nodes = this.nodes.filter(n => filtered.includes(n.id))
         return nodes.length ? nodes : null
       },
       parsedGraph () {
@@ -167,7 +169,7 @@
         this.$nextTick(this.createNodes)
       },
       connType (type) {
-        this.graph.edges.forEach(edge => {
+        this.edges.forEach(edge => {
           edge.type = type
         })
       },
@@ -183,13 +185,13 @@
         this.$emit('toggleGroupNodes', bool)
       },
       edgeSnap (value) {
-        this.graph.edges.forEach(edge => {
+        this.edges.forEach(edge => {
           edge.fromAnchor.snap = value
           edge.toAnchor.snap = value
         })
       },
       edgeAlign (value) {
-        this.graph.edges.forEach(edge => {
+        this.edges.forEach(edge => {
           edge.fromAnchor.align = value
           edge.toAnchor.align = value
         })
@@ -200,7 +202,7 @@
         } else if (!value.endsWith('%')) {
           value = parseFloat(value)
         }
-        this.graph.edges.forEach(edge => {
+        this.edges.forEach(edge => {
           edge.fromAnchor.x = value
           edge.toAnchor.x = value
         })
@@ -211,7 +213,7 @@
         } else if (!value.endsWith('%')) {
           value = parseFloat(value)
         }
-        this.graph.edges.forEach(edge => {
+        this.edges.forEach(edge => {
           edge.fromAnchor.y = value
           edge.toAnchor.y = value
         })

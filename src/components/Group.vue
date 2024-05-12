@@ -23,7 +23,7 @@ export default {
   ],
   props: {
     nodes: {
-      type: Array,
+      type: Object,
       default: []
     },
     margin: {
@@ -37,10 +37,11 @@ export default {
     disableDrag: false,
   },
   computed: {
-    minX: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.min(acc, node.x), Infinity),
-    maxX: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.max(acc, node.x + node.width), -Infinity),
-    minY: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.min(acc, node.y), Infinity),
-    maxY: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.max(acc, node.y + node.height), -Infinity),
+    nodesArr: vm => Object.values(vm.nodes),
+    minX: vm => !vm.nodesArr.length ? 0 : vm.nodesArr.reduce((acc, node) => Math.min(acc, node.x), Infinity),
+    maxX: vm => !vm.nodesArr.length ? 0 : vm.nodesArr.reduce((acc, node) => Math.max(acc, node.x + node.width), -Infinity),
+    minY: vm => !vm.nodesArr.length ? 0 : vm.nodesArr.reduce((acc, node) => Math.min(acc, node.y), Infinity),
+    maxY: vm => !vm.nodesArr.length ? 0 : vm.nodesArr.reduce((acc, node) => Math.max(acc, node.y + node.height), -Infinity),
     width: vm => vm.maxX - vm.minX,
     height: vm => vm.maxY - vm.minY,
 

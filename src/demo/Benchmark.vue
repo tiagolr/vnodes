@@ -40,7 +40,7 @@ export default {
       this.graph.reset();
       this.graph.createNode('0')
       for (let i=1; i < this.nodeCount; i++) {
-        const parent = this.graph.nodes[Math.round(Math.random() * (this.graph.nodes.length - 1))]
+        const parent = this.nodes[Math.round(Math.random() * (this.nodes.length - 1))]
         const node = this.graph.createNode({
           id: String(i),
           x: Math.random() * this.nodeCount * 12,
@@ -50,6 +50,10 @@ export default {
       }
       this.$refs.screen.zoomNodes(this.graph.nodes)
     },
+  },
+  computed: {
+    nodes: vm => Object.values(vm.graph.nodes),
+    edges: vm => Object.values(vm.graph.edges)
   },
   mounted () {
     this.makeGraph()
