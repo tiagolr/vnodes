@@ -42,10 +42,6 @@ export default {
         })
         this.graph.createEdge(parent, node, { type: 'smooth' })
       }
-      // this.$refs.screen.zoomNodes(this.graph.nodes)
-      this.$nextTick(() => {
-        this.$refs.screen.draw()
-      })
     },
   },
   mounted () {

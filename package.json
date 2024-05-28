@@ -28,6 +28,8 @@
   "dependencies": {
     "d3-dag": "^0.2.6",
     "d3-flextree": "^2.1.2",
+    "pixi-viewport": "^5.0.3",
+    "pixi.js": "^8.1.5",
     "tiny-emitter": "^2.1.0"
   },
   "devDependencies": {
