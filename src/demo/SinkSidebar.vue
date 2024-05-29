@@ -103,8 +103,9 @@
 
         this.$parent.$refs.screen.zoomRect({ left, top, right, bottom }, { scale })
       },
-      createNodes () {
+      async createNodes () {
         this.graph.reset()
+        await this.$nextTick() // wait for graph reset to take effect
         const graph = this.parsedGraph
         const visitNode = (node, parent) => {
           if (!this.graph.nodes.find(n => n.id === node.id)) {
