@@ -2,6 +2,8 @@
   <div class="demo" id="canvas-demo">
     <div class="viewport">
       <canvas-screen ref="screen" :nodes="graph.nodes" :edges="graph.edges">
+        <canvas-node v-for="node in graph.nodes" :id="node.id" :data="node">
+        </canvas-node>
       </canvas-screen>
     </div>
     <div class="sidebar">
@@ -16,21 +18,22 @@
 import graph from '../graph'
 import Stats from 'stats.js'
 import CanvasScreen from '../components/CanvasScreen.vue'
+import CanvasNode from '../components/CanvasNode.vue'
 
 export default {
   components: {
     CanvasScreen,
+    CanvasNode,
   },
   data() {
     return {
       graph: new graph(),
-      nodeCount: 5000,
+      nodeCount: 500,
     }
   },
   methods: {
     makeGraph () {
       this.graph.reset();
-      this.graph.createNode('0')
       for (let i=1; i < this.nodeCount; i++) {
         const parent = this.graph.nodes[Math.round(Math.random() * (this.graph.nodes.length - 1))]
         const node = this.graph.createNode({
@@ -40,7 +43,9 @@ export default {
           width: 50,
           height: 50
         })
-        this.graph.createEdge(parent, node, { type: 'smooth' })
+        if (parent) {
+          this.graph.createEdge(parent, node, { type: 'smooth' })
+        }
       }
     },
   },

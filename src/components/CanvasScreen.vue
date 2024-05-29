@@ -1,6 +1,7 @@
 <script>
 import { Application, Graphics } from 'pixi.js'
 import { Viewport } from 'pixi-viewport'
+import { TinyEmitter } from 'tiny-emitter'
 export default {
   props: {
     zoomMin: {
@@ -22,22 +23,35 @@ export default {
   },
   data() {
     return {
+      canvas: {
+        app: null,
+        viewport: null,
+      },
+      emitter: new TinyEmitter()
+    }
+  },
+  provide () {
+    return {
+      canvas: this.canvas,
+      emitter: this.emitter
     }
   },
   async mounted () {
     const app = new Application()
-    await app.init({view: this.$refs.canvas })
-    this.$refs.canvas.addEventListener('wheel', (e) => {
-      e.preventDefault();
+    await app.init({
+      view: this.$refs.canvas,
+      background: 0xffffff,
     })
-    window.app = app
+    this.canvas.app = app
     window.vm = this
 
     const viewport = new Viewport({
       screenWidth: this.$refs.canvas.width,
       screenHeight: this.$refs.canvas.height,
-      events: app.renderer.events
+      events: app.renderer.events,
+      passiveWheel: false,
     })
+    this.canvas.viewport = viewport
 
     app.stage.addChild(viewport)
 
@@ -47,15 +61,7 @@ export default {
       .wheel()
       .decelerate()
 
-
-
-    this.nodes.forEach(node => {
-      const obj = new Graphics()
-        .roundRect(node.x, node.y, node.width, node.height , 20)
-        .fill(0xff0000);
-      viewport.addChild(obj)
-    })
-
+    this.emitter.emit('ready')
   },
   methods: {
   }
@@ -65,6 +71,7 @@ export default {
 <template>
   <canvas ref="canvas"
   ></canvas>
+  <slot></slot>
 </template>
 
 
