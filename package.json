@@ -1,8 +1,8 @@
 {
   "name": "vnodes",
-  "version": "1.3.3",
+  "version": "1.4.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "pages": "vite build && rm -rf docs && mv dist docs && git add . && git commit -m pages && git push",
     "start": "npm run dev"

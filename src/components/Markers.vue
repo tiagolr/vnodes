@@ -1,6 +1,6 @@
 <template>
-<g>
-  <g v-for="marker in all" :key="marker.id">
+<defs>
+  <template v-for="marker in all" :key="marker.id">
     <marker v-if="marker.type === 'arrow-start'"
       :id="marker.id" orient="auto"
       :markerWidth="13 * marker.scale"
@@ -67,8 +67,8 @@
         <path d="M10,5 L1,1 M10,5 L1,9"
         :style="`transform: scale(${marker.scale});${marker.style}`"/>
     </marker>
-  </g>
-</g>
+  </template>
+</defs>
 </template>
 
 <script>

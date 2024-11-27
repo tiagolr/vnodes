@@ -58,8 +58,11 @@ export default {
       return util.isSafari() ? 'static': 'relative'
     }
   },
-  mounted () {
+  async mounted () {
     if (this.fit) {
+      if (util.isSafari()) {
+        await this.$nextTick() // fix safari issues
+      }
       this.fitContent()
     }
   },

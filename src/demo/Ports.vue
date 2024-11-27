@@ -53,6 +53,7 @@ import Node from '../components/Node.vue'
 import Edge from '../components/Edge.vue'
 import Port from '../components/Port.vue'
 import graph from '../graph'
+import util from '../util'
 export default {
   components: {
     Screen,
@@ -164,8 +165,7 @@ export default {
     activeEdge: vm => vm.graph.edges
       .find(e => e.active)
   },
-  mounted () {
-    window.ports = this// DELETEME
+  async mounted () {
     this.graph.createNode({
       id: 'a',
       inputs: ['i1'],
@@ -210,10 +210,13 @@ export default {
       active: false,
       type: 'hsmooth'
     })
-    this.$nextTick(() => {
-      this.graph.graphNodes({ spacing: 75 })
-      this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
-    })
+
+    await this.$nextTick()
+    if (util.isSafari()) {
+      await this.$nextTick() // await two ticks, in safari nodes take two ticks before updating their size, fixes render issues
+    }
+    this.graph.graphNodes({ spacing: 75 })
+    this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
     document.addEventListener('mouseup', this.cancelConnect)
     document.addEventListener('mousemove', this.onmousemove)
   },

@@ -1,9 +1,7 @@
 <template>
   <svg class="screen" ref="screen">
-    <defs>
-      <markers :markers="markers">
-      </markers>
-    </defs>
+    <markers :markers="markers">
+    </markers>
     <g>
       <slot>
       </slot>

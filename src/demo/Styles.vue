@@ -4,10 +4,12 @@
       <screen ref="screen" v-if="visible">
         <markers :markers="markers">
         </markers>
-        <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
-        </edge>
-        <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
-        </node>
+        <g>
+          <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+          </edge>
+          <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
+          </node>
+        </g>
       </screen>
     </div>
     <div class="sidebar">
@@ -37,6 +39,7 @@ import graph from '../graph'
 import Markers from '../components/Markers.vue'
 import { Codemirror } from 'vue-codemirror'
 import { css } from '@codemirror/lang-css'
+import util from '../util'
 
 const themes = {
   reds: `
@@ -138,22 +141,17 @@ export default {
 
     this.graph.graphNodes({ type: 'tree', spacing: 50 })
     this.applyTheme();
-    window.t = this
   },
   methods: {
     selectTheme(theme) {
       this.theme = themes[theme].trim()
     },
-    forceRender () {
+    async forceRender () {
       this.visible = false
-      return this
-        .$nextTick()
-        .then(() => {
-          this.visible = true
-          this.$nextTick(() => {
-            this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
-          })
-        })
+        await this.$nextTick()
+      this.visible = true
+        await this.$nextTick()
+      this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
     },
     async applyTheme () {
       // parse theme rules
@@ -173,12 +171,25 @@ export default {
         rule.declarations
           .filter(dec => dec.type === 'declaration')
           .forEach(dec => {
-            els.filter(el => el).forEach(el => {
-              const prop = dec.property.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-              el.style[prop] = dec.value
+            els
+              .filter(Boolean)
+              .forEach(el => {
+                const prop = dec.property.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
+                console.log(dec.property, prop, dec.value)
+                el.style[prop] = dec.value
+              })
             })
           })
-      })
+
+        // SAFARI FIX - safari has issues setting some properties via el.style
+        // hiding the elements and showing them does the trick
+        if (util.isSafari()) {
+          const els = Array.from(document.querySelectorAll('#styles-demo .edge')).filter(Boolean)
+          els.forEach(el => el.style.display = 'none')
+          setTimeout(() => {
+            els.forEach(el => el.style.display = '')
+          }, 0);
+        }
     }
   },
   watch: {
