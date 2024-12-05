@@ -150,7 +150,7 @@ export default {
     })
     this.graph.createEdge({ id: 'c:d', from: 'c', to: 'd', type: 'smooth' })
     this.$nextTick(() => {
-      this.$refs.screen.zoomNodes(this.graph.nodes, {scale: 1})
+      this.$refs.screen.zoomNodes(this.graph.nodes, {zoom: 1})
     })
   },
   watch: {

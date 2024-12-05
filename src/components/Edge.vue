@@ -1,5 +1,5 @@
 <template>
-  <path class="edge" :d="path" :id="data.id">
+  <path :id="data.id" class="edge" :d="path">
   </path>
 </template>
 
@@ -17,24 +17,6 @@ export default {
     }
   },
 
-  mounted () {
-    if (typeof this.data.id === 'undefined') {
-      const id = Math.random().toString(36).slice(2)
-      if (this.$set) { // vue 2
-        this.$set(this.data, 'id', id)
-      } else { // vue 3
-        this.data['id'] = id
-      }
-    }
-    if (typeof this.data.pathd === 'undefined') {
-      if (this.$set) { // vue 2
-        this.$set(this.data, 'pathd', '')
-      } else { // vue 3
-        this.data['pathd'] = ''
-      }
-    }
-  },
-
   computed: {
     fromNode: vm => typeof vm.data.from === 'string'
       ? vm.nodes.find(n => n.id === vm.data.from)
@@ -46,6 +28,10 @@ export default {
     toAnchor: vm => vm.parseAnchor(vm.data.toAnchor, vm.toNode),
 
     pos () {
+      if (!this.fromNode || !this.toNode) {
+        console.debug('nodes not found for edge', this.data)
+        return null
+      }
       let x1 = this.fromNode.x + (this.fromAnchor.x || 0)
       let y1 = this.fromNode.y + (this.fromAnchor.y || 0)
       let x2 = this.toNode.x + (this.toAnchor.x || 0)
@@ -85,6 +71,7 @@ export default {
     },
 
     path () {
+      if (!this.pos) return ''
       const pos = Object.assign({}, this.pos)
       let pathd = `M ${pos.x1},${pos.y1} `
       const distX = pos.x1 - pos.x2
@@ -115,10 +102,32 @@ export default {
         pathd += ` ${c1.x},${c1.y} ${c2.x},${c2.y} `
       }
 
-      pathd += ` ${pos.x2} ${pos.y2}`
-      this.data.pathd = pathd;
+      pathd += `${pos.x2},${pos.y2}`
+
       return pathd
     },
+  },
+
+  watch: {
+    pathd: {
+      immediate: true,
+      handler (pathd) {
+        // eslint-disable-next-line vue/no-mutating-props
+        this.data.pathd = pathd
+      }
+    }
+  },
+
+  mounted () {
+    if (typeof this.data.id === 'undefined') {
+      const id = Math.random().toString(36).slice(2)
+      if (this.$set) { // vue 2
+        this.$set(this.data, 'id', id)
+      } else { // vue 3
+        // eslint-disable-next-line vue/no-mutating-props
+        this.data['id'] = id
+      }
+    }
   },
   methods: {
     /**
@@ -179,12 +188,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .edge {
   stroke-width: 4;
   stroke: green;
   /* marker-start: url(#arrow-start) */
   marker-end: url(#arrow-end);
-  fill: none;
+  fill: transparent;
 }
 </style>

@@ -88,7 +88,7 @@ export default {
 
     this.graph.graphNodes({ type: 'tree' })
     this.$nextTick(() => {
-      this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 0.9 })
+      this.$refs.screen.zoomNodes(this.graph.nodes, { zoom: 0.9 })
     })
   },
 }

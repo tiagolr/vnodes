@@ -13,7 +13,7 @@
     </edit> -->
 
     <h2>Ports <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Ports.vue" target="_blank">&lt;/&gt;</a></h2>
-    <ports>
+    <ports v-if="false">
     </ports>
 
     <!-- <h2>Groups <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Groups.vue" target="_blank">&lt;/&gt;</a></h2>
@@ -21,19 +21,19 @@
     </groups> -->
 
     <h2>Labels <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue" target="_blank">&lt;/&gt;</a></h2>
-    <labels>
+    <labels v-if="false">
     </labels>
 
     <h2>Styles <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
-    <styles>
+    <styles v-if="false">
     </styles>
 
     <h2>Markers <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Markers.vue" target="_blank">&lt;/&gt;</a></h2>
-    <markers>
+    <markers v-if="false">
     </markers>
 
     <h2>Benchpress <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Benchmark.vue" target="_blank">&lt;/&gt;</a></h2>
-    <benchpress>
+    <benchpress v-if="false">
     </benchpress>
   </div>
 </template>
@@ -76,6 +76,7 @@ h2 a {
 <style>
 .screen {
   background-color: white;
+  border: 1px solid #ccc;
 }
 h2 {
   font-size: 1.5em;

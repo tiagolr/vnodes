@@ -151,7 +151,7 @@ export default {
         await this.$nextTick()
       this.visible = true
         await this.$nextTick()
-      this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
+      this.$refs.screen.zoomNodes(this.graph.nodes, { zoom: 1 })
     },
     async applyTheme () {
       // parse theme rules

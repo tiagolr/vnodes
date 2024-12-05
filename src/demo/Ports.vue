@@ -216,7 +216,7 @@ export default {
       await this.$nextTick() // await two ticks, in safari nodes take two ticks before updating their size, fixes render issues
     }
     this.graph.graphNodes({ spacing: 75 })
-    this.$refs.screen.zoomNodes(this.graph.nodes, { scale: 1 })
+    this.$refs.screen.zoomNodes(this.graph.nodes, { zoom: 1 })
     document.addEventListener('mouseup', this.cancelConnect)
     document.addEventListener('mousemove', this.onmousemove)
   },

@@ -47,16 +47,16 @@ export default {
       this.drag.threshold = {x: 0, y: 0, crossed: false}
       document.addEventListener('mouseup', this.stopDrag)
       document.addEventListener('touchend', this.stopDrag)
-      document.addEventListener('mousemove', this.applyDrag)
-      document.addEventListener('touchmove', this.applyDrag)
+      document.addEventListener('mousemove', this.applyDrag, { passive: true })
+      document.addEventListener('touchmove', this.applyDrag, { passive: true })
       document.addEventListener('click', this.preventClicks, true)
     },
     stopDrag () {
       this.drag.active = false
       document.removeEventListener('mouseup', this.stopDrag)
       document.removeEventListener('touchend', this.stopDrag)
-      document.removeEventListener('mousemove', this.applyDrag)
-      document.removeEventListener('touchmove', this.applyDrag)
+      document.removeEventListener('mousemove', this.applyDrag, { passive: true })
+      document.removeEventListener('touchmove', this.applyDrag, { passive: true })
     },
     applyDrag (e) {
       if (e.touches && e.touches.length) {
@@ -66,7 +66,6 @@ export default {
       let x = (e.clientX - this.drag.prev.x) / this.drag.zoom
       let y = (e.clientY - this.drag.prev.y) / this.drag.zoom
       this.drag.prev = {x: e.clientX, y: e.clientY}
-
 
       if (!this.drag.threshold.crossed) {
         if (Math.abs(this.drag.threshold.x) < this.dragThreshold && Math.abs(this.drag.threshold.y) < this.dragThreshold) {

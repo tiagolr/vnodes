@@ -29,6 +29,10 @@ export default {
       position: util.isSafari() ? 'static': 'relative'
     }
   },
+  watch: {
+    edgesFrom: 'updatePosition',
+    edgesTo: 'updatePosition',
+  },
   mounted () {
     this.updatePosition()
   },
@@ -38,19 +42,25 @@ export default {
      * and update edges anchors to this element offset
      */
     updatePosition () {
-      let el = this.$slots.default && this.$slots.default.length === 1
-        && this.$slots.default[0].elm && this.$slots.default[0].elm.offsetWidth
-        ? this.$slots.default[0].elm // there is a single valid html el in <slot />
-        : this.$el
       this.offset = this.startOffset || {
-        x: el.offsetWidth / 2,
-        y: el.offsetHeight / 2,
+        x: this.$el.offsetWidth / 2,
+        y: this.$el.offsetHeight / 2,
       }
-      while (el && !el.classList.contains('content')) {
-        this.offset.x += el.offsetLeft || 0
-        this.offset.y += el.offsetTop || 0
-        el = el.offsetParent
+      const rectPort = this.$el.getBoundingClientRect()
+      const rectNode = this.$el.closest('.screen').querySelector('edges').getBoundingClientRect()
+      const diffx = rectPort.left - rectNode.left
+      const diffy = rectPort.top - rectNode.top
+
+      const panzoom = this.$el.closest(".svg-pan-zoom_viewport")
+      if (!panzoom) {
+        console.debug('port failed to find panzoom container')
+        return
       }
+
+      const zoom = new DOMMatrix(window.getComputedStyle(panzoom).transform).a
+      this.offset.x += diffx / zoom
+      this.offset.y += diffy / zoom
+
       this.edgesFrom.forEach(edge => {
         Object.assign(edge.fromAnchor, this.offset)
       })
@@ -58,10 +68,6 @@ export default {
         Object.assign(edge.toAnchor, this.offset)
       })
     }
-  },
-  watch: {
-    edgesFrom: 'updatePosition',
-    edgesTo: 'updatePosition',
   },
 }
 </script>

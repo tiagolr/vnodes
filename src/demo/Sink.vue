@@ -1,5 +1,5 @@
 <template>
-  <div class="demo">
+  <div class="demo demo-sink">
     <div class="viewport">
       <screen ref="screen" :markers="[]">
         <group v-if="groupNodes" :nodes="$refs.sidebar.filterNodes || graph.nodes">
@@ -8,8 +8,10 @@
         <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
         </edge>
 
-        <node v-for="node in graph.nodes" :data="node" :key="node.id">
-        </node>
+        <template #nodes>
+          <node v-for="node in graph.nodes" :data="node" :key="node.id" :drag-threshold="2">
+          </node>
+        </template>
       </screen>
     </div>
     <sink-sidebar class="sidebar" :graph="graph" @toggleGroupNodes="toggleGroupNodes" ref="sidebar">
@@ -44,5 +46,10 @@ export default {
 </script>
 
 <style>
+.demo-sink * {
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
 </style>
 

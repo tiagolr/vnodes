@@ -1,38 +1,44 @@
 <template>
-  <svg class="screen" ref="screen">
-    <markers :markers="markers">
-    </markers>
-    <g>
+  <div class="screen">
+    <svg ref="edges" class="edges">
       <slot>
       </slot>
-    </g>
-  </svg>
+    </svg>
+    <div class="nodes" ref="nodes" style="overflow: hidden">
+      <div class="nodes-inner" ref="nodesInner" style="width: 100%; height: 100%">
+        <slot name="nodes">
+        </slot>
+      </div>
+    </div>
+    <svg ref="overflay" class="overlay">
+    </svg>
+  </div>
 </template>
 
 <script>
-import Markers from './Markers.vue'
 import SvgPanZoom from '../../lib/svg-pan-zoom/svg-pan-zoom.js'
 export default {
   props: {
-    markers: {
-      type: Array, // { id:String, type: 'arrow|circle|square|diamond', scale: Number, style: String }
-      default: () => []
-    },
     options: {
       type: Object,
       default: () => ({})
     }
   },
-  components: {
-    Markers
-  },
+  emits: [
+    'dblclick',
+    'zoom',
+    'pan',
+    'user-zoom',
+    'user-pan',
+    'ctm'
+  ],
   data() {
     return {
       panzoom: null,
     }
   },
   mounted () {
-    this.panzoom = SvgPanZoom(this.$refs.screen, Object.assign({
+    this.panzoom = SvgPanZoom(this.$refs.edges, Object.assign({
       dblClickZoomEnabled: false,
       mouseWheelZoomEnabled: true,
       preventMouseEventsDefault: true,
@@ -43,12 +49,12 @@ export default {
       zoomScaleSensitivity: 0.4,
       minZoom: 0.1,
       maxZoom: 5,
-      onZoom: scale => {},
-      onPan: pan => {},
-      onUserZoom: e => {},
-      onUserPan: e => {},
-      onDoubleClick: () => {},
-      onUpdatedCTM: m => {}
+      onZoom: zoom => this.$emit('zoom', zoom),
+      onPan: pan => this.$emit('pan', pan),
+      onUserZoom: e => this.$emit('user-zoom', e),
+      onUserPan: e => this.$emit('user-pan', e),
+      onDoubleClick: e => this.$emit('dblclick', e),
+      onUpdatedCTM: m => this.onUpdatedCTM(m)
     }, this.options))
 
     this.panzoom.zoomRect = this.zoomRect
@@ -60,29 +66,35 @@ export default {
       this.panzoom.zoom(scale)
       this.panzoom.pan( x,y )
     },
+    onUpdatedCTM (m) {
+      const { a, b, c, d, e, f } = m;
+      this.$refs.nodesInner.style.transform = `matrix(${a}, ${b}, ${c}, ${d}, ${e}, ${f})`
+
+      this.$emit('ctm', m)
+    },
     /**
      * Centers and zooms a rectangle
      * @param rect { left, right, top, bottom }
      * @param scale force zoom to a specific value (eg: 1)
      */
-    zoomRect (rect, opts = {scale: null}) {
-      let scale = opts.scale
-      const screen = this.$refs.screen
+    zoomRect (rect, opts = {zoom: null}) {
+      let zoom = opts.zoom
+      const screen = this.$refs.edges
       const width = rect.right - rect.left
       const height = rect.bottom - rect.top
-      if (!scale) {
+      if (!zoom) {
         const dx = width / screen.clientWidth
         const dy = height / screen.clientHeight
-        scale = 1 / Math.max(dx, dy)
+        zoom = 1 / Math.max(dx, dy)
       }
-      const x = -rect.left * scale + ((screen.clientWidth / scale - width) / 2) * scale
-      const y = -rect.top * scale + ((screen.clientHeight / scale - height) / 2) * scale
+      const x = -rect.left * zoom + ((screen.clientWidth / zoom - width) / 2) * zoom
+      const y = -rect.top * zoom + ((screen.clientHeight / zoom - height) / 2) * zoom
 
-      this.panzoom.zoom(scale)
+      this.panzoom.zoom(zoom)
       this.panzoom.pan({ x, y })
     },
     zoomNode (node) {
-      const screen = this.$refs.screen
+      const screen = this.$refs.edges
       const marginX = screen.clientWidth / 2 - node.width / 2
       const marginY = screen.clientHeight / 2 - node.height / 2
 
@@ -96,12 +108,12 @@ export default {
     /**
      * centers the view and zoom on a group nodes
      */
-    zoomNodes (nodes, opts = { padding: 50, scale: null }) {
+    zoomNodes (nodes, opts = { padding: 50, zoom: null }) {
       if (!nodes || !nodes.length) {
         return
       }
       const padding = opts.padding || 50
-      const scale = opts.scale
+      const zoom = opts.zoom
       let left = Infinity
       let top = Infinity
       let right = -Infinity
@@ -114,13 +126,16 @@ export default {
         if (node.y + node.height > bottom) bottom = node.y + node.height
       })
 
-      this.zoomRect({
-        left: left - padding,
-        top: top - padding,
-        right: right + padding,
-        bottom: bottom + padding,
-      }, { scale })
+      left -= padding
+      top -= padding
+      right += padding
+      bottom += padding
+      const rect = { left, top, right, bottom }
+
+      this.zoomRect({...rect}, { zoom })
+      return rect
     },
+
     panNode (node, opts = { offsetX, offsetY }) { // centers node on screen
       const offsetX = opts.offsetX || 0
       const offsetY = opts.offsetY || 0
@@ -129,18 +144,40 @@ export default {
       const y = this.$el.clientHeight / 2 - (node.y + node.height / 2) * zoom + offsetY
       this.panzoom.pan({ x, y })
     },
+
+    getZoom () {
+      return this.panzoom.getZoom()
+    },
+
+    getPan () {
+      return this.panzoom.getPan()
+    }
   },
 }
 </script>
 
-<style scoped>
-#arrow-end {
-  fill: red !important
-}
+<style>
 .screen {
   width: 100%;
   height: 100%;
-  outline: none;
-  border: 1px solid #ccc;
+  position: relative;
+  overflow: hidden;
+}
+.screen .edges, .screen .nodes, .screen .overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+.screen .nodes, .screen .overlay, .screen .nodes .nodes-inner {
+  pointer-events: none;
+}
+.screen .nodes-inner *, .screen .overlay * {
+  pointer-events: auto;
+}
+.nodes-inner {
+  transform-origin: top left;
+  position: relative;
 }
 </style>

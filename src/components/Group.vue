@@ -5,11 +5,12 @@
     :y="minY - padding.top - margin"
     :width="width + (padding.left + padding.right) + margin * 2"
     :height="height + (padding.top + padding.bottom) + margin * 2"
-    @mousedown="onMousedown">
-      <div class="content" ref="content" :style="contentMargin">
-        <slot>
-        </slot>
-      </div>
+    @mousedown="onMousedown"
+  >
+    <div ref="content" class="group-content" :style="contentMargin">
+      <slot>
+      </slot>
+    </div>
   </foreignObject>
 </template>
 
@@ -24,7 +25,7 @@ export default {
   props: {
     nodes: {
       type: Array,
-      default: []
+      default: () => []
     },
     margin: {
       type: Number,
@@ -34,7 +35,7 @@ export default {
       type: Object,
       default: () => ({ left: 10, right: 10, top: 10, bottom: 10 })
     },
-    disableDrag: false,
+    disableDrag: Boolean,
   },
   computed: {
     minX: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.min(acc, node.x), Infinity),
@@ -70,7 +71,7 @@ export default {
 </script>
 
 <style>
-.group .content {
+.group-content {
   width: 100%;
   height: 100%;
   position: v-bind('position');

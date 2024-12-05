@@ -1,85 +1,71 @@
 <template>
-  <foreignObject
+  <div
     class="node"
-    :class="!fit && 'fill'"
-    :x="data.x - margin"
-    :y="data.y - margin"
-    :width="data.width + margin * 2"
-    :height="data.height + margin * 2"
     @mousedown="onMousedown"
     @touchstart="onMousedown"
-    >
-      <div class="outer" :style="`padding: ${margin}px;`">
-        <div class="content" :class="background && 'background'" ref="content">
-          <div v-if="!$slots.default" class="default-label">
-            {{ data.id }}
-          </div>
-          <slot>
-          </slot>
-        </div>
-      </div>
-  </foreignObject>
+    :style="nodeStyle"
+  >
+    <div v-if="!$slots.default" class="default-label">
+      {{ data.id }}
+    </div>
+    <slot>
+    </slot>
+  </div>
 </template>
 
 <script>
 import dragMixin from '../mixins/drag.js'
-import util from '../util.js'
 export default {
   mixins: [
     dragMixin
   ],
   props: {
-    data: {
-      // { x, y, width, height }
-    },
+    data: Object, // { x, y, width, height }
     margin: { // margin allows to display borders, shadow etc without clipping contents
       type: Number,
       default: 10,
+    },
+    fit: {
+      type: Boolean,
+      default: true,
     },
     useDrag: { // use default drag behavior
       type: Boolean,
       default: true
     },
-    fit: {  // fit node width/height when mounted
-      type: Boolean,
-      default: true
-    },
-    background: { // show background
-      type: Boolean,
-      default: true
-    },
-    textSelect: { // allow text selection
-      type: Boolean,
-      default: false
-    },
   },
+  emits: [
+    'drag'
+  ],
   computed: {
-    position () {
-      return util.isSafari() ? 'static': 'relative'
-    }
+    nodeStyle: vm => ({
+      left: vm.data.x + 'px',
+      top: vm.data.y + 'px',
+    })
   },
-  async mounted () {
+  mounted () {
     if (this.fit) {
-      if (util.isSafari()) {
-        await this.$nextTick() // fix safari issues
-      }
       this.fitContent()
     }
   },
   methods: {
     onDrag ({ x,y }) {
+      // eslint-disable-next-line vue/no-mutating-props
       this.data.x += x
+      // eslint-disable-next-line vue/no-mutating-props
       this.data.y += y
       this.$emit('drag', { x, y })
     },
+    /**
+     * Update node width/height from the contents size
+     */
     fitContent () {
-      this.data.width = this.$refs.content.offsetWidth
-      this.data.height = this.$refs.content.offsetHeight
+      // eslint-disable-next-line vue/no-mutating-props
+      this.data.width = this.$el.offsetWidth
+      // eslint-disable-next-line vue/no-mutating-props
+      this.data.height = this.$el.offsetHeight
     },
     onMousedown (e) {
-      if (!this.textSelect) {
-        e.preventDefault() // prevent text select
-      }
       if (this.useDrag) {
         e.stopPropagation() // prevent viewport drag
         this.startDrag(e)
@@ -90,26 +76,14 @@ export default {
 </script>
 
 <style>
-.node .content {
-  position: v-bind("position");
-  white-space: nowrap;
-  width: fit-content;
-}
-
-.node .background {
+.node {
+  display: inline-flex;
+  position: absolute;
   background-color: rgba(100, 200, 100, .9);
   border-radius: 7px;
 }
 
-.node.fill .outer,
-.node.fill .content,
-.node.fill .content > * {
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.default-label {
+.node .default-label {
   font-weight: bold;
   width: auto;
   height: auto;
