@@ -10,7 +10,11 @@
         </slot>
       </div>
     </div>
-    <svg ref="overflay" class="overlay">
+    <svg ref="overlay" class="overlay">
+      <g ref="overlayInner">
+        <slot name="overlay">
+        </slot>
+      </g>
     </svg>
   </div>
 </template>
@@ -69,6 +73,7 @@ export default {
     onUpdatedCTM (m) {
       const { a, b, c, d, e, f } = m;
       this.$refs.nodesInner.style.transform = `matrix(${a}, ${b}, ${c}, ${d}, ${e}, ${f})`
+      this.$refs.overlayInner.style.transform = `matrix(${a}, ${b}, ${c}, ${d}, ${e}, ${f})`
 
       this.$emit('ctm', m)
     },
