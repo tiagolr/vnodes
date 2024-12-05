@@ -2,14 +2,18 @@
   <div class="demo" id="styles-demo">
     <div class="viewport">
       <screen ref="screen" v-if="visible">
-        <markers :markers="markers">
-        </markers>
-        <g>
-          <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
-          </edge>
+        <template #edges>
+          <markers :markers="markers">
+          </markers>
+          <g>
+            <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+            </edge>
+          </g>
+        </template>
+        <template #nodes>
           <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
           </node>
-        </g>
+        </template>
       </screen>
     </div>
     <div class="sidebar">
@@ -47,7 +51,7 @@ const themes = {
   background-color: white
 }
 
-.node .content {
+.node {
   background-color: pink;
   color: red;
   box-shadow: inset 0px 0px 0px 4px red;
@@ -64,7 +68,7 @@ const themes = {
   background-color: #1A53A9
 }
 
-.node .content {
+.node {
   background-color: #559EF5;
   color: #fff;
   box-shadow: inset 0px 0px 0px 4px #fff;
@@ -82,7 +86,7 @@ const themes = {
   background-color: white
 }
 
-.node .content {
+.node {
   border-radius: 50%;
   background-color: #eee;
   color: #333;

@@ -2,10 +2,14 @@
   <div class="demo" id="benchmark-demo">
     <div class="viewport">
       <screen ref="screen">
-        <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
-        </edge>
-        <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
-        </node>
+        <template #edges>
+          <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+          </edge>
+        </template>
+        <template #nodes>
+          <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
+          </node>
+        </template>
       </screen>
     </div>
     <div class="sidebar">
@@ -73,12 +77,12 @@ export default {
 </script>
 
 <style>
-#benchmark-demo .node .content {
+#benchmark-demo .node {
   /* background-color #14c56a */
   background-color: #47696e;
   color: white;
 }
-#benchmark-demo .node:hover .content {
+#benchmark-demo .node:hover {
   background-color: red;
 }
 #benchmark-demo .edge {

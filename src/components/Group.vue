@@ -1,23 +1,17 @@
 <template>
-  <foreignObject
-    class="group"
-    :x="minX - padding.left - margin"
-    :y="minY - padding.top - margin"
-    :width="width + (padding.left + padding.right) + margin * 2"
-    :height="height + (padding.top + padding.bottom) + margin * 2"
+  <div
+    class="node-group"
     @mousedown="onMousedown"
+    :style="groupStyle"
   >
-    <div ref="content" class="group-content" :style="contentMargin">
-      <slot>
-      </slot>
-    </div>
-  </foreignObject>
+    <slot>
+    </slot>
+  </div>
 </template>
 
 <script>
 /** */
 import drag from '../mixins/drag.js'
-import util from "../util";
 export default {
   mixins: [
     drag
@@ -26,10 +20,6 @@ export default {
     nodes: {
       type: Array,
       default: () => []
-    },
-    margin: {
-      type: Number,
-      default: 20
     },
     padding: { // additional area covered by group besides nodes minxy, maxxy
       type: Object,
@@ -50,7 +40,13 @@ export default {
       width: `calc(100% - ${vm.margin * 2}px)`,
       height: `calc(100% - ${vm.margin * 2}px)`
     }),
-    position: () => util.isSafari() ? 'static': 'absolute'
+
+    groupStyle: vm => ({
+      left: `${vm.minX - vm.padding.left}px`,
+      top: `${vm.minY - vm.padding.top}px`,
+      width: `${vm.width + vm.padding.left + vm.padding.right}px`,
+      height: `${vm.height + vm.padding.top + vm.padding.bottom}px`
+    })
   },
   methods: {
     onDrag ({ x,y }) {
@@ -71,10 +67,9 @@ export default {
 </script>
 
 <style>
-.group-content {
-  width: 100%;
-  height: 100%;
-  position: v-bind('position');
+.node-group {
+  position: absolute;
+  display: inline-flex;
   border-radius: 7px;
   background-color: rgba(100, 100, 100, .25);
   display: inline-block;

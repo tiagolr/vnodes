@@ -13,7 +13,7 @@
     </edit> -->
 
     <h2>Ports <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Ports.vue" target="_blank">&lt;/&gt;</a></h2>
-    <ports v-if="false">
+    <ports>
     </ports>
 
     <!-- <h2>Groups <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Groups.vue" target="_blank">&lt;/&gt;</a></h2>
@@ -25,7 +25,7 @@
     </labels>
 
     <h2>Styles <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>
-    <styles v-if="false">
+    <styles>
     </styles>
 
     <h2>Markers <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Markers.vue" target="_blank">&lt;/&gt;</a></h2>
@@ -33,7 +33,7 @@
     </markers>
 
     <h2>Benchpress <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Benchmark.vue" target="_blank">&lt;/&gt;</a></h2>
-    <benchpress v-if="false">
+    <benchpress>
     </benchpress>
   </div>
 </template>

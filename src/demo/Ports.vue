@@ -2,44 +2,48 @@
   <div class="demo" id="ports-demo">
     <div class="viewport">
       <screen ref="screen">
-        <edge v-for="edge in graph.edges"
-          :data="edge"
-          :nodes="graph.nodes"
-          :key="edge.id"
-        ></edge>
-        <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
-          <div class="node-header"><strong>{{ node.id }}</strong></div>
-          <table>
-            <td style="border-bottom: none">
-              <tr v-for="input in node.inputs" :key="node.id+':'+input">
+        <template #edges>
+          <edge v-for="edge in graph.edges"
+            :data="edge"
+            :nodes="graph.nodes"
+            :key="edge.id"
+          ></edge>
+        </template>
+        <template #nodes>
+          <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
+            <div class="node-header"><strong>{{ node.id }}</strong></div>
+            <table>
+              <td style="border-bottom: none">
+                <tr v-for="input in node.inputs" :key="node.id+':'+input">
+                    <port ref="port"
+                      :id="node.id+':'+input"
+                      :edgesTo="getInputEdges(node, input)">
+                        <div class="port-inner"
+                          @mousedown.prevent.stop="evt => startConnect(node, { input }, evt)"
+                          @mouseup.prevent.stop="createConnect(node, { input })"
+                          :class="getInputEdges(node, input).length && 'connected'">
+                        </div>
+                    </port>
+                  {{ input.slice(1) }}
+                </tr>
+              </td>
+              <td style="border-bottom: none">
+                <tr v-for="output in node.outputs" :key="node.id+':'+output">
+                  {{ output.slice(1) }}
                   <port ref="port"
-                    :id="node.id+':'+input"
-                    :edgesTo="getInputEdges(node, input)">
+                    :id="node.id+':'+output"
+                    :edgesFrom="getOutputEdges(node, output)">
                       <div class="port-inner"
-                        @mousedown.prevent.stop="evt => startConnect(node, { input }, evt)"
-                        @mouseup.prevent.stop="createConnect(node, { input })"
-                        :class="getInputEdges(node, input).length && 'connected'">
+                        @mousedown.prevent.stop="evt => startConnect(node, { output }, evt)"
+                        @mouseup.prevent.stop="createConnect(node, { output })"
+                        :class="getOutputEdges(node, output).length && 'connected'">
                       </div>
                   </port>
-                {{ input.slice(1) }}
-              </tr>
-            </td>
-            <td style="border-bottom: none">
-              <tr v-for="output in node.outputs" :key="node.id+':'+output">
-                {{ output.slice(1) }}
-                <port ref="port"
-                  :id="node.id+':'+output"
-                  :edgesFrom="getOutputEdges(node, output)">
-                    <div class="port-inner"
-                      @mousedown.prevent.stop="evt => startConnect(node, { output }, evt)"
-                      @mouseup.prevent.stop="createConnect(node, { output })"
-                      :class="getOutputEdges(node, output).length && 'connected'">
-                    </div>
-                </port>
-              </tr>
-            </td>
-          </table>
-        </node>
+                </tr>
+              </td>
+            </table>
+          </node>
+        </template>
       </screen>
     </div>
     <div class="sidebar">
@@ -53,7 +57,6 @@ import Node from '../components/Node.vue'
 import Edge from '../components/Edge.vue'
 import Port from '../components/Port.vue'
 import graph from '../graph'
-import util from '../util'
 export default {
   components: {
     Screen,
@@ -212,9 +215,6 @@ export default {
     })
 
     await this.$nextTick()
-    if (util.isSafari()) {
-      await this.$nextTick() // await two ticks, in safari nodes take two ticks before updating their size, fixes render issues
-    }
     this.graph.graphNodes({ spacing: 75 })
     this.$refs.screen.zoomNodes(this.graph.nodes, { zoom: 1 })
     document.addEventListener('mouseup', this.cancelConnect)
@@ -255,7 +255,7 @@ export default {
 </style>
 
 <style>
-#ports-demo .node .content {
+#ports-demo .node {
   background-color: #eee;
   box-shadow: 2px 2px 2px 2px rgb(100, 100, 100, .5);
   /* outline: 2px solid #555; */

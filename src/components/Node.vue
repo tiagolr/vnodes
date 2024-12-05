@@ -78,6 +78,7 @@ export default {
 <style>
 .node {
   display: inline-flex;
+  flex-direction: column;
   position: absolute;
   background-color: rgba(100, 200, 100, .9);
   border-radius: 7px;

@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import util from "../util";
-
 /**
  * Offsets edges to its position when placed inside a node
  */
@@ -16,22 +14,27 @@ export default {
     startOffset: Object, // {x, y}, contents center if null
     edgesFrom: {
       type: Array,
-      default: () => []
+      default: () => [],
     },
     edgesTo: {
       type: Array,
-      default: () => []
+      default: () => [],
     }
   },
   data() {
     return {
       offset: { x: 0, y: 0 },
-      position: util.isSafari() ? 'static': 'relative'
     }
   },
+  computed: {
+    // use a computed property by merging all edge ids
+    // to update position, avoids recalculations
+    edgeIds: vm => vm.edgesFrom
+      .map(e => e.id).concat(vm.edgesTo
+      .map(e => e.id)).join(' ')
+  },
   watch: {
-    edgesFrom: 'updatePosition',
-    edgesTo: 'updatePosition',
+    edgeIds: 'updatePosition'
   },
   mounted () {
     this.updatePosition()
@@ -47,16 +50,11 @@ export default {
         y: this.$el.offsetHeight / 2,
       }
       const rectPort = this.$el.getBoundingClientRect()
-      const rectNode = this.$el.closest('.screen').querySelector('edges').getBoundingClientRect()
+      const rectNode = this.$el.closest('.node').getBoundingClientRect()
       const diffx = rectPort.left - rectNode.left
       const diffy = rectPort.top - rectNode.top
 
-      const panzoom = this.$el.closest(".svg-pan-zoom_viewport")
-      if (!panzoom) {
-        console.debug('port failed to find panzoom container')
-        return
-      }
-
+      const panzoom = this.$el.closest(".screen").querySelector('.svg-pan-zoom_viewport')
       const zoom = new DOMMatrix(window.getComputedStyle(panzoom).transform).a
       this.offset.x += diffx / zoom
       this.offset.y += diffy / zoom
@@ -73,7 +71,4 @@ export default {
 </script>
 
 <style>
-.port {
-  position: v-bind("position");
-}
 </style>

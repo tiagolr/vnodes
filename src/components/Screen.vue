@@ -1,7 +1,7 @@
 <template>
   <div class="screen">
     <svg ref="edges" class="edges">
-      <slot>
+      <slot name="edges">
       </slot>
     </svg>
     <div class="nodes" ref="nodes" style="overflow: hidden">

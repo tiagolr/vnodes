@@ -1,14 +1,14 @@
 <template>
   <div class="demo demo-sink">
     <div class="viewport">
-      <screen ref="screen" :markers="[]">
-        <group v-if="groupNodes" :nodes="$refs.sidebar.filterNodes || graph.nodes">
-        </group>
-
-        <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
-        </edge>
-
+      <screen ref="screen">
+        <template #edges>
+          <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+          </edge>
+        </template>
         <template #nodes>
+          <group v-if="groupNodes" :nodes="$refs.sidebar.filterNodes || graph.nodes">
+          </group>
           <node v-for="node in graph.nodes" :data="node" :key="node.id" :drag-threshold="2">
           </node>
         </template>
