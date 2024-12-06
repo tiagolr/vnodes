@@ -57,6 +57,8 @@
     <div class="sidebar">
       <div>Position {{ perc }}</div>
       <input type="range" v-model="perc" min="0" max="100">
+      <div>Color {{ color }}</div>
+      <input type="range" v-model="colorPerc" min="0" max="100">
     </div>
   </div>
 </template>
@@ -78,6 +80,7 @@ export default {
   data() {
     return {
       perc: 50,
+      colorPerc: 65,
       graph: new graph(),
       color: '#00f',
       visible: true,
@@ -103,6 +106,49 @@ export default {
         { id: 'a5b5', from: '5a', to: '5b', type: 'smooth' },
         { id: 'a6b6', from: '6a', to: '6b', type: 'smooth' },
       ]
+    }
+  },
+  watch: {
+    colorPerc: {
+      immediate: true,
+      handler (val) {
+        this.color = this.valueToColor(val)
+      }
+    }
+  },
+  methods: {
+    valueToColor(value) {
+      const v = Math.max(0, Math.min(100, value));
+      const hue = (v / 100) * 360;
+      const rgb = this.hslToRgb(hue, 1, 0.5);
+      return `#${rgb[0].toString(16).padStart(2, '0')}${rgb[1].toString(16).padStart(2, '0')}${rgb[2].toString(16).padStart(2, '0')}`;
+    },
+
+    // HSL to RGB Conversion Function
+    hslToRgb(h, s, l) {
+      const c = (1 - Math.abs(2 * l - 1)) * s; // Chroma
+      const x = c * (1 - Math.abs((h / 60) % 2 - 1)); // Intermediate value
+      const m = l - c / 2;
+
+      let r = 0, g = 0, b = 0;
+      if (h >= 0 && h < 60) {
+          r = c; g = x; b = 0;
+      } else if (h >= 60 && h < 120) {
+          r = x; g = c; b = 0;
+      } else if (h >= 120 && h < 180) {
+          r = 0; g = c; b = x;
+      } else if (h >= 180 && h < 240) {
+          r = 0; g = x; b = c;
+      } else if (h >= 240 && h < 300) {
+          r = x; g = 0; b = c;
+      } else if (h >= 300 && h < 360) {
+          r = c; g = 0; b = x;
+      }
+      return [
+          Math.round((r + m) * 255),
+          Math.round((g + m) * 255),
+          Math.round((b + m) * 255)
+      ];
     }
   }
 }

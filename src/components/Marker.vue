@@ -50,7 +50,7 @@ export default {
     updatePosition () {
       const el = document.getElementById(this.edge.id)
       if (!el) return;
-      const length = el.getTotalLength() * this.perc / 100 - 0.01
+      const length = Math.max(el.getTotalLength() * this.perc / 100 - 0.01, 0)
       this.pos = el.getPointAtLength(length)
 
       if (this.rotate) {
