@@ -5,7 +5,7 @@
         <template #edges>
           <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
           </edge>
-          <v-marker v-for="edge in graph.edges" :edge="edge" :offset="{x: -4, y:1}">
+          <v-marker v-for="edge in graph.edges" :edge="edge" :offset="{x: -4, y: 0}">
             <path style="fill:green;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:5.2" d="M2.936 1.722 1.57 2.51.204 3.3V.143L1.57.933z" transform="scale(6)"/>
           </v-marker>
         </template>

@@ -1,6 +1,6 @@
 <template>
     <g>
-      <g :transform="transform">
+      <g :transform="transform" ref="super">
         <slot></slot>
       </g>
     </g>
@@ -33,10 +33,12 @@ export default {
   },
   data() {
     return {
+      radsToDeg,
       pos: { x: 0, y: 0 },
       size: { w: 0, h : 0 },
       angle: 0,
-      zoom: 1
+      zoom: 1,
+      box: null
     }
   },
   mounted () {
@@ -45,8 +47,7 @@ export default {
   computed: {
     transform: vm => `
       translate(${vm.pos.x} ${vm.pos.y})
-      rotate(${vm.angle},${vm.size.w / 2 / vm.zoom},${vm.size.h / 2 / vm.zoom})
-      translate(${vm.offset.x} ${vm.offset.y})
+      rotate(${vm.angle * radsToDeg},${vm.size.w / 2 / vm.zoom},${vm.size.h / 2 / vm.zoom})
     `,
   },
   methods: {
@@ -58,35 +59,43 @@ export default {
 
       if (this.rotate) {
         const delta = el.getPointAtLength(length + 0.01)
-        this.angle = Math.atan2(delta.y - this.pos.y, delta.x - this.pos.x) * radsToDeg;
+        this.angle = Math.atan2(delta.y - this.pos.y, delta.x - this.pos.x)
       } else {
         this.angle = 0
       }
 
       this.zoom = this.$parent.zoom
-      const box = this.$el.getBoundingClientRect()
+      const box = this.$refs.super.getBBox()
+      box.x /= this.zoom
+      box.y /= this.zoom
+      box.width /= this.zoom
+      box.height /= this.zoom
       this.size.w = box.width
       this.size.h = box.height
+
       if (this.align === 'center') {
-        this.pos.x -= box.width / 2 / this.zoom
-        this.pos.y -= box.height / 2 / this.zoom
+        this.pos.x -= box.width / 2
+        this.pos.y -= box.height / 2
       }
-      if (this.align === 'left') {
-        this.pos.x -= box.width / this.zoom
-        this.pos.y -= box.height / 2 / this.zoom
+      // if (this.align === 'left') {
+      //   this.pos.x -= box.width / this.zoom
+      //   this.pos.y -= box.height / 2 / this.zoom
+      // }
+      // if (this.align === 'right') {
+      //   this.pos.y -= box.height / 2 / this.zoom
+      // }
+      // if (this.align === 'bottom') {
+      //   this.pos.x -= box.width / 2 / this.zoom
+      // }
+      // if (this.align === 'top') {
+      //   this.pos.y -= box.height / this.zoom
+      //   this.pos.x -= box.width / 2 / this.zoom
+      // }
+
+      if (this.offset.x || this.offset.y) {
+        this.pos.x += (this.offset.x * Math.cos(this.angle) - this.offset.y * Math.sin(this.angle)) / this.zoom
+        this.pos.y += (this.offset.x * Math.sin(this.angle) + this.offset.y * Math.cos(this.angle)) / this.zoom
       }
-      if (this.align === 'right') {
-        this.pos.y -= box.height / 2 / this.zoom
-      }
-      if (this.align === 'bottom') {
-        this.pos.x -= box.width / 2 / this.zoom
-      }
-      if (this.align === 'top') {
-        this.pos.y -= box.height / this.zoom
-        this.pos.x -= box.width / 2 / this.zoom
-      }
-      // this.pos.x += this.offset.x
-      // this.pos.y += this.offset.y
     },
   },
   watch: {
