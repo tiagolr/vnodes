@@ -5,6 +5,7 @@ import Edge from './src/components/Edge.vue'
 import Group from './src/components/Group.vue'
 import Port from './src/components/Port.vue'
 import Label from './src/components/Label.vue'
+import Marker from './src/components/Marker.vue'
 
 export { graph }
 export { Screen }
@@ -13,6 +14,7 @@ export { Edge }
 export { Group }
 export { Port }
 export { Label }
+export { Marker }
 export default {
   graph,
   Screen,
@@ -20,5 +22,6 @@ export default {
   Edge,
   Group,
   Port,
-  Label
+  Label,
+  Marker
 }

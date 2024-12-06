@@ -28,7 +28,7 @@ export default {
     },
     rotate: {
       type: Boolean,
-      default: true // disable for slight performance increase
+      default: true // disable for slight performance gain
     },
   },
   data() {
@@ -45,14 +45,15 @@ export default {
   computed: {
     transform: vm => `
       translate(${vm.pos.x} ${vm.pos.y})
-      rotate(${vm.angle},${vm.size.w / vm.zoom},${vm.size.h / vm.zoom})
+      rotate(${vm.angle},${vm.size.w / 2 / vm.zoom},${vm.size.h / 2 / vm.zoom})
+      translate(${vm.offset.x} ${vm.offset.y})
     `,
   },
   methods: {
     updatePosition () {
       const el = document.getElementById(this.edge.id)
       if (!el) return;
-      const length = el.getTotalLength() * this.perc / 100
+      const length = el.getTotalLength() * this.perc / 100 - 0.01
       this.pos = el.getPointAtLength(length)
 
       if (this.rotate) {
@@ -84,8 +85,8 @@ export default {
         this.pos.y -= box.height / this.zoom
         this.pos.x -= box.width / 2 / this.zoom
       }
-      this.pos.x += this.offset.x
-      this.pos.y += this.offset.y
+      // this.pos.x += this.offset.x
+      // this.pos.y += this.offset.y
     },
   },
   watch: {
