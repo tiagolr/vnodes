@@ -108,6 +108,9 @@ export default {
       ]
     }
   },
+  mounted () {
+    this.$refs.screen.panzoom.zoom(1.15)
+  },
   watch: {
     colorPerc: {
       immediate: true,

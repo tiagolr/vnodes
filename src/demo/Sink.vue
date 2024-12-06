@@ -12,7 +12,7 @@
         <template #nodes>
           <group v-if="groupNodes" :nodes="$refs.sidebar.filterNodes || graph.nodes">
           </group>
-          <node v-for="node in graph.nodes" :data="node" :key="node.id" :drag-threshold="2">
+          <node v-for="node in graph.nodes" :data="node" :key="node.id">
           </node>
         </template>
       </screen>
@@ -48,12 +48,4 @@ export default {
   },
 }
 </script>
-
-<style>
-.demo-sink * {
-  user-select: none;
-  -webkit-user-select: none;
-  cursor: default;
-}
-</style>
 

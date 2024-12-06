@@ -29,7 +29,6 @@ export default {
 
     pos () {
       if (!this.fromNode || !this.toNode) {
-        console.debug('nodes not found for edge', this.data)
         return null
       }
       let x1 = this.fromNode.x + (this.fromAnchor.x || 0)
@@ -109,17 +108,14 @@ export default {
     },
   },
 
-  mounted () {
+  beforeMount () {
     if (typeof this.data.id === 'undefined') {
       const id = Math.random().toString(36).slice(2)
-      if (this.$set) { // vue 2
-        this.$set(this.data, 'id', id)
-      } else { // vue 3
-        // eslint-disable-next-line vue/no-mutating-props
-        this.data['id'] = id
-      }
+      // eslint-disable-next-line vue/no-mutating-props
+      this.data['id'] = id
     }
   },
+
   methods: {
     /**
      * anchor {
