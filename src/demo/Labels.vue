@@ -1,24 +1,28 @@
 <template>
-  <div class="demo">
+  <div class="demo demo-labels">
     <div class="viewport">
       <screen ref="screen">
-        <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
-        </edge>
-        <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
-        </node>
+        <template #edges>
+          <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+          </edge>
+        </template>
+        <template #nodes>
+          <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
+          </node>
+          <v-label v-if="graph.edges.length"
+            :edge="graph.edges[0]"
+            :perc="parseInt(perc)"
+            :offset="{x: parseInt(offsetX), y: parseInt(offsetY)}"
+            :align="align"
+            :rotate="rotate"
+            :connector="connector"
+            :useDrag="true"
+            ref="label"
+            @drag="onDrag">
+              <div v-html="contents"></div>
+          </v-label>
+        </template>
 
-        <v-label v-if="graph.edges.length"
-          :edge="graph.edges[0]"
-          :perc="parseInt(perc)"
-          :offset="{x: parseInt(offsetX), y: parseInt(offsetY)}"
-          :align="align"
-          :rotate="rotate"
-          :connector="connector"
-          :useDrag="true"
-          ref="label"
-          @drag="onDrag">
-            <div v-html="contents"></div>
-        </v-label>
       </screen>
     </div>
     <div class="sidebar">
@@ -106,16 +110,8 @@ export default {
 </script>
 
 <style>
-/* // #benchmark-demo
-//   .node .content
-//     background-color: #47696e;
-//     color: white;
-//   .node:hover .content
-//     background-color red
-//   .edge
-//     stroke #ccc
-//     stroke-width 4
-//     marker-end: none
-//   .edge:hover
-//     stroke: red */
+.demo-labels .node {
+  user-select: none;
+  -moz-user-select: none;
+}
 </style>

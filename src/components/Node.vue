@@ -82,6 +82,8 @@ export default {
   position: absolute;
   background-color: rgba(100, 200, 100, .9);
   border-radius: 7px;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .node .default-label {

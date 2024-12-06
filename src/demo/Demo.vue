@@ -21,7 +21,7 @@
     </groups> -->
 
     <h2>Labels <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Labels.vue" target="_blank">&lt;/&gt;</a></h2>
-    <labels v-if="false">
+    <labels>
     </labels>
 
     <h2>Styles <a href="https://github.com/txlabs/vnodes/blob/master/src/demo/Styles.vue" target="_blank">&lt;/&gt;</a></h2>

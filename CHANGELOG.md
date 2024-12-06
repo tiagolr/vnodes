@@ -1,6 +1,7 @@
 
-2.0
+2.0.0
   - New method of rendering nodes in a div layer instead of old foreignObject inside svg
+  - Dropped vue 2 support
   - Improved ports offset calculation method
   - Fixed ports continuous updates by using a computed property instead to trigger updates
   - Other - default drag threshold reduced to 2

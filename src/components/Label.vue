@@ -1,17 +1,16 @@
 <template>
-  <g class="label">
-    <path v-if="connector" class="edge"
-      :d="`M ${pos.x} ${pos.y} L ${node.x + node.width / 2} ${node.y + node.height / 2}`">
-    </path>
-    <node ref="node"
+  <div class="label">
+    <node
+      ref="node"
       :data="node"
       :useDrag="useDrag"
       :style="nodeTransform"
-      @drag="e => $emit('drag', e)">
-        <slot>
-        </slot>
+      @drag="e => $emit('drag', e)"
+    >
+      <slot>
+      </slot>
     </node>
-  </g>
+  </div>
 </template>
 
 <script>
@@ -23,9 +22,9 @@ export default {
   props: {
     edge: {
       type: Object,
-      required: true // { id, pathd }
+      required: true
     },
-    perc: {
+    perc: { // position from 0 to 100 along the edge
       type: Number,
       default: 50
     },
@@ -69,9 +68,7 @@ export default {
   methods: {
     getPosition () {
       const el = document.getElementById(this.edge.id)
-      if (!el) {
-        throw `element not found: ${this.edge.id}`
-      }
+      if (!el) return;
       const length = el.getTotalLength() * this.perc / 100
       this.pos = el.getPointAtLength(length)
 
@@ -100,7 +97,7 @@ export default {
   },
   computed: {
     nodeTransform: vm => `
-        transform-origin: ${vm.node.x + vm.node.width / 2}px ${vm.node.y + vm.node.height}px;
+        transform-origin: 50% 50%;
         transform: rotate(${vm.angle}rad);`,
   },
   watch: {
@@ -121,12 +118,7 @@ export default {
 </script>
 
 <style>
-.label .node .content {
+.label .node {
   background-color: #bbe4bb;
-}
-.label .edge {
-  stroke: #286f28;
-  stroke-width: 3;
-  stroke-dasharray: 4;
 }
 </style>

@@ -6,7 +6,7 @@
 
 <script>
 /**
- * Offsets edges to its position when placed inside a node
+ * Offsets edges position when placed inside a node
  */
 export default {
   props: {
