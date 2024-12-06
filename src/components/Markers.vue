@@ -1,7 +1,20 @@
 <template>
 <defs>
   <template v-for="marker in all" :key="marker.id">
-    <marker v-if="marker.type === 'arrow-start'"
+    <marker
+      :id="marker.id" orient="auto"
+      :markerWidth="marker.width * marker.scale"
+      :markerHeight="marker.height * marker.scale"
+      :refX="marker.refX"
+      :refY="marker.refY"
+      :viewBox="marker.viewBox"
+      :stroke-width="2"
+      stroke-linecap="round"
+    >
+      <path :d="marker.path" :style="marker.style">
+      </path>
+    </marker>
+    <!-- <marker v-if="marker.type === 'arrow-start'"
       :id="marker.id" orient="auto"
       :markerWidth="13 * marker.scale"
       :markerHeight="13 * marker.scale"
@@ -66,7 +79,7 @@
       fill="none" stroke="green" stroke-width="2">
         <path d="M10,5 L1,1 M10,5 L1,9"
         :style="`transform: scale(${marker.scale});${marker.style}`"/>
-    </marker>
+    </marker> -->
   </template>
 </defs>
 </template>
@@ -122,19 +135,36 @@ const defaults = [{
 
 export default {
   props: {
-    markers: Array //[{ id:String, type:String, scale:Number, style:String }, ...]
+    markers: {
+      type: Array,
+      default: () => []
+    } //[{ id:String, type:String, scale:Number, style:String }, ...]
   },
   computed: {
     all () {
       return this.markers
-        .concat(defaults)
+        .filter(m => m.path)
         .map(marker => {
-          const base = defaults.find(d => d.type === marker.type)
-          if (!base) {
-            console.error('unknown marker', marker)
-          } else {
-            return Object.assign({}, base, marker) // replace marker default attrs
+          const tempSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          const tempPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+
+          tempPath.setAttribute("d", marker.path);
+          tempSvg.appendChild(tempPath);
+          if (marker.strokeWidth) {
+            tempPath.setAttribute("stroke-width", marker.strokeWidth.toString());
           }
+          if (marker.strokeLinecap) {
+            tempPath.setAttribute("stroke-linecap", marker.strokeLinecap.toString());
+          }
+          document.body.appendChild(tempSvg);
+          const bbox = tempPath.getBBox();
+          const width = bbox.width;
+          const height = bbox.height;
+          const refX = bbox.x + bbox.width / 2
+          const refY = bbox.y + bbox.height / 2
+          const viewBox = `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`
+          document.body.removeChild(tempSvg);
+          return Object.assign({ width, height, refX, refY, viewBox }, marker)
         })
         .filter(marker => marker)
     }

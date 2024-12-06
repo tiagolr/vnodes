@@ -15,7 +15,6 @@
             :offset="{x: parseInt(offsetX), y: parseInt(offsetY)}"
             :align="align"
             :rotate="rotate"
-            :connector="connector"
             :useDrag="true"
             ref="label"
             @drag="onDrag">
@@ -45,7 +44,6 @@
         <option value="bottom-right">bottom-right</option>
       </select>
       <div><input type="checkbox" v-model="rotate"><span>Rotate</span></div>
-      <div><input type="checkbox" v-model="connector"><span>Connector</span></div>
     </div>
   </div>
 </template>
@@ -72,7 +70,6 @@ export default {
       offsetY: 0,
       align: 'center',
       rotate: false,
-      connector: true,
       contents: '<small style="padding: 10px">Label</small>'
     }
   },

@@ -103,19 +103,10 @@ export default {
       }
 
       pathd += `${pos.x2},${pos.y2}`
-
+      // eslint-disable-next-line vue/no-mutating-props
+      this.data.pathd = pathd
       return pathd
     },
-  },
-
-  watch: {
-    pathd: {
-      immediate: true,
-      handler (pathd) {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.data.pathd = pathd
-      }
-    }
   },
 
   mounted () {
