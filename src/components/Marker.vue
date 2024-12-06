@@ -38,7 +38,7 @@ export default {
       size: { w: 0, h : 0 },
       angle: 0,
       zoom: 1,
-      box: null
+      box: {x: 0, y: 0, width: 100, height: 100}
     }
   },
   mounted () {
@@ -47,7 +47,7 @@ export default {
   computed: {
     transform: vm => `
       translate(${vm.pos.x} ${vm.pos.y})
-      rotate(${vm.angle * radsToDeg},${vm.size.w / 2 / vm.zoom},${vm.size.h / 2 / vm.zoom})
+      rotate(${vm.angle * radsToDeg},${vm.box.x + vm.box.width / 2},${vm.box.y + vm.box.height / 2})
     `,
   },
   methods: {
@@ -66,12 +66,6 @@ export default {
 
       this.zoom = this.$parent.zoom
       const box = this.$refs.super.getBBox()
-      box.x /= this.zoom
-      box.y /= this.zoom
-      box.width /= this.zoom
-      box.height /= this.zoom
-      this.size.w = box.width
-      this.size.h = box.height
 
       if (this.align === 'center') {
         this.pos.x -= box.width / 2
@@ -92,9 +86,12 @@ export default {
       //   this.pos.x -= box.width / 2 / this.zoom
       // }
 
+      this.box = this.$refs.super.getBBox()
+
+
       if (this.offset.x || this.offset.y) {
-        this.pos.x += (this.offset.x * Math.cos(this.angle) - this.offset.y * Math.sin(this.angle)) / this.zoom
-        this.pos.y += (this.offset.x * Math.sin(this.angle) + this.offset.y * Math.cos(this.angle)) / this.zoom
+        this.pos.x += (this.offset.x * Math.cos(this.angle) - this.offset.y * Math.sin(this.angle)) * this.zoom
+        this.pos.y += (this.offset.x * Math.sin(this.angle) + this.offset.y * Math.cos(this.angle)) * this.zoom
       }
     },
   },
