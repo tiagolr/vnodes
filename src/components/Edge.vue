@@ -183,8 +183,6 @@ export default {
 .edge {
   stroke-width: 4;
   stroke: green;
-  /* marker-start: url(#arrow-start) */
-  marker-end: url(#arrow-end);
   fill: transparent;
 }
 </style>

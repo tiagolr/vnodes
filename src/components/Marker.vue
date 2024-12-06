@@ -1,9 +1,8 @@
 <template>
     <g>
-      <g v-if="!$slots.default" :transform="transform">
-        <rect width="20" height="20"/>
+      <g :transform="transform">
+        <slot></slot>
       </g>
-      <slot></slot>
     </g>
 </template>
 
@@ -65,12 +64,28 @@ export default {
 
       this.zoom = this.$parent.zoom
       const box = this.$el.getBoundingClientRect()
+      this.size.w = box.width
+      this.size.h = box.height
       if (this.align === 'center') {
-        this.size.w = box.width,
-        this.size.h = box.height,
         this.pos.x -= box.width / 2 / this.zoom
         this.pos.y -= box.height / 2 / this.zoom
       }
+      if (this.align === 'left') {
+        this.pos.x -= box.width / this.zoom
+        this.pos.y -= box.height / 2 / this.zoom
+      }
+      if (this.align === 'right') {
+        this.pos.y -= box.height / 2 / this.zoom
+      }
+      if (this.align === 'bottom') {
+        this.pos.x -= box.width / 2 / this.zoom
+      }
+      if (this.align === 'top') {
+        this.pos.y -= box.height / this.zoom
+        this.pos.x -= box.width / 2 / this.zoom
+      }
+      this.pos.x += this.offset.x
+      this.pos.y += this.offset.y
     },
   },
   watch: {
