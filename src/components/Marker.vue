@@ -22,10 +22,6 @@ export default {
       type: Object,
       default: () => ({ x: 0, y: 0 })
     },
-    align: {
-    type: String,
-    default: 'center'
-    },
     rotate: {
       type: Boolean,
       default: true // disable for slight performance gain
@@ -65,31 +61,14 @@ export default {
       }
 
       this.zoom = this.$parent.zoom
-      const box = this.$refs.super.getBBox()
-      this.box = box;
+      this.box = this.$refs.super.getBBox()
 
-      if (this.align === 'center') {
-        this.pos.x -= box.width / 2
-        this.pos.y -= box.height / 2
-      }
-      // if (this.align === 'left') {
-      //   this.pos.x -= box.width / this.zoom
-      //   this.pos.y -= box.height / 2 / this.zoom
-      // }
-      // if (this.align === 'right') {
-      //   this.pos.y -= box.height / 2 / this.zoom
-      // }
-      // if (this.align === 'bottom') {
-      //   this.pos.x -= box.width / 2 / this.zoom
-      // }
-      // if (this.align === 'top') {
-      //   this.pos.y -= box.height / this.zoom
-      //   this.pos.x -= box.width / 2 / this.zoom
-      // }
+      this.pos.x -= this.box.width / 2
+      this.pos.y -= this.box.height / 2
 
       if (this.offset.x || this.offset.y) {
-        this.pos.x += (this.offset.x * Math.cos(this.angle) - this.offset.y * Math.sin(this.angle)) * this.zoom
-        this.pos.y += (this.offset.x * Math.sin(this.angle) + this.offset.y * Math.cos(this.angle)) * this.zoom
+        this.pos.x += (this.offset.x * Math.cos(this.angle) - this.offset.y * Math.sin(this.angle))
+        this.pos.y += (this.offset.x * Math.sin(this.angle) + this.offset.y * Math.cos(this.angle))
       }
     },
   },
