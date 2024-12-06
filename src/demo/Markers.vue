@@ -80,7 +80,7 @@ export default {
   data() {
     return {
       perc: 50,
-      colorPerc: 65,
+      colorPerc: 60,
       graph: new graph(),
       color: '#00f',
       visible: true,
