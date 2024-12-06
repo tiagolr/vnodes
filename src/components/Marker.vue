@@ -66,6 +66,7 @@ export default {
 
       this.zoom = this.$parent.zoom
       const box = this.$refs.super.getBBox()
+      this.box = box;
 
       if (this.align === 'center') {
         this.pos.x -= box.width / 2
@@ -85,9 +86,6 @@ export default {
       //   this.pos.y -= box.height / this.zoom
       //   this.pos.x -= box.width / 2 / this.zoom
       // }
-
-      this.box = this.$refs.super.getBBox()
-
 
       if (this.offset.x || this.offset.y) {
         this.pos.x += (this.offset.x * Math.cos(this.angle) - this.offset.y * Math.sin(this.angle)) * this.zoom
