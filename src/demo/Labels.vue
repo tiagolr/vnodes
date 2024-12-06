@@ -105,10 +105,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.demo-labels .node {
-  user-select: none;
-  -moz-user-select: none;
-}
-</style>

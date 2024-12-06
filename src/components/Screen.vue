@@ -26,7 +26,7 @@ export default {
     options: {
       type: Object,
       default: () => ({})
-    }
+    },
   },
   emits: [
     'dblclick',
@@ -39,6 +39,8 @@ export default {
   data() {
     return {
       panzoom: null,
+      zoom: 1, // readonly
+      pan: {x: 0, y: 0} // readonly
     }
   },
   mounted () {
@@ -74,7 +76,9 @@ export default {
       const { a, b, c, d, e, f } = m;
       this.$refs.nodesInner.style.transform = `matrix(${a}, ${b}, ${c}, ${d}, ${e}, ${f})`
       this.$refs.overlayInner.style.transform = `matrix(${a}, ${b}, ${c}, ${d}, ${e}, ${f})`
-
+      this.zoom = a
+      this.pan.x = e
+      this.pan.y = f
       this.$emit('ctm', m)
     },
     /**

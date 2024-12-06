@@ -3,12 +3,8 @@
     <div class="viewport">
       <screen ref="screen" v-if="visible">
         <template #edges>
-          <markers :markers="markers">
-          </markers>
-          <g>
-            <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
-            </edge>
-          </g>
+          <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+          </edge>
         </template>
         <template #nodes>
           <node :data="node" ref="node" v-for="node in graph.nodes" :key="node.id">
@@ -40,7 +36,6 @@ import Screen from '../components/Screen.vue'
 import Node from '../components/Node.vue'
 import Edge from '../components/Edge.vue'
 import graph from '../graph'
-import Markers from '../components/Markers.vue'
 import { Codemirror } from 'vue-codemirror'
 import { css } from '@codemirror/lang-css'
 import util from '../util'
@@ -111,7 +106,6 @@ export default {
     Screen,
     Node,
     Edge,
-    Markers,
     Codemirror
   },
   data() {
@@ -120,10 +114,6 @@ export default {
       themeSelect: 'blueprint',
       graph: new graph(),
       visible: true,
-      markers: [
-        {id:'arrow-end-red', type:'arrow-end', scale:0.5, style:'fill: red'} ,
-        {id:'circle-white', type:'circle', scale:1, style:'fill: white'},
-      ],
       theme: themes['blueprint'].trim()
     }
   },

@@ -14,7 +14,7 @@ export default {
     },
     nodes: { // graph nodes reference
       type: Array,
-    }
+    },
   },
 
   computed: {

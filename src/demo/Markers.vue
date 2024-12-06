@@ -1,44 +1,23 @@
 <template>
-  <div class="demo" id="markers-demo">
+  <div id="markers-demo" class="demo">
     <div class="viewport">
       <screen ref="screen" v-if="visible">
-          <template #edges>
-            <markers :markers="markers">
-            </markers>
-            <edge :data="{
-              from: { x: 100, y: 150},
-              to: { x: 300, y: 150}}"
-              style="marker-start: url(#arrow-start-blue); marker-end: url(#arrow-end-blue); stroke: blue"
-            ></edge>
-            <text x="350" y="155" class="small">#arrow-start, #arrow-end</text>
-            <edge :data="{
-              from: { x: 100, y: 200},
-              to: { x: 300, y: 200}}"
-              style="marker-start: url(#squared); marker-end: url(#squared); stroke: blue"
-            ></edge>
-            <text x="350" y="205" class="small">#square</text>
-            <edge :data="{
-              from: { x: 100, y: 250},
-              to: { x: 300, y: 250}}"
-              style="marker-start: url(#circular); marker-end: url(#circular); stroke: blue; "
-            ></edge>
-            <text x="350" y="255" class="small">#circle</text>
-            <edge :data="{
-              from: { x: 100, y: 300},
-              to: { x: 300, y: 300}}"
-              style="marker-start: url(#crossed); marker-end: url(#crossed); stroke: blue; "
-            ></edge>
-            <text x="350" y="305" class="small">#cross</text>
-            <edge :data="{
-              from: { x: 100, y: 350},
-              to: { x: 300, y: 350}}"
-              style="marker-start: url(#arrow-slim-start-blue); marker-end: url(#arrow-slim-end-blue); stroke: blue; "
-            ></edge>
-            <text x="350" y="355" class="small">#arrow-slim-start, #arrow-slim-end</text>
-          </template>
-        </screen>
+        <template #edges>
+          <edge v-for="(edge, i) in edges" :key="i" :data="edge" :nodes="nodes">
+          </edge>
+          <v-marker :edge="edges[0]" :perc="parseInt(perc)">
+          </v-marker>
+          <text x="350" y="155" class="small">#arrow-start, #arrow-end</text>
+          <text x="350" y="205" class="small">#square</text>
+          <text x="350" y="255" class="small">#circle</text>
+          <text x="350" y="305" class="small">#cross</text>
+          <text x="350" y="355" class="small">#arrow-slim-start, #arrow-slim-end</text>
+        </template>
+      </screen>
     </div>
     <div class="sidebar">
+      <div>Position {{ perc }}</div>
+      <input type="range" v-model="perc" min="0" max="100">
     </div>
   </div>
 </template>
@@ -47,33 +26,48 @@
 import Screen from '../components/Screen.vue'
 import Node from '../components/Node.vue'
 import Edge from '../components/Edge.vue'
+import VMarker from '../components/Marker.vue'
 import graph from '../graph'
-import Markers from '../components/Markers.vue'
 
 export default {
   components: {
     Screen,
     Node,
     Edge,
-    Markers,
+    VMarker,
   },
   data() {
     return {
+      perc: 50,
       graph: new graph(),
+      color: '#00f',
       visible: true,
-      markers: [
-        { id:'arrow-start-blue', type:'path', scale:0.5, style:'fill: blue', path: 'M0,5 L10,10 L10,0 L0,5'},
-        { id:'arrow-end-blue', type:'path', scale:0.5, style:'fill: blue', path: 'M0,0 L0,10 L10,5 L0,0' },
-        { id:'squared', type:'rect', scale: 1, style:'fill: blue;'},
-        { id:'circular', type:'circle', scale: 1, style:'fill: blue'},
-        { id:'crossed', type:'path', scale: 2, style:'stroke: blue', path: 'M 3,3 L 7,7 M 3,7 L 7,3'},
-        { id:'arrow-slim-start-blue', type:'path', scale: .5, style:'stroke: blue', path: 'M1,5 L9,9 M9,1 L1,5'},
-        { id:'arrow-slim-end-blue', type:'path', scale: .5, style:'stroke: blue', path: 'M10,5 L1,1 M10,5 L1,9', strokeLinecap: 'round'},
+      nodes: [
+        {id: '1a', x: 100, y: 150, width: 1, height: 1},
+        {id: '1b', x: 300, y: 50 , width: 1, height: 1},
+        {id: '2a', x: 100, y: 200, width: 1, height: 1},
+        {id: '2b', x: 300, y: 200, width: 1, height: 1},
+        {id: '3a', x: 100, y: 250, width: 1, height: 1},
+        {id: '3b', x: 300, y: 250, width: 1, height: 1},
+        {id: '4a', x: 100, y: 300, width: 1, height: 1},
+        {id: '4b', x: 300, y: 300, width: 1, height: 1},
+        {id: '5a', x: 100, y: 350, width: 1, height: 1},
+        {id: '5b', x: 300, y: 350, width: 1, height: 1},
       ],
+      edges: [
+        { from: '1a', to: '1b', type: 'smooth' },
+        { from: '2a', to: '2b', type: 'smooth' },
+        { from: '3a', to: '3b', type: 'smooth' },
+        { from: '4a', to: '4b', type: 'smooth' },
+        { from: '5a', to: '5b', type: 'smooth' },
+      ]
     }
   }
 }
 </script>
 
 <style>
+#markers-demo .edge {
+  stroke: v-bind('color');
+}
 </style>
