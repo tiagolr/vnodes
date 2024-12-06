@@ -1,7 +1,17 @@
 <template>
-    <div :style="transform" class="label">
-      <slot></slot>
-    </div>
+  <div>
+    <node
+      class="label"
+      ref="node"
+      :data="node"
+      :useDrag="useDrag"
+      :style="nodeTransform"
+      @drag="e => $emit('drag', e)"
+    >
+      <slot>
+      </slot>
+    </node>
+  </div>
 </template>
 
 <script>
@@ -58,7 +68,6 @@ export default {
   },
   methods: {
     getPosition () {
-      console.log('getting...')
       const el = document.getElementById(this.edge.id)
       if (!el) return;
       const length = el.getTotalLength() * this.perc / 100
@@ -71,24 +80,25 @@ export default {
         this.angle = 0
       }
     },
+    updateNodePos () {
+      const align =  { x: 0, y: 0}
+      if (this.align === 'center') { align.x = this.node.width / 2; align.y = this.node.height / 2; }
+      else if (this.align === 'top') align.x = this.node.width / 2
+      else if (this.align === 'top-right') align.x = this.node.width;
+      else if (this.align === 'left') align.y = this.node.height / 2;
+      else if (this.align === 'right') { align.x = this.node.width; align.y = this.node.height / 2; }
+      else if (this.align === 'bottom-left') { align.y = this.node.height }
+      else if (this.align === 'bottom') { align.x = this.node.width / 2; align.y = this.node.height }
+      else if (this.align === 'bottom-right') { align.x = this.node.width; align.y = this.node.height }
+
+      this.node.x = this.pos.x + this.offset.x - align.x
+      this.node.y = this.pos.y + this.offset.y - align.y
+    },
   },
   computed: {
-    translate: vm => vm.align === 'top' ? 'translate(-50%, -100%)'
-      : vm.align === 'bottom' ? 'translate(-50%, 0%)'
-      : vm.align === 'left' ? 'translate(-100%, -50%)'
-      : vm.align === 'right' ? 'translate(0, -50%)'
-      : vm.align === 'top-left' ? 'translate(-100%, -100%)'
-      : vm.align === 'top-right' ? 'translate(0%, -100%)'
-      : vm.align === 'bottom-left' ? 'translate(-100%, 0%)'
-      : vm.align === 'bottom-right' ? 'translate(0%, 0%)'
-      : 'translate(-50%, -50%)',
-    transform: vm => ({
-      position: 'absolute',
-      left: vm.pos.x + vm.offset.x + 'px',
-      top: vm.pos.y + vm.offset.y + 'px',
-      transformOrigin: '50% 50%',
-      transform: `rotate(${vm.angle}rad) ${vm.translate}`
-    })
+    nodeTransform: vm => `
+        transform-origin: 50% 50%;
+        transform: rotate(${vm.angle}rad);`,
   },
   watch: {
     edge: {
@@ -96,7 +106,13 @@ export default {
       handler: 'getPosition'
     },
     perc: 'getPosition',
-    rotate: 'getPosition'
+    pos: 'updateNodePos',
+    'node.width': 'updateNodePos',
+    'node.height': 'updateNodePos',
+    'offset': 'updateNodePos',
+    'offset': 'updateNodePos',
+    'align': 'updateNodePos',
+    'rotate': 'getPosition'
   },
 }
 </script>
@@ -104,6 +120,5 @@ export default {
 <style>
 .label {
   background-color: #bbe4bb;
-  border-radius: 8px;
 }
 </style>

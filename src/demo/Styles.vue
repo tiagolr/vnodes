@@ -179,7 +179,6 @@ export default {
               .filter(Boolean)
               .forEach(el => {
                 const prop = dec.property.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-                console.log(dec.property, prop, dec.value)
                 el.style[prop] = dec.value
               })
             })
