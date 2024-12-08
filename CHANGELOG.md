@@ -4,6 +4,7 @@
   - Dropped vue 2 support
   - Improved ports offset calculation method
   - Fixed ports continuous updates by using a computed property instead to trigger updates
+  - Allow middle click on nodes to go through
   - Other - default drag threshold reduced to 2
           - simplified nodes and groups structure (less divs)
           - removed margin from groups and nodes as its no longer needed

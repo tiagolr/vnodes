@@ -1,7 +1,7 @@
 <template>
   <div
     class="node"
-    @mousedown="onMousedown"
+    @mousedown.left="onMousedown"
     @touchstart="onMousedown"
     :style="nodeStyle"
   >

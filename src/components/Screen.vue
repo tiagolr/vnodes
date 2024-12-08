@@ -55,6 +55,7 @@ export default {
       zoomScaleSensitivity: 0.4,
       minZoom: 0.1,
       maxZoom: 5,
+      eventsListenerElement: this.$el,
       onZoom: zoom => this.$emit('zoom', zoom),
       onPan: pan => this.$emit('pan', pan),
       onUserZoom: e => this.$emit('user-zoom', e),

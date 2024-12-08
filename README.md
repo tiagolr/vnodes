@@ -1,4 +1,4 @@
-# vnodes
+# Vnodes
 
 Vue components to create svg interactive graphs, diagrams or node visual tools.
 
@@ -12,19 +12,36 @@ https://tiagolr.github.io/vnodes/
 npm install vnodes
 ```
 
+## Vnodes 2.0 is here!
+
+With 2.0 the rendering method was changed, instead of having foreignObjects inside svg, the `screen` now uses different layers for svg and html while sinchronizing the transforms between them. This fixes issues with Safari that were partially patched by @metanas, the layout of nodes becomes simpler as there is no need to account for margins, clipping, lack of support of absolute positioning inside nodes or opacity in browsers based on WebKit.
+
+Markers were also revamped among other changes, see CHANGELOG for more details.
+
 ### Get started
 ```html
 <template>
   <screen ref="screen">
-    <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
-    </edge>
+    <!-- svg content can be placed in #edges template -->
+    <template #edges>
+      <edge v-for="edge in graph.edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+      </edge>
+    </template>
 
-    <!-- html can be placed inside node, defaults to <div>{{node.id}}</div> -->
-    <node v-for="node in graph.nodes" :data="node" :key="node.id">
-    </node>
+      <!-- html content can be placed on #nodes template -->
+    <template #nodes>
+      <!-- nodes can have any html content, defaults to <div>{{node.id}}</div> -->
+      <node v-for="node in graph.nodes" :data="node" :key="node.id">
+      </node>
+    </template>
   </screen>
 </template>
 ```
+
+Previously all svg and html nodes were placed inside screen default slot, in 2.0 that changed and it uses different layers for different types like `#nodes` (html), `#edges` (svg) and `#overlay` (svg).
+
+The rest of the API remains the same but there were a few minor tweaks and changes.
+
 ```js
 import { Screen, Node, Edge, graph } from 'vnodes'
 export default {
@@ -49,15 +66,15 @@ export default {
 
 ## Components
 
-Components are independent and can be imported separately.
-
 ### Screen
 
-Svg wrapper with zoom, panning and other features.
+Main container of html and svg content, handles zoom panning and applies the same transforms to all its layers.
 
 ```html
 <screen>
-  <circle cx="50" cy="50" r="50" fill="red"/>
+  <template #edges>
+    <circle cx="50" cy="50" r="50" fill="red"/>
+  </template>
 </screen>
 ```
 
@@ -66,7 +83,9 @@ Screen component uses [svg-pan-zoom](https://www.npmjs.com/package/svg-pan-zoom)
 and screen takes options prop like this
 ```html
 <screen :options="options">
-  <circle cx="50" cy="50" r="50" fill="red"/>
+  <template #edges>
+    <circle cx="50" cy="50" r="50" fill="red"/>
+  </template>
 </screen>
 ```
 you can refer to available options [here](https://www.npmjs.com/package/svg-pan-zoom#how-to-use)
@@ -98,25 +117,24 @@ you can refer to available options [here](https://www.npmjs.com/package/svg-pan-
 
 ### Node
 
-Html wrapper for svg with additional features like, dragging and fitting contents.
-
+Div containers with handlers for data updates based on dimensions and positioning, also provides dragging by default which can be disabled.
 
 ```html
-<svg width="500" height="500">
-  <node :data="{
+<node :data="{
     id: 'test',
     x: 100,
     y: 100,
     width: 250,
-    height: 150}">
-      <h1>My First Node!</h1>
-  </node>
-</svg>
+    height: 150
+  }"
+>
+  <h1>My First Node!</h1>
+</node>
 ```
 
 ### Edge
 
-Connects nodes using svg lines
+Connects nodes using svg paths
 
 ```html
 <edge :data="{
@@ -176,7 +194,7 @@ Surrounds a group of nodes with a rectangle, allows dragging multiple nodes.
 
 ### Port
 
-Placed inside a node, automatically offsets edges to a their position inside the nodes html [Ports demo].
+Placed inside a node, automatically offsets edges to a their position inside the nodes.
 
 ### Label
 
@@ -214,16 +232,21 @@ svg .edge {
 
 ### Markers
 
-TODO
-routing orth manh metro https://resources.jointjs.com/demos/routing
-theme apply demo
-markers demo
-groups demo
-edge api review
-graph tools, nodes containing edge refs or adj list etc
-graph layouts https://www.yworks.com/products/yfiles/features#layout
-layered layouts https://github.com/erikbrinkman/d3-dag
-layered layouts https://www.yworks.com/pages/layered-graph-layout
-css animations demo/theme https://www.yworks.com/products/yfiles/features
-https://www.edrawmax.com/online/en/
-https://js.cytoscape.org/
+There are two ways to create makers for eges, one is using [SVG markers](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker), creating definitions  `<defs></defs>` in `#edges` slot and then assign them to edges using CSS. This was the previous default method of using markers.
+
+In 2.0 the old markers helper was removed and a new `Marker.vue` component was added that provides embed svg markers which are a lot more versatile, here is how it can be used:
+
+```html
+<screen ref="screen">
+  <template #edges>
+    <edge v-for="edge in edges" :data="edge" :nodes="graph.nodes" :key="edge.id">
+    </edge>
+    <v-marker v-for="edge in edges" :edge="edge" :perc="100">
+      <rect x="0" y="0" width="10" height="10" :fill="markerColor">
+    </v-marker>
+  </template>
+</screen>
+```
+
+The marker can be any svg content, the component handles rotations and translations to the correct place along the edge given a percentage `perc` and the edge to place on.
+The svg content should be centered at the origin for the transforms to work properly, the `offset` property can be used to correct alignments.

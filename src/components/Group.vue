@@ -1,7 +1,7 @@
 <template>
   <div
     class="node-group"
-    @mousedown="onMousedown"
+    @mousedown.left="onMousedown"
     :style="groupStyle"
   >
     <slot>
@@ -25,7 +25,10 @@ export default {
       type: Object,
       default: () => ({ left: 10, right: 10, top: 10, bottom: 10 })
     },
-    disableDrag: Boolean,
+    useDrag: { // use default drag behavior
+      type: Boolean,
+      default: true
+    },
   },
   computed: {
     minX: vm => !vm.nodes.length ? 0 : vm.nodes.reduce((acc, node) => Math.min(acc, node.x), Infinity),
@@ -56,8 +59,8 @@ export default {
       })
     },
     onMousedown (e) {
-      e.stopPropagation()
-      if (!this.disableDrag) {
+      if (this.useDrag) {
+        e.stopPropagation()
         e.preventDefault();
         this.startDrag(e);
       }
