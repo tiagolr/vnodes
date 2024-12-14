@@ -16,7 +16,7 @@ npm install vnodes
 
 With 2.0 the rendering method was changed, instead of having foreignObjects inside svg, the `screen` now uses different layers for svg and html while sinchronizing the transforms between them. This fixes issues with Safari that were partially patched by @metanas, the layout of nodes becomes simpler as there is no need to account for margins, clipping, lack of support of absolute positioning inside nodes or opacity in browsers based on WebKit.
 
-Markers were also revamped among other changes, see CHANGELOG for more details.
+Markers were also revamped among other changes, see [CHANGELOG.md](./CHANGELOG.md) for more details.
 
 ### Get started
 ```html
@@ -40,7 +40,7 @@ Markers were also revamped among other changes, see CHANGELOG for more details.
 
 Previously all svg and html nodes were placed inside screen default slot, in 2.0 that changed and it uses different layers for different types like `#nodes` (html), `#edges` (svg) and `#overlay` (svg).
 
-The rest of the API remains the same but there were a few minor tweaks and changes.
+The rest of the API remains the same but there were a few minor tweaks.
 
 ```js
 import { Screen, Node, Edge, graph } from 'vnodes'
@@ -232,9 +232,9 @@ svg .edge {
 
 ### Markers
 
-There are two ways to create makers for eges, one is using [SVG markers](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker), creating definitions  `<defs></defs>` in `#edges` slot and then assign them to edges using CSS. This was the previous default method of using markers.
+There are two ways to create makers for eges, one is using [SVG markers](https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker), creating definitions  `<defs></defs>` in `#edges` slot and then assign them to edges using CSS.
 
-In 2.0 the old markers helper was removed and a new `Marker.vue` component was added that provides embed svg markers which are a lot more versatile, here is how it can be used:
+In 2.0 the old markers helper was removed and a new `Marker.vue` component was added that provides embed svg markers which are more versatile than SVG markers, here is how it can be used:
 
 ```html
 <screen ref="screen">
@@ -249,4 +249,5 @@ In 2.0 the old markers helper was removed and a new `Marker.vue` component was a
 ```
 
 The marker can be any svg content, the component handles rotations and translations to the correct place along the edge given a percentage `perc` and the edge to place on.
+These markers are more versatile then defining them in svg using `<defs></defs>` although probably more expensive in terms of computation.
 The svg content should be centered at the origin for the transforms to work properly, the `offset` property can be used to correct alignments.

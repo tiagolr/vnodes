@@ -3,6 +3,18 @@
     <div class="viewport">
       <screen ref="screen" v-if="visible">
         <template #edges>
+          <defs>
+            <marker id="arrow-end-red" orient="auto" markerWidth="6.5" markerHeight="6.5" refX="4.5" refY="2.5">
+              <path d="M0,0 L0,10 L10,5 L0,0" style="fill: red; transform: scale(0.5);">
+              </path>
+            </marker>
+            <marker id="circle-white" markerWidth="10" markerHeight="10" refX="2.5" refY="2.5">
+              <circle cx="2.5" cy="2.5" r="2.5" style="transform: scale(1); fill: white;">
+              </circle>
+            </marker>
+          </defs>
+
+
           <edge v-for="(edge, i) in edges" :key="i" :data="edge" :nodes="nodes">
           </edge>
 
@@ -52,6 +64,14 @@
           <text x="350" y="305" class="small">cross</text>
           <text x="350" y="355" class="small">arrow</text>
         </template>
+        <template #nodes>
+          <node :data="nodes[10]">
+            <div style="width: 15px; height: 15px; border-radius: 50%" :style="`background: ${color}`"></div>
+          </node>
+          <node :data="nodes[11]">
+            <div style="width: 15px; height: 15px; border-radius: 50%" :style="`background: ${color}`"></div>
+          </node>
+        </template>
       </screen>
     </div>
     <div class="sidebar">
@@ -96,7 +116,7 @@ export default {
         {id: '5a', x: 100, y: 350, width: 1, height: 1},
         {id: '5b', x: 300, y: 350, width: 1, height: 1},
         {id: '6a', x: 480, y: 350, width: 1, height: 1},
-        {id: '6b', x: 700, y: 150, width: 1, height: 1},
+        {id: '6b', x: 680, y: 150, width: 1, height: 1},
       ],
       edges: [
         { id: 'a1b1', from: '1a', to: '1b', type: 'smooth' },
@@ -104,7 +124,7 @@ export default {
         { id: 'a3b3', from: '3a', to: '3b', type: 'smooth' },
         { id: 'a4b4', from: '4a', to: '4b', type: 'smooth' },
         { id: 'a5b5', from: '5a', to: '5b', type: 'smooth' },
-        { id: 'a6b6', from: '6a', to: '6b', type: 'smooth' },
+        { id: 'a6b6', from: '6a', to: '6b', type: 'smooth', fromAnchor: 'center', toAnchor: 'center' },
       ]
     }
   },
@@ -160,5 +180,8 @@ export default {
 <style>
 #markers-demo .edge {
   stroke: v-bind('color');
+}
+#markers-demo .node {
+  background: none;
 }
 </style>
